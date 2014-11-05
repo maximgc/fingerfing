@@ -1,11 +1,17 @@
 package org.fingerfing.client.widget;
 
+import org.fingerfing.client.controller.DesignControllerImpl;
+import org.fingerfing.client.core.ExerciseDescriptor;
+import org.fingerfing.client.core.NativeKey;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 
 public class DesignWidgetImpl extends Composite {
 
@@ -13,6 +19,7 @@ public class DesignWidgetImpl extends Composite {
 			.create(DesignWidgetImplUiBinder.class);
 	@UiField
 	TextArea textArea;
+	private DesignControllerImpl designController;
 
 	interface DesignWidgetImplUiBinder extends
 			UiBinder<Widget, DesignWidgetImpl> {
@@ -22,4 +29,23 @@ public class DesignWidgetImpl extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
+	public void setDesignController(DesignControllerImpl designController) {
+		this.designController = designController;
+	}
+	
+	
+
+	@UiHandler("textArea")
+	void onTextAreaKeyDown(KeyDownEvent event) {
+		designController.onKeyInput(event.getNativeKeyCode());
+	}
+ 
+	public void showExercise(ExerciseDescriptor exerciseDescriptor) {
+		StringBuilder sb = new StringBuilder();
+		for (NativeKey nk : exerciseDescriptor.getSequence()){
+			sb.append(nk.toText());
+			sb.append(" ");
+		}
+		textArea.setText(sb.toString());
+	}
 }

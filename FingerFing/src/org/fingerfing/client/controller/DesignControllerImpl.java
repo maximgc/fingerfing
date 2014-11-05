@@ -1,20 +1,48 @@
 package org.fingerfing.client.controller;
 
-import org.fingerfing.client.core.ExerciseDescriptor;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.google.gwt.user.client.ui.Widget;
+import org.fingerfing.client.core.ExerciseDescriptor;
+import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.widget.DesignWidgetImpl;
 
 public class DesignControllerImpl {
 
-	private Widget designWidget;
+	private DesignWidgetImpl designWidget;
+	private List<NativeKey> keySeq;
 	private ExerciseDescriptor exerciseDescriptor;
 
-	public DesignControllerImpl(Widget designWidget) {
+	public DesignControllerImpl(DesignWidgetImpl designWidget) {
 		this.designWidget = designWidget;
+		this.designWidget.setDesignController(this);
 	}
 
 	public ExerciseDescriptor getExerciseDescriptor() {
 		return exerciseDescriptor;
+	}
+
+	public void setExerciseDescriptor(ExerciseDescriptor exerciseDescriptor) {
+		if (exerciseDescriptor == null) {
+			keySeq = new ArrayList<NativeKey>();
+			this.exerciseDescriptor = new ExerciseDescriptor(keySeq);
+		} else {
+			this.exerciseDescriptor = exerciseDescriptor;
+		}
+	}
+	
+	public void onActive() {
+		showEx();
+	}
+
+	public void onKeyInput(int nativeKeyCode) {
+		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
+		keySeq.add(nk);
+		showEx();
+	}
+
+	private void showEx() {
+		designWidget.showExercise(exerciseDescriptor);
 	}
 
 }

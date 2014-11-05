@@ -4,9 +4,6 @@ import org.fingerfing.client.widget.DesignWidgetImpl;
 import org.fingerfing.client.widget.MainWidget;
 import org.fingerfing.client.widget.TrainWidgetImpl;
 
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-
 public class MainController {
 
 	private MainWidget mainWidget;
@@ -15,26 +12,34 @@ public class MainController {
 
 	public MainController(MainWidget mw) {
 		this.mainWidget = mw;
+		this.mainWidget.setMainController(this);
 		
-		mw.setTrainWidget(new TrainWidgetImpl());
-		mw.setDesignWidget(new DesignWidgetImpl());
+		TrainWidgetImpl tw = new TrainWidgetImpl();
+		DesignWidgetImpl dw = new DesignWidgetImpl();
+
+		this.mainWidget.setTrainWidget(tw);
+		this.mainWidget.setDesignWidget(dw);
 		
-		trainController = new TrainControllerImpl(mw.getTrainWidget());
-		designController = new DesignControllerImpl(mw.getDesignWidget());
+		trainController = new TrainControllerImpl(tw);
+		designController = new DesignControllerImpl(dw);
 		
-		mainWidget.tabPanel.addSelectionHandler(new SelectionHandler<Integer>() {
-			@Override
-			public void onSelection(SelectionEvent<Integer> event) {
-				switch (event.getSelectedItem()){
-				case 0:
-					trainController.setExerciseDescriptor(designController.getExerciseDescriptor());
-					break;
-				case 1:
-					break;
-				}
-				
-			}
-		});
 	}
 
+	public void switchToTrain() {
+		mainWidget.switchToTrain();
+	}
+
+	public void onChangeTab(Integer newTabIndex) {
+		switch (newTabIndex){
+		case 0:
+			trainController.setExerciseDescriptor(designController.getExerciseDescriptor());
+			trainController.onActive();
+			break;
+		case 1:
+			designController.setExerciseDescriptor(trainController.getExerciseDescriptor());
+			designController.onActive();
+			break;
+		}
+
+	}
 }
