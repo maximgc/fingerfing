@@ -1,6 +1,6 @@
 package org.fingerfing.client.controller;
 
-import org.fingerfing.client.core.Element;
+import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Exercise;
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.NativeKey;
@@ -29,15 +29,23 @@ public class TrainControllerImpl {
 	public void onActive() {
 		if (exercise != null) {
 			trainWidget.showSequence(exercise.getSequence());
-			trainWidget.showCurElement(exercise.getCurElement());
+			trainWidget.showCurElement(exercise.getCurrentElement().getPos(), true);
 		}
 	}
 
 	public void onKeyInput(int nativeKeyCode) {
-		if (exercise.getCurElement() != null) {
-			exercise.makeAttempt(NativeKey.getByNativeCode(nativeKeyCode));
-			trainWidget.showLastAttempt(exercise.getLastAttempt());
-			trainWidget.showCurElement(exercise.getCurElement());
+		if (exercise.hasCurrentElement()) {
+			exercise.makeElementAttempt(NativeKey
+					.getByNativeCode(nativeKeyCode));
+			Attempt lastAttempt = exercise.getLastAttempt();
+			trainWidget.showEnv(lastAttempt.getPos(), lastAttempt.getEval());
+			
+			if (exercise.hasCurrentElement()) {
+				trainWidget.showCurElement(exercise.getCurrentElement()
+						.getPos(), true);
+			} else {
+				trainWidget.showCurElement(lastAttempt.getPos(), false);
+			}
 		}
 	}
 

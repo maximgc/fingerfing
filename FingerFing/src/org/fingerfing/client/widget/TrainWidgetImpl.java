@@ -1,11 +1,8 @@
 package org.fingerfing.client.widget;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.fingerfing.client.controller.TrainControllerImpl;
-import org.fingerfing.client.core.Attempt;
-import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.NativeKey;
 
 import com.google.gwt.core.client.GWT;
@@ -19,6 +16,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 
 /**
  * Widget for demonstrate exercise.
+ * 
  * @author Max
  */
 public class TrainWidgetImpl extends Composite {
@@ -33,10 +31,10 @@ public class TrainWidgetImpl extends Composite {
 	TextArea textArea;
 
 	private TrainControllerImpl trainController;
-	//WARN нет сброса при новом exercise что то не то в модели
-	private List<NativeKey> sequence;
-	private Element curElement;
-	private List<Attempt> lastAttempts;
+	// WARN нет сброса при новом exercise что то не то в модели
+	private List<NativeKey> keySeq;
+	private int curPos;
+	private int[] evals;
 
 	public TrainWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -46,40 +44,38 @@ public class TrainWidgetImpl extends Composite {
 		this.trainController = trainController;
 	}
 
-	public void showCurElement(Element el) {
-		this.curElement = el;
+	public void showCurElement(int currentPos, boolean showed) {
+		if (showed) {
+			this.curPos = currentPos;
+		} else if (this.curPos == currentPos) {
+			this.curPos = -1;
+		}
 		refresh();
+
 	}
 
-	public void showLastAttempt(Attempt lastAttempt) {
-		if (lastAttempts == null) {
-			lastAttempts = new ArrayList<Attempt>(sequence.size());
-		}
-		if (lastAttempts.size() <= lastAttempt.getPos()) {
-			lastAttempts.add(lastAttempt);
-		} else {
-			lastAttempts.set(lastAttempt.getPos(), lastAttempt);
-		}
+	public void showEnv(int pos, int eval) {
+		this.evals[pos] = eval;
 		refresh();
 	}
 
 	public void showSequence(List<NativeKey> sequence) {
-		this.sequence = sequence;
+		this.keySeq = sequence;
+		this.evals = new int[keySeq.size()];
 		refresh();
 	}
 
 	private void refresh() {
 		StringBuilder sb = new StringBuilder();
-		int pos = 0;
-		for (NativeKey nk : sequence) {
-			sb.append(nk.toText());
-			if (lastAttempts != null && pos < lastAttempts.size()) {
-				sb.append(" - ").append(lastAttempts.get(pos).getEval());
+		for (int p = 0; p < keySeq.size(); p++) {
+			sb.append(keySeq.get(p).toText());
+
+			if (p <= curPos) {
+				sb.append(" |").append(evals[p]);
 			}
-			if (curElement != null && pos++ == curElement.getPos()) {
-				sb.append(" <- ").append(curElement.getNativeKey().toString());
+			if (p == curPos) {
+				sb.append(" <- ").append(keySeq.get(p).toText());
 			}
-			;
 			sb.append((char) 13);
 		}
 		textArea.setText(sb.toString());

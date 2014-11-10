@@ -1,6 +1,5 @@
 package org.fingerfing.client.core;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ExerciseDescriptor {
