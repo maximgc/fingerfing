@@ -18,4 +18,10 @@ public class Element {
 		return pos;
 	}
 
+	public boolean is(NativeKey nativeKey2) {
+		return nativeKey.equals(nativeKey);
+	}
+	
+	
+
 }

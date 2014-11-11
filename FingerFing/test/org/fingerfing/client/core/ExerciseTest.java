@@ -3,6 +3,7 @@ package org.fingerfing.client.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,6 +16,7 @@ public class ExerciseTest {
 	private ExerciseDescriptor ed;
 	private Exercise e;
 
+	@Before
 	public void setUp() throws Exception {
 		ArrayList<NativeKey> sequence = new ArrayList<NativeKey>();
 		sequence.add(NativeKey.KEY_Q);

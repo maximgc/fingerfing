@@ -4,17 +4,58 @@ import java.util.List;
 
 public class Exercise {
 
-	private final ExerciseDescriptor exerciseDescriptor;
+	private class ElementNavigator {
 
+		private final ExerciseDescriptor exerciseDescriptor;
+		
+		public ElementNavigator(ExerciseDescriptor exerciseDescriptor) {
+			this.exerciseDescriptor = exerciseDescriptor;
+		}
+
+		public Element getElement(int i) {
+			if (hasElement(i)) {
+				return new Element(i, getSequence().get(i));
+			} else {
+				throw new RuntimeException("Element not found");
+			}
+		}
+
+		public ExerciseDescriptor getExerciseDescriptor() {
+			return exerciseDescriptor;
+		}
+
+		public List<NativeKey> getSequence() {
+			return exerciseDescriptor.getSequence();
+		}
+
+		public boolean hasElement(int i) {
+			return i < getSequence().size();
+		}
+
+		public Element nextElement(Element element) {
+			if (element == null && hasElement(0)) {
+				return getElement(0);
+			} else if (hasElement(element.getPos() + 1)) {
+				return getElement(element.getPos() + 1);
+			} else {
+				return null;
+			}
+		}
+	}
+	
+	
+
+	private ElementNavigator elementNavigator;
 	private Element currentElement;
+
 	private Attempt lastAttempt;
 
 	public Exercise(ExerciseDescriptor exerciseDescriptor) {
 		if (exerciseDescriptor == null || exerciseDescriptor.getSequence()==null){
 			throw new RuntimeException("ExerciseDescriptor doesn't define sequence");
 		}
-		this.exerciseDescriptor = exerciseDescriptor;
-		this.currentElement = nextElement();
+		this.elementNavigator = new ElementNavigator(exerciseDescriptor);
+		this.currentElement = elementNavigator.nextElement(null);
 	}
 
 	public Element getCurrentElement() {
@@ -25,7 +66,7 @@ public class Exercise {
 	}
 
 	public ExerciseDescriptor getExerciseDescriptor() {
-		return exerciseDescriptor;
+		return elementNavigator.getExerciseDescriptor();
 	}
 
 	public Attempt getLastAttempt() {
@@ -36,46 +77,23 @@ public class Exercise {
 	}
 
 	public List<NativeKey> getSequence() {
-		return exerciseDescriptor.getSequence();
+		return elementNavigator.getSequence();
 	}
 
 	public boolean hasCurrentElement() {
 		return currentElement != null;
 	}
-
+	
+	
 	public void makeElementAttempt(NativeKey nativeKey) {
 		if (!hasCurrentElement()) {
 			throw new RuntimeException("Current Element is undefined");
 		}
-		if (currentElement.getNativeKey().equals(nativeKey)) {
+		if (currentElement.is(nativeKey)) {
 			lastAttempt = new Attempt(currentElement, 0, nativeKey, 1);
-			currentElement = nextElement();
+			currentElement = elementNavigator.nextElement(currentElement);
 		} else {
 			lastAttempt = new Attempt(currentElement, 0, nativeKey, 2);
 		}
 	}
-
-	private Element getElement(int i) {
-		if (hasElement(i)) {
-			return new Element(i, getSequence().get(i));
-		} else {
-			throw new RuntimeException("Element not found");
-		}
-
-	}
-
-	private boolean hasElement(int i) {
-		return i < getSequence().size();
-	}
-
-	private Element nextElement() {
-		if (hasCurrentElement() && hasElement(currentElement.getPos() + 1)) {
-			return getElement(currentElement.getPos() + 1);
-		} else if (!hasCurrentElement() && hasElement(0)) {
-			return getElement(0);
-		} else {
-			return null;
-		}
-	}
-
 }
