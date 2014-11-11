@@ -1,49 +1,56 @@
 package org.fingerfing.client.core;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
 
 public class ExerciseTest {
 
 	private ExerciseDescriptor ed;
 	private Exercise e;
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
 	public void setUp() throws Exception {
 		ArrayList<NativeKey> sequence = new ArrayList<NativeKey>();
 		sequence.add(NativeKey.KEY_Q);
 		sequence.add(NativeKey.KEY_W);
 		sequence.add(NativeKey.KEY_E);
-		ed = new ExerciseDescriptor(sequence);  
+		ed = createExerciseDescriptor(sequence);
 		e = new Exercise(ed);
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	private ExerciseDescriptor createExerciseDescriptor(
+			ArrayList<NativeKey> sequence) {
+		class ExerciseDescriptorImpl implements ExerciseDescriptor {
+
+			private List<NativeKey> sequence;
+
+			public ExerciseDescriptorImpl(List<NativeKey> sequence) {
+				this.sequence = sequence;
+			}
+
+			@Override
+			public void setSequence(List<NativeKey> sequence) {
+				this.sequence = sequence;
+			}
+
+			@Override
+			public List<NativeKey> getSequence() {
+				return this.sequence;
+			}
+
+		}
+		return new ExerciseDescriptorImpl(sequence);
 	}
 
 	@Test
 	public void testExercise() {
+		assertNotNull(ed);
 		Exercise ee = new Exercise(ed);
 		assertEquals(3, ee.getSequence().size());
 	}
@@ -73,29 +80,31 @@ public class ExerciseTest {
 		Exercise ee = new Exercise(null);
 		assertNotNull(ee);
 	}
-	
+
 	@Test(expected = RuntimeException.class)
 	public void testNullSequence() {
-		Exercise ee = new Exercise(new ExerciseDescriptor(null));
+		Exercise ee = new Exercise(createExerciseDescriptor(null));
 		assertNotNull(ee);
 	}
-	
+
 	@Test
 	public void testEmptySequence() {
-		Exercise ee = new Exercise(new ExerciseDescriptor(new ArrayList<NativeKey>()));
-		assertThat(ee, notNullValue());
-		assertThat(ee.getSequence(), notNullValue());
-		assertThat(ee.hasCurrentElement(), is(false));
+		Exercise ee = new Exercise(
+				createExerciseDescriptor(new ArrayList<NativeKey>()));
+		assertNotNull(ee);
+		assertNotNull(ee.getSequence());
+		assertFalse(ee.hasCurrentElement());
+
 	}
-	
+
 	@Test
 	public void testPassAllElements() {
 		Exercise ee = new Exercise(ed);
-		while (ee.hasCurrentElement()){
+		while (ee.hasCurrentElement()) {
 			ee.makeElementAttempt(ee.getCurrentElement().getNativeKey());
 		}
-		ee = new Exercise(new ExerciseDescriptor(new ArrayList<NativeKey>()));
-		while (ee.hasCurrentElement()){
+		ee = new Exercise(createExerciseDescriptor(new ArrayList<NativeKey>()));
+		while (ee.hasCurrentElement()) {
 			ee.makeElementAttempt(ee.getCurrentElement().getNativeKey());
 		}
 	}

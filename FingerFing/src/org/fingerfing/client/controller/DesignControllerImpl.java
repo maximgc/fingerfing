@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.json.BeanManager;
 import org.fingerfing.client.widget.DesignWidgetImpl;
 
 public class DesignControllerImpl {
@@ -12,6 +13,7 @@ public class DesignControllerImpl {
 	private DesignWidgetImpl designWidget;
 	private List<NativeKey> keySeq;
 	private ExerciseDescriptor exerciseDescriptor;
+	private BeanManager bm = new BeanManager();
 
 	public DesignControllerImpl(DesignWidgetImpl designWidget) {
 		this.designWidget = designWidget;
@@ -25,7 +27,8 @@ public class DesignControllerImpl {
 	public void setExerciseDescriptor(ExerciseDescriptor exerciseDescriptor) {
 		if (exerciseDescriptor == null) {
 			keySeq = new ArrayList<NativeKey>();
-			this.exerciseDescriptor = new ExerciseDescriptor(keySeq);
+			this.exerciseDescriptor = bm.create(ExerciseDescriptor.class);
+			this.exerciseDescriptor.setSequence(keySeq);
 		} else {
 			this.exerciseDescriptor = exerciseDescriptor;
 		}
@@ -43,6 +46,7 @@ public class DesignControllerImpl {
 
 	private void showEx() {
 		designWidget.showExercise(exerciseDescriptor);
+		designWidget.showJson(bm.encode(exerciseDescriptor));
 	}
 
 }

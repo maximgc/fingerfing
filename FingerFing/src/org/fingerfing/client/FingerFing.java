@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * 
  * NativeKey
  * Element, Attempt
- * ExerciseDescriptor
+ * ExerciseDescriptorImpl
  * Exercise
  * 
  */
@@ -21,10 +21,9 @@ public class FingerFing implements EntryPoint {
 		
 		MainWidget mw = new MainWidget();
 		MainController mc = new MainController(mw);
+
 		RootPanel.get("mainArea").add(mw);
-		//WARN нужно управлять через контроллер 
-		mw.switchToTrain();
-		
+		mc.start();
 
 	}
 }

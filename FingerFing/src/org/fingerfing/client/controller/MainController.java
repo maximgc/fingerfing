@@ -25,10 +25,10 @@ public class MainController {
 		
 	}
 
-	public void switchToTrain() {
+	public void start() {
 		mainWidget.switchToTrain();
 	}
-
+	
 	public void onChangeTab(Integer newTabIndex) {
 		switch (newTabIndex){
 		case 0:

@@ -2,18 +2,10 @@ package org.fingerfing.client.core;
 
 import java.util.List;
 
-public class ExerciseDescriptor {
-	
-	List<NativeKey> sequence;
+public interface ExerciseDescriptor {
 
-	public ExerciseDescriptor(List<NativeKey> sequence) {
-//		assert (sequence!=null); Collections.copy(this.sequence, sequence); 
-		this.sequence = sequence;
-	}
+	public abstract void setSequence(List<NativeKey> sequence);
 
-	public List<NativeKey> getSequence() {
-		return sequence;
-	}
+	public abstract List<NativeKey> getSequence();
 
-	
 }
