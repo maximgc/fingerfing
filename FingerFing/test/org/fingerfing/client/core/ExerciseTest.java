@@ -1,6 +1,6 @@
 package org.fingerfing.client.core;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -18,16 +18,16 @@ public class ExerciseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ArrayList<NativeKey> sequence = new ArrayList<NativeKey>();
-		sequence.add(NativeKey.KEY_Q);
-		sequence.add(NativeKey.KEY_W);
-		sequence.add(NativeKey.KEY_E);
-		ed = createExerciseDescriptor(sequence);
+		ed = createExerciseDescriptor(NativeKey.KEY_Q, NativeKey.KEY_W,
+				NativeKey.KEY_E);
 		e = new Exercise(ed);
 	}
 
-	private ExerciseDescriptor createExerciseDescriptor(
-			ArrayList<NativeKey> sequence) {
+	private ExerciseDescriptor createExerciseDescriptor(NativeKey... sequence) {
+		return createExerciseDescriptor(Arrays.asList(sequence));
+	}
+
+	private ExerciseDescriptor createExerciseDescriptor(List<NativeKey> sequence) {
 		class ExerciseDescriptorImpl implements ExerciseDescriptor {
 
 			private List<NativeKey> sequence;
@@ -65,10 +65,11 @@ public class ExerciseTest {
 	@Test
 	public void testMakeAndGetLastAttempt() {
 		Exercise ee = new Exercise(ed);
-		ee.makeElementAttempt(NativeKey.KEY_0);
-		assertEquals(2, ee.getLastAttempt().getEval());
-		ee.makeElementAttempt(NativeKey.KEY_Q);
-		assertEquals(1, ee.getLastAttempt().getEval());
+		Attempt a;
+		a = ee.makeElementAttempt(NativeKey.KEY_0);
+		assertEquals(2, a.getEval());
+		a = ee.makeElementAttempt(NativeKey.KEY_Q);
+		assertEquals(1, a.getEval());
 	}
 
 	@Test
@@ -77,26 +78,28 @@ public class ExerciseTest {
 		assertTrue(ee.hasCurrentElement());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test(expected = FFRuntimeException.class)
 	public void testNullExerciseDescription() {
-		Exercise ee = new Exercise(null);
-		assertNotNull(ee);
+		new Exercise(null);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test(expected = FFRuntimeException.class)
 	public void testNullSequence() {
-		Exercise ee = new Exercise(createExerciseDescriptor(null));
-		assertNotNull(ee);
+		new Exercise(createExerciseDescriptor((List<NativeKey>) null));
 	}
 
 	@Test
 	public void testEmptySequence() {
-		Exercise ee = new Exercise(
-				createExerciseDescriptor(new ArrayList<NativeKey>()));
+		Exercise ee = new Exercise(createExerciseDescriptor());
 		assertNotNull(ee);
 		assertNotNull(ee.getSequence());
 		assertFalse(ee.hasCurrentElement());
-
+	}
+	
+	@Test(expected = FFRuntimeException.class)
+	public void testEmptySequence2() {
+		Exercise ee = new Exercise(createExerciseDescriptor());
+		ee.getCurrentElement();
 	}
 
 	@Test
@@ -105,7 +108,7 @@ public class ExerciseTest {
 		while (ee.hasCurrentElement()) {
 			ee.makeElementAttempt(ee.getCurrentElement().getNativeKey());
 		}
-		ee = new Exercise(createExerciseDescriptor(new ArrayList<NativeKey>()));
+		ee = new Exercise(createExerciseDescriptor());
 		while (ee.hasCurrentElement()) {
 			ee.makeElementAttempt(ee.getCurrentElement().getNativeKey());
 		}

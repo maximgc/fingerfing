@@ -20,7 +20,7 @@ public class TrainControllerImpl {
 		return exercise != null ? exercise.getExerciseDescriptor() : null;
 	}
 
-	public void setExerciseDescriptor(ExerciseDescriptor exerciseDescriptor) {
+	public void startNewExercise(ExerciseDescriptor exerciseDescriptor) {
 		if (exerciseDescriptor != null) {
 			exercise = new Exercise(exerciseDescriptor);
 		}
@@ -41,9 +41,8 @@ public class TrainControllerImpl {
 
 	public void onKeyInput(int nativeKeyCode) {
 		if (exercise.hasCurrentElement()) {
-			exercise.makeElementAttempt(NativeKey
+			Attempt lastAttempt = exercise.makeElementAttempt(NativeKey
 					.getByNativeCode(nativeKeyCode));
-			Attempt lastAttempt = exercise.getLastAttempt();
 			trainWidget.showEnv(lastAttempt.getPos(), lastAttempt.getEval());
 			
 			if (exercise.hasCurrentElement()) {

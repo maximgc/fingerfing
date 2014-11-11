@@ -32,7 +32,7 @@ public class MainController {
 	public void onChangeTab(Integer newTabIndex) {
 		switch (newTabIndex){
 		case 0:
-			trainController.setExerciseDescriptor(designController.getExerciseDescriptor());
+			trainController.startNewExercise(designController.getExerciseDescriptor());
 			trainController.onActive();
 			break;
 		case 1:
