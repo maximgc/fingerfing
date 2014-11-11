@@ -33,7 +33,7 @@ public class TrainWidgetImpl extends Composite {
 	private TrainControllerImpl trainController;
 	// WARN нет сброса при новом exercise что то не то в модели
 	private List<NativeKey> keySeq;
-	private int curPos;
+	private int curPos = -1;
 	private int[] evals;
 
 	public TrainWidgetImpl() {
@@ -62,6 +62,7 @@ public class TrainWidgetImpl extends Composite {
 	public void showSequence(List<NativeKey> sequence) {
 		this.keySeq = sequence;
 		this.evals = new int[keySeq.size()];
+		this.curPos = -1;
 		refresh();
 	}
 
@@ -69,10 +70,7 @@ public class TrainWidgetImpl extends Composite {
 		StringBuilder sb = new StringBuilder();
 		for (int p = 0; p < keySeq.size(); p++) {
 			sb.append(keySeq.get(p).toText());
-
-			if (p <= curPos) {
-				sb.append(" |").append(evals[p]);
-			}
+			sb.append(" |").append(evals[p]);
 			if (p == curPos) {
 				sb.append(" <- ").append(keySeq.get(p).toText());
 			}
@@ -84,5 +82,9 @@ public class TrainWidgetImpl extends Composite {
 	@UiHandler("textArea")
 	void onTextAreaKeyDown(KeyDownEvent event) {
 		trainController.onKeyInput(event.getNativeKeyCode());
+	}
+	
+	public void reset(){
+		
 	}
 }

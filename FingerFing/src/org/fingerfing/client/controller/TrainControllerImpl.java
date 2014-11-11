@@ -27,9 +27,15 @@ public class TrainControllerImpl {
 	}
 
 	public void onActive() {
+		startExercise();
+	}
+
+	private void startExercise() {
 		if (exercise != null) {
 			trainWidget.showSequence(exercise.getSequence());
-			trainWidget.showCurElement(exercise.getCurrentElement().getPos(), true);
+			if (exercise.hasCurrentElement()){
+				trainWidget.showCurElement(exercise.getCurrentElement().getPos(), true);
+			}
 		}
 	}
 
@@ -45,6 +51,8 @@ public class TrainControllerImpl {
 						.getPos(), true);
 			} else {
 				trainWidget.showCurElement(lastAttempt.getPos(), false);
+				exercise = new Exercise(exercise.getExerciseDescriptor());
+				startExercise();
 			}
 		}
 	}

@@ -21,8 +21,8 @@ public class FingerFing implements EntryPoint {
 		
 		MainWidget mw = new MainWidget();
 		MainController mc = new MainController(mw);
-		
 		RootPanel.get("mainArea").add(mw);
+		//WARN нужно управлять через контроллер 
 		mw.switchToTrain();
 		
 

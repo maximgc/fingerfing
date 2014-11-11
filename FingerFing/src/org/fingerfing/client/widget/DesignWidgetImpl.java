@@ -19,6 +19,8 @@ public class DesignWidgetImpl extends Composite {
 			.create(DesignWidgetImplUiBinder.class);
 	@UiField
 	TextArea textArea;
+	@UiField
+	TextArea jsonArea;
 	private DesignControllerImpl designController;
 
 	interface DesignWidgetImplUiBinder extends
@@ -47,5 +49,9 @@ public class DesignWidgetImpl extends Composite {
 			sb.append(" ");
 		}
 		textArea.setText(sb.toString());
+	}
+	
+	public void showJson(String json) {
+		jsonArea.setText(json);
 	}
 }

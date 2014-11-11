@@ -8,5 +8,6 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:TextArea ui:field="textArea" width="276px" height="108px" readOnly="true"/>
+		<g:TextArea ui:field="jsonArea" width="276px" height="108px" readOnly="true"/>
 	</g:HTMLPanel>
 </ui:UiBinder> 
