@@ -66,16 +66,16 @@ public class ExerciseTest {
 	public void testMakeAndGetLastAttempt() {
 		Exercise ee = new Exercise(ed);
 		Attempt a;
-		a = ee.makeElementAttempt(NativeKey.KEY_0);
+		a = ee.makeAttempt(NativeKey.KEY_0);
 		assertEquals(2, a.getEval());
-		a = ee.makeElementAttempt(NativeKey.KEY_Q);
+		a = ee.makeAttempt(NativeKey.KEY_Q);
 		assertEquals(1, a.getEval());
 	}
 
 	@Test
 	public void testHasCurrentElement() {
 		Exercise ee = new Exercise(ed);
-		assertTrue(ee.hasCurrentElement());
+		assertFalse(ee.isComplete());
 	}
 
 	@Test(expected = CoreException.class)
@@ -93,7 +93,7 @@ public class ExerciseTest {
 		Exercise ee = new Exercise(createExerciseDescriptor());
 		assertNotNull(ee);
 		assertNotNull(ee.getSequence());
-		assertFalse(ee.hasCurrentElement());
+		assertTrue(ee.isComplete());
 	}
 	
 	@Test(expected = CoreException.class)
@@ -105,12 +105,12 @@ public class ExerciseTest {
 	@Test
 	public void testPassAllElements() {
 		Exercise ee = new Exercise(ed);
-		while (ee.hasCurrentElement()) {
-			ee.makeElementAttempt(ee.getCurrentElement().getNativeKey());
+		while (!ee.isComplete()) {
+			ee.makeAttempt(ee.getCurrentElement().getNativeKey());
 		}
 		ee = new Exercise(createExerciseDescriptor());
-		while (ee.hasCurrentElement()) {
-			ee.makeElementAttempt(ee.getCurrentElement().getNativeKey());
+		while (!ee.isComplete()) {
+			ee.makeAttempt(ee.getCurrentElement().getNativeKey());
 		}
 	}
 

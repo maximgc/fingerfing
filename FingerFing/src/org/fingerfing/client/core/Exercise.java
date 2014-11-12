@@ -49,14 +49,8 @@ public class Exercise {
 		currentElement = nextElement();
 	}
 
-	private void requireCurrentElement() {
-		if (!hasCurrentElement()) {
-			throw new CoreException("Current Element is undefined");
-		}
-	}
-
 	public Element getCurrentElement() {
-		requireCurrentElement();
+		requireIncomplete();
 		return currentElement;
 	}
 
@@ -68,18 +62,13 @@ public class Exercise {
 		return exerciseDescriptor.getSequence();
 	}
 
-	/**
-	 * use instead isComplete()
-	 * @author Max
-	 */
-	@Deprecated
-	public boolean hasCurrentElement() {
-		return currentElement != null;
+	public boolean isComplete() {
+		return currentElement == null;
 	}
 
-	public Attempt makeElementAttempt(NativeKey nativeKey) {
+	public Attempt makeAttempt(NativeKey nativeKey) {
 		Attempt lastAttempt;
-		requireCurrentElement();
+		requireIncomplete();
 		if (currentElement.is(nativeKey)) {
 			lastAttempt = new Attempt(currentElement, 0, nativeKey, 1);
 			currentElement = nextElement();
@@ -93,7 +82,9 @@ public class Exercise {
 		return (elementNavigator.hasNext()) ? elementNavigator.next() : null;
 	}
 
-	public boolean isComplete() {
-		return !hasCurrentElement();
+	private void requireIncomplete() {
+		if (isComplete()) {
+			throw new CoreException("Exercise is completed");
+		}
 	}
 }
