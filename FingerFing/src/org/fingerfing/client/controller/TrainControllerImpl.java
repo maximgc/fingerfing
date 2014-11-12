@@ -16,6 +16,7 @@ public class TrainControllerImpl {
 		this.trainWidget.setTrainController(this);
 	}
 
+	@Deprecated
 	public ExerciseDescriptor getExerciseDescriptor() {
 		return exercise != null ? exercise.getExerciseDescriptor() : null;
 	}
@@ -24,11 +25,12 @@ public class TrainControllerImpl {
 		if (exerciseDescriptor != null) {
 			exercise = new Exercise(exerciseDescriptor);
 		}
-	}
-
-	public void onActive() {
 		startExercise();
 	}
+
+//	public void activate() {
+//		startExercise();
+//	}
 
 	private void startExercise() {
 		if (exercise != null) {

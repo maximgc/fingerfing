@@ -7,22 +7,31 @@ public class Exercise {
 
 	private class ElementNavigator implements Iterator<Element> {
 
-		private int cur;
+		private int curPos;
+		private List<NativeKey> sequence;
 
 		public ElementNavigator() {
-			cur = -1;
+			curPos = -1;
+			sequence = exerciseDescriptor.getSequence();
 		}
 
 		@Override
 		public boolean hasNext() {
-			return cur + 1 < exerciseDescriptor.getSequence().size();
+			
+			return curPos + 1 < sequence.size();
 		}
 
 		@Override
 		public Element next() {
-			cur++;
-			return new Element(cur, exerciseDescriptor.getSequence().get(cur));
+			curPos++;
+			return new Element(curPos, sequence.get(curPos));
 		}
+		
+		@Override
+		public void remove() {
+	        throw new UnsupportedOperationException("remove");
+	    }
+		
 	}
 
 	private ExerciseDescriptor exerciseDescriptor;
@@ -32,7 +41,7 @@ public class Exercise {
 	public Exercise(ExerciseDescriptor exerciseDescriptor) {
 		if (exerciseDescriptor == null
 				|| exerciseDescriptor.getSequence() == null) {
-			throw new FFRuntimeException(
+			throw new CoreException(
 					"ExerciseDescriptor doesn't define sequence");
 		}
 		this.exerciseDescriptor = exerciseDescriptor;
@@ -40,11 +49,15 @@ public class Exercise {
 		currentElement = nextElement();
 	}
 
-	public Element getCurrentElement() {
-		if (hasCurrentElement()) {
-			return currentElement;
+	private void requireCurrentElement() {
+		if (!hasCurrentElement()) {
+			throw new CoreException("Current Element is undefined");
 		}
-		throw new FFRuntimeException("Current Element is undefined");
+	}
+
+	public Element getCurrentElement() {
+		requireCurrentElement();
+		return currentElement;
 	}
 
 	public ExerciseDescriptor getExerciseDescriptor() {
@@ -61,9 +74,7 @@ public class Exercise {
 
 	public Attempt makeElementAttempt(NativeKey nativeKey) {
 		Attempt lastAttempt;
-		if (!hasCurrentElement()) {
-			throw new FFRuntimeException("Current Element is undefined");
-		}
+		requireCurrentElement();
 		if (currentElement.is(nativeKey)) {
 			lastAttempt = new Attempt(currentElement, 0, nativeKey, 1);
 			currentElement = nextElement();

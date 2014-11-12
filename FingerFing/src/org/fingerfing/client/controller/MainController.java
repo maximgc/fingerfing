@@ -33,11 +33,8 @@ public class MainController {
 		switch (newTabIndex){
 		case 0:
 			trainController.startNewExercise(designController.getExerciseDescriptor());
-			trainController.onActive();
 			break;
 		case 1:
-			designController.setExerciseDescriptor(trainController.getExerciseDescriptor());
-			designController.onActive();
 			break;
 		}
 

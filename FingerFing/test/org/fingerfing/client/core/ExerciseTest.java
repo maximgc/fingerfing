@@ -78,12 +78,12 @@ public class ExerciseTest {
 		assertTrue(ee.hasCurrentElement());
 	}
 
-	@Test(expected = FFRuntimeException.class)
+	@Test(expected = CoreException.class)
 	public void testNullExerciseDescription() {
 		new Exercise(null);
 	}
 
-	@Test(expected = FFRuntimeException.class)
+	@Test(expected = CoreException.class)
 	public void testNullSequence() {
 		new Exercise(createExerciseDescriptor((List<NativeKey>) null));
 	}
@@ -96,7 +96,7 @@ public class ExerciseTest {
 		assertFalse(ee.hasCurrentElement());
 	}
 	
-	@Test(expected = FFRuntimeException.class)
+	@Test(expected = CoreException.class)
 	public void testEmptySequence2() {
 		Exercise ee = new Exercise(createExerciseDescriptor());
 		ee.getCurrentElement();

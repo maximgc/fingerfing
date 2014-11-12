@@ -5,19 +5,43 @@ import java.util.List;
 
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.NativeKey;
-import org.fingerfing.client.json.BeanManager;
+import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.widget.DesignWidgetImpl;
 
 public class DesignControllerImpl {
 
+	private class DescriptorMaker{
+		
+		private List<NativeKey> keySeq;
+		
+		public DescriptorMaker() {
+			if (exerciseDescriptor == null){
+				exerciseDescriptor = dm.create(ExerciseDescriptor.class);
+			}
+			if (exerciseDescriptor.getSequence() == null) {
+				keySeq = new ArrayList<NativeKey>();
+				exerciseDescriptor.setSequence(keySeq);
+			} else {
+				keySeq = exerciseDescriptor.getSequence();
+			}
+		}
+		
+		private void addKey(NativeKey nativeKey) {
+			keySeq.add(nativeKey);
+		}
+		
+	}
+	
 	private DesignWidgetImpl designWidget;
-	private List<NativeKey> keySeq;
+	private DescriptorManager dm = new DescriptorManager();
+
 	private ExerciseDescriptor exerciseDescriptor;
-	private BeanManager bm = new BeanManager();
+	private DescriptorMaker descriptorMaker;
 
 	public DesignControllerImpl(DesignWidgetImpl designWidget) {
 		this.designWidget = designWidget;
 		this.designWidget.setDesignController(this);
+		descriptorMaker = new DescriptorMaker();
 	}
 
 	public ExerciseDescriptor getExerciseDescriptor() {
@@ -26,27 +50,21 @@ public class DesignControllerImpl {
 
 	public void setExerciseDescriptor(ExerciseDescriptor exerciseDescriptor) {
 		if (exerciseDescriptor == null) {
-			keySeq = new ArrayList<NativeKey>();
-			this.exerciseDescriptor = bm.create(ExerciseDescriptor.class);
-			this.exerciseDescriptor.setSequence(keySeq);
-		} else {
-			this.exerciseDescriptor = exerciseDescriptor;
+			throw new ClientException("ExerciseDescriptor is null");
 		}
+		this.exerciseDescriptor = exerciseDescriptor;
+		descriptorMaker = new DescriptorMaker();
 	}
 	
-	public void onActive() {
-		showEx();
-	}
-
 	public void onKeyInput(int nativeKeyCode) {
 		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
-		keySeq.add(nk);
-		showEx();
+		descriptorMaker.addKey(nk);
+		showExerciseDescriptor();
 	}
 
-	private void showEx() {
+	private void showExerciseDescriptor() {
 		designWidget.showExercise(exerciseDescriptor);
-		designWidget.showJson(bm.encode(exerciseDescriptor));
+		designWidget.showJson(dm.encodeToJson(exerciseDescriptor));
 	}
 
 }
