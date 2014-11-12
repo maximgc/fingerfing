@@ -7,6 +7,7 @@
 	}
 	</ui:style>
 	<g:HTMLPanel>
+		<g:ListBox ui:field="exerciseSelector"/>
 		<g:TabPanel width="663px" height="374px" ui:field="tabPanel">
 			<g:Tab text="Train" >
 				<g:VerticalPanel ui:field="pTrain"/>

@@ -10,15 +10,11 @@ public class TrainControllerImpl {
 
 	private TrainWidgetImpl trainWidget;
 	private Exercise exercise;
+	private MainController mainController;
 
 	public TrainControllerImpl(TrainWidgetImpl trainWidget) {
 		this.trainWidget = trainWidget;
 		this.trainWidget.setTrainController(this);
-	}
-
-	@Deprecated
-	public ExerciseDescriptor getExerciseDescriptor() {
-		return exercise != null ? exercise.getExerciseDescriptor() : null;
 	}
 
 	public void startNewExercise(ExerciseDescriptor exerciseDescriptor) {
@@ -28,15 +24,12 @@ public class TrainControllerImpl {
 		startExercise();
 	}
 
-//	public void activate() {
-//		startExercise();
-//	}
-
 	private void startExercise() {
 		if (exercise != null) {
 			trainWidget.showSequence(exercise.getSequence());
-			if (exercise.hasCurrentElement()){
-				trainWidget.showCurElement(exercise.getCurrentElement().getPos(), true);
+			if (exercise.hasCurrentElement()) {
+				trainWidget.showCurElement(exercise.getCurrentElement()
+						.getPos(), true);
 			}
 		}
 	}
@@ -46,7 +39,7 @@ public class TrainControllerImpl {
 			Attempt lastAttempt = exercise.makeElementAttempt(NativeKey
 					.getByNativeCode(nativeKeyCode));
 			trainWidget.showEnv(lastAttempt.getPos(), lastAttempt.getEval());
-			
+
 			if (exercise.hasCurrentElement()) {
 				trainWidget.showCurElement(exercise.getCurrentElement()
 						.getPos(), true);
@@ -56,6 +49,10 @@ public class TrainControllerImpl {
 				startExercise();
 			}
 		}
+	}
+
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
 	}
 
 }

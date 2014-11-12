@@ -37,6 +37,7 @@ public class DesignControllerImpl {
 
 	private ExerciseDescriptor exerciseDescriptor;
 	private DescriptorMaker descriptorMaker;
+	private MainController mainController;
 
 	public DesignControllerImpl(DesignWidgetImpl designWidget) {
 		this.designWidget = designWidget;
@@ -54,9 +55,11 @@ public class DesignControllerImpl {
 		}
 		this.exerciseDescriptor = exerciseDescriptor;
 		descriptorMaker = new DescriptorMaker();
+		showExerciseDescriptor();
 	}
 	
 	public void onKeyInput(int nativeKeyCode) {
+		mainController.changeExercise(-1);
 		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
 		descriptorMaker.addKey(nk);
 		showExerciseDescriptor();
@@ -65,6 +68,10 @@ public class DesignControllerImpl {
 	private void showExerciseDescriptor() {
 		designWidget.showExercise(exerciseDescriptor);
 		designWidget.showJson(dm.encodeToJson(exerciseDescriptor));
+	}
+
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
 	}
 
 }

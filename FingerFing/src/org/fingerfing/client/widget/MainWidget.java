@@ -1,5 +1,7 @@
 package org.fingerfing.client.widget;
 
+import java.util.List;
+
 import org.fingerfing.client.controller.MainController;
 
 import com.google.gwt.core.client.GWT;
@@ -11,6 +13,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.event.dom.client.ChangeEvent;
 
 public class MainWidget extends Composite {
 
@@ -23,6 +27,8 @@ public class MainWidget extends Composite {
 	VerticalPanel pDesign;
 	@UiField
 	public TabPanel tabPanel;
+	@UiField
+	ListBox exerciseSelector;
 
 	private MainController mainController;
 
@@ -52,5 +58,20 @@ public class MainWidget extends Composite {
 
 	public void switchToTrain() {
 		tabPanel.selectTab(0);
+	}
+	
+	public void setExerciseList(List<String> nameList) {
+		for (String s : nameList){
+			exerciseSelector.addItem(s);
+		}
+	}
+	
+	public void setExerciseListSelected(int index){
+		exerciseSelector.setSelectedIndex(index);
+	}
+	
+	@UiHandler("exerciseSelector")
+	void onExerciseSelectorChange(ChangeEvent event) {
+		mainController.onChangeExercise(exerciseSelector.getSelectedIndex());
 	}
 }

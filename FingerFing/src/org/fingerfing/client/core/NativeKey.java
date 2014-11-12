@@ -78,7 +78,9 @@ public enum NativeKey{
 	KEY_SEMICOLON(186, ";"), KEY_EQUAL(187, "="), KEY_COMMA(188, ","), KEY_MINUS(
 			189, "-"), KEY_FULLSTOP(190, "."), KEY_SLASH(191, "/"), KEY_GRAVE_ACCENT(
 			192, "`"), KEY_SQ_BRACKET_OPEN(219, "["), KEY_BACKSLASH(220, "\\"), KEY_SQ_BRACKET_CLOSE(
-			221, "]"), KEY_APOSTROPHE(222, "'");
+			221, "]"), KEY_APOSTROPHE(222, "'"),
+	
+	KEY_BACKSLASH_ADDITIONAL(226, "\\");
 
 	public static Map<Integer, NativeKey> nativeCodeMap;
 
