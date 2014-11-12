@@ -10,6 +10,8 @@ public class TrainControllerImpl {
 
 	private TrainWidgetImpl trainWidget;
 	private Exercise exercise;
+	
+	@SuppressWarnings("unused") //WARN unused
 	private MainController mainController;
 
 	public TrainControllerImpl(TrainWidgetImpl trainWidget) {
@@ -20,34 +22,33 @@ public class TrainControllerImpl {
 	public void startNewExercise(ExerciseDescriptor exerciseDescriptor) {
 		if (exerciseDescriptor != null) {
 			exercise = new Exercise(exerciseDescriptor);
+			startExercise();
 		}
-		startExercise();
 	}
 
 	private void startExercise() {
 		if (exercise != null) {
 			trainWidget.showSequence(exercise.getSequence());
-			if (exercise.hasCurrentElement()) {
-				trainWidget.showCurElement(exercise.getCurrentElement()
-						.getPos(), true);
-			}
+			startElement();
+		}
+	}
+
+	private void startElement() {
+		if (exercise.hasCurrentElement()) {
+			trainWidget.showCurrentElement(exercise.getCurrentElement());
 		}
 	}
 
 	public void onKeyInput(int nativeKeyCode) {
-		if (exercise.hasCurrentElement()) {
+		if (!exercise.isComplete()) {
 			Attempt lastAttempt = exercise.makeElementAttempt(NativeKey
 					.getByNativeCode(nativeKeyCode));
-			trainWidget.showEnv(lastAttempt.getPos(), lastAttempt.getEval());
-
-			if (exercise.hasCurrentElement()) {
-				trainWidget.showCurElement(exercise.getCurrentElement()
-						.getPos(), true);
-			} else {
-				trainWidget.showCurElement(lastAttempt.getPos(), false);
-				exercise = new Exercise(exercise.getExerciseDescriptor());
-				startExercise();
-			}
+			trainWidget.showAttempt(lastAttempt);
+			startElement();
+		}
+		if (exercise.isComplete()) {
+			exercise = new Exercise(exercise.getExerciseDescriptor());
+			startExercise();
 		}
 	}
 

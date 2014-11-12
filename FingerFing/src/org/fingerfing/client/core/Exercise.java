@@ -68,6 +68,11 @@ public class Exercise {
 		return exerciseDescriptor.getSequence();
 	}
 
+	/**
+	 * use instead isComplete()
+	 * @author Max
+	 */
+	@Deprecated
 	public boolean hasCurrentElement() {
 		return currentElement != null;
 	}
@@ -86,5 +91,9 @@ public class Exercise {
 
 	private Element nextElement() {
 		return (elementNavigator.hasNext()) ? elementNavigator.next() : null;
+	}
+
+	public boolean isComplete() {
+		return !hasCurrentElement();
 	}
 }

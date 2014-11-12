@@ -3,6 +3,8 @@ package org.fingerfing.client.widget;
 import java.util.List;
 
 import org.fingerfing.client.controller.TrainControllerImpl;
+import org.fingerfing.client.core.Attempt;
+import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.NativeKey;
 
 import com.google.gwt.core.client.GWT;
@@ -33,8 +35,8 @@ public class TrainWidgetImpl extends Composite {
 	private TrainControllerImpl trainController;
 	// WARN нет сброса при новом exercise что то не то в модели
 	private List<NativeKey> keySeq;
-	private int curPos = -1;
-	private int[] evals;
+	private Element curElement;
+	private Attempt[] attempts;
 
 	public TrainWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -44,34 +46,31 @@ public class TrainWidgetImpl extends Composite {
 		this.trainController = trainController;
 	}
 
-	public void showCurElement(int currentPos, boolean showed) {
-		if (showed) {
-			this.curPos = currentPos;
-		} else if (this.curPos == currentPos) {
-			this.curPos = -1;
-		}
+	public void showCurrentElement(Element element) {
+		this.curElement = element;
 		refresh();
-
 	}
 
-	public void showEnv(int pos, int eval) {
-		this.evals[pos] = eval;
+	public void showAttempt(Attempt attempt) {
+		this.attempts[attempt.getPos()] = attempt;
 		refresh();
 	}
 
 	public void showSequence(List<NativeKey> sequence) {
 		this.keySeq = sequence;
-		this.evals = new int[keySeq.size()];
-		this.curPos = -1;
+		this.attempts = new Attempt[keySeq.size()];
+		this.curElement = null;
 		refresh();
 	}
 
 	private void refresh() {
 		StringBuilder sb = new StringBuilder();
-		for (int p = 0; p < keySeq.size(); p++) {
+		for (int p = 0; keySeq!=null && p < keySeq.size(); p++) {
 			sb.append(keySeq.get(p).toText());
-			sb.append(" |").append(evals[p]);
-			if (p == curPos) {
+			if (attempts[p] != null) {
+				sb.append(" |").append(attempts[p].getEval());
+			}
+			if (curElement != null && p == curElement.getPos()) {
 				sb.append(" <- ").append(keySeq.get(p).toText());
 			}
 			sb.append((char) 13);
@@ -83,8 +82,5 @@ public class TrainWidgetImpl extends Composite {
 	void onTextAreaKeyDown(KeyDownEvent event) {
 		trainController.onKeyInput(event.getNativeKeyCode());
 	}
-	
-	public void reset(){
-		
-	}
+
 }
