@@ -56,7 +56,6 @@ public class MainController {
 	}
 
 	public void onChangeExercise(int index) {
-		System.out.println("onChangeExercise");
 		if (index != -1) {
 			currentEd = edLoader.loadExerciseDescriptor(index);
 			trainController.startNewExercise(currentEd);

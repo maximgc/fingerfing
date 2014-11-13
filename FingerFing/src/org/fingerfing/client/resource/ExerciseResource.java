@@ -8,7 +8,7 @@ public interface ExerciseResource extends ClientBundle{
 	
 	public final ExerciseResource INST = GWT.create(ExerciseResource.class);
 	
-	@Source(value = "ExerciseDescriptor1.json")
+	@Source("ExerciseDescriptor1.json")
 	public TextResource getJsonExerciseDescriptor1(); 
 
 }

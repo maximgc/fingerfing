@@ -7,7 +7,6 @@
 	}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:TextArea ui:field="textArea" width="300px" height="300px" readOnly="true"/>
-		<g:TextArea ui:field="jsonArea" width="300px" height="300px" readOnly="true"/>
+		<g:AbsolutePanel ui:field="keyArea" height="300px" width="1000px"/>
 	</g:HTMLPanel>
 </ui:UiBinder> 

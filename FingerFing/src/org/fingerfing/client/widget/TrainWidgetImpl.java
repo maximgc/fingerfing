@@ -6,6 +6,8 @@ import org.fingerfing.client.controller.TrainControllerImpl;
 import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.json.DescriptorManager;
+import org.fingerfing.client.resource.KeyboardResource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -31,15 +33,27 @@ public class TrainWidgetImpl extends Composite {
 
 	@UiField
 	TextArea textArea;
+	@UiField
+	Keyboard keyboard;
 
 	private TrainControllerImpl trainController;
-	// WARN нет сброса при новом exercise что то не то в модели
+	private DescriptorManager dm = new DescriptorManager();
+
 	private List<NativeKey> keySeq;
 	private Element curElement;
 	private Attempt[] attempts;
 
 	public TrainWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		KeyboardDescriptor kd = dm.decodeFromJson(KeyboardDescriptor.class,
+				KeyboardResource.INST.getKeyboardDescriptor1().getText());
+		KeyboardLabelDescriptor kldEN = dm.decodeFromJson(
+				KeyboardLabelDescriptor.class, KeyboardResource.INST
+						.getKeyboardLabelDescriptorEN().getText());
+		KeyboardLabelDescriptor kldRU = dm.decodeFromJson(
+				KeyboardLabelDescriptor.class, KeyboardResource.INST
+						.getKeyboardLabelDescriptorRU().getText());
+		keyboard.setDescriptor(kd, kldEN, kldRU);
 	}
 
 	public void setTrainController(TrainControllerImpl trainController) {
@@ -65,7 +79,7 @@ public class TrainWidgetImpl extends Composite {
 
 	private void refresh() {
 		StringBuilder sb = new StringBuilder();
-		for (int p = 0; keySeq!=null && p < keySeq.size(); p++) {
+		for (int p = 0; keySeq != null && p < keySeq.size(); p++) {
 			sb.append(keySeq.get(p).toText());
 			if (attempts[p] != null) {
 				sb.append(" |").append(attempts[p].getEval());

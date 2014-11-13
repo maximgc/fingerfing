@@ -35,8 +35,6 @@ public class DesignWidgetImpl extends Composite {
 		this.designController = designController;
 	}
 	
-	
-
 	@UiHandler("textArea")
 	void onTextAreaKeyDown(KeyDownEvent event) {
 		designController.onKeyInput(event.getNativeKeyCode());
