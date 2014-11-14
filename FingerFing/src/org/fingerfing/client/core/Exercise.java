@@ -66,14 +66,14 @@ public class Exercise {
 		return currentElement == null;
 	}
 
-	public Attempt makeAttempt(Key nativeKey) {
+	public Attempt makeAttempt(Key key) {
 		Attempt lastAttempt;
 		requireIncomplete();
-		if (currentElement.is(nativeKey)) {
-			lastAttempt = new Attempt(currentElement, 0, nativeKey, 1);
+		if (currentElement.is(key)) {
+			lastAttempt = new Attempt(currentElement, 0, key, 1);
 			currentElement = nextElement();
 		} else {
-			lastAttempt = new Attempt(currentElement, 0, nativeKey, 2);
+			lastAttempt = new Attempt(currentElement, 0, key, 2);
 		}
 		return lastAttempt;
 	}

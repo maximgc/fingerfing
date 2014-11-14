@@ -84,11 +84,11 @@ public enum Key{
 
 	public static Map<Integer, Key> nativeCodeMap;
 
-	private static void putKeyCode(Integer nativeCode, Key nativeKey) {
+	private static void putKeyCode(Integer nativeCode, Key key) {
 		if (nativeCodeMap == null) {
 			nativeCodeMap = new HashMap<Integer, Key>();
 		}
-		nativeCodeMap.put(nativeCode, nativeKey);
+		nativeCodeMap.put(nativeCode, key);
 	}
 
 	private String textualNotation;

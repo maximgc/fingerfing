@@ -26,8 +26,8 @@ public class DesignControllerImpl {
 			}
 		}
 		
-		private void addKey(Key nativeKey) {
-			keySeq.add(nativeKey);
+		private void addKey(Key key) {
+			keySeq.add(key);
 		}
 		
 	}
@@ -58,10 +58,10 @@ public class DesignControllerImpl {
 		showExerciseDescriptor();
 	}
 	
-	public void onKeyInput(int nativeKeyCode) {
+	public void onKeyInput(int keyCode) {
 		mainController.changeExercise(-1);
-		Key nk = Key.getByNativeCode(nativeKeyCode);
-		descriptorMaker.addKey(nk);
+		Key key = Key.getByNativeCode(keyCode);
+		descriptorMaker.addKey(key);
 		showExerciseDescriptor();
 	}
 

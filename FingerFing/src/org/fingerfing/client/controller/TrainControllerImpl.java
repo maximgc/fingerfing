@@ -19,10 +19,10 @@ public class TrainControllerImpl {
 		this.trainWidget.setTrainController(this);
 	}
 
-	public void onKeyInput(int nativeKeyCode) {
+	public void onKeyInput(int keyCode) {
 		if (!exercise.isComplete()) {
-			Key nk = Key.getByNativeCode(nativeKeyCode);
-			trainWidget.showAttempt(exercise.makeAttempt(nk));
+			Key key = Key.getByNativeCode(keyCode);
+			trainWidget.showAttempt(exercise.makeAttempt(key));
 			startElement();
 		}
 		if (exercise.isComplete()) {

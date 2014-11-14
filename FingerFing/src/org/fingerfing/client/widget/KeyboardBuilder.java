@@ -49,7 +49,7 @@ class KeyboardBuilder {
 
 	private AbsolutePanel keyArea;
 
-	// WARN 1 nativeKey не больше 1 кнопки?
+	// WARN 1 key не больше 1 кнопки?
 	private Map<Key, KeyWidget> keyWidgetMap = new HashMap<Key, KeyWidget>();
 
 	public KeyboardBuilder(AbsolutePanel keyArea) {
@@ -97,11 +97,11 @@ class KeyboardBuilder {
 		keyArea.add(label, left, top);
 	}
 
-	private void buildKey(Key nativeKey, int left, int top, int width,
+	private void buildKey(Key key, int left, int top, int width,
 			int height) {
-		KeyWidget keyWidget = new KeyWidget(left, top, width, height); // , nativeKey.toText());
+		KeyWidget keyWidget = new KeyWidget(left, top, width, height); // , key.toText());
 		keyArea.add(keyWidget, left, top);
-		keyWidgetMap.put(nativeKey, keyWidget);
+		keyWidgetMap.put(key, keyWidget);
 	}
 
 	private void buildRow(List<KeyDescriptor> keys, int left, int top,
@@ -113,7 +113,7 @@ class KeyboardBuilder {
 			} else {
 				width = Integer.parseInt(r.getWidth());
 			}
-			buildKey(r.getNativeKey(), left, top, width, height);
+			buildKey(r.getKey(), left, top, width, height);
 			left += width + KEY_SPACE_HORIZONTAL;
 		}
 	}

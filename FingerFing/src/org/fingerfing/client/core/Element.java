@@ -3,23 +3,23 @@ package org.fingerfing.client.core;
 public class Element {
 	
 	private int pos;
-	private Key nativeKey;
+	private Key key;
 	
-	public Element(int pos, Key nk) {
+	public Element(int pos, Key key) {
 		this.pos = pos;
-		this.nativeKey = nk;
+		this.key = key;
 	}
 	
-	public Key getNativeKey() {
-		return nativeKey;
+	public Key getKey() {
+		return key;
 	}
 
 	public int getPos() {
 		return pos;
 	}
 
-	public boolean is(Key nativeKey) {
-		return this.nativeKey.equals(nativeKey);
+	public boolean is(Key key) {
+		return this.key.equals(key);
 	}
 	
 	

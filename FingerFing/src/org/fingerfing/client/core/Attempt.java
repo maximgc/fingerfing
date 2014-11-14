@@ -8,7 +8,7 @@ public class Attempt extends Element{
 	private Key obtained;
 	
 	public Attempt(Element expectElement, int number, Key obtained, int eval) {
-		this(expectElement.getPos(), expectElement.getNativeKey(), number, obtained, eval);
+		this(expectElement.getPos(), expectElement.getKey(), number, obtained, eval);
 	}
 	
 	public Attempt(int pos, Key expect, int number, Key obtained, int eval) {

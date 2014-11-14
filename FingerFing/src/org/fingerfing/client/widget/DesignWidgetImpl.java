@@ -45,8 +45,8 @@ public class DesignWidgetImpl extends Composite {
  
 	public void showExercise(ExerciseDescriptor exerciseDescriptor) {
 		StringBuilder sb = new StringBuilder();
-		for (Key nk : exerciseDescriptor.getSequence()){
-			sb.append(nk.toText());
+		for (Key key : exerciseDescriptor.getSequence()){
+			sb.append(key.toText());
 			sb.append(" ");
 		}
 		textArea.setText(sb.toString());
@@ -57,8 +57,8 @@ public class DesignWidgetImpl extends Composite {
 //		DescriptorManager dm = new DescriptorManager();
 //		KeyboardLabelDescriptor kld = dm.create(KeyboardLabelDescriptor.class);
 //		kld.setLabelTextMap(new HashMap<Key, String>());
-//		for (Key nk : Key.values()){
-//			kld.getLabelTextMap().put(nk, nk.toText());
+//		for (Key key : Key.values()){
+//			kld.getLabelTextMap().put(key, key.toText());
 //		}
 //		jsonArea.setText(dm.encodeToJson(kld));
 	}

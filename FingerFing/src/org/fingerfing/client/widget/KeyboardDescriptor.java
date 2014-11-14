@@ -8,11 +8,11 @@ public interface KeyboardDescriptor {
 
 	public static interface KeyDescriptor {
 		
-		public Key getNativeKey();
+		public Key getKey();
 
 		public String getWidth();
 
-		public void setNativeKey(Key nativeKey);
+		public void setKey(Key key);
 
 		public void setWidth(String width);
 	}

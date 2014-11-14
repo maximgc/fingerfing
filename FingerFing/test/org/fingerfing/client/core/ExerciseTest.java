@@ -59,7 +59,7 @@ public class ExerciseTest {
 
 	@Test
 	public void testGetCurrentElement() {
-		assertEquals(Key.KEY_Q, e.getCurrentElement().getNativeKey());
+		assertEquals(Key.KEY_Q, e.getCurrentElement().getKey());
 	}
 
 	@Test
@@ -106,11 +106,11 @@ public class ExerciseTest {
 	public void testPassAllElements() {
 		Exercise ee = new Exercise(ed);
 		while (!ee.isComplete()) {
-			ee.makeAttempt(ee.getCurrentElement().getNativeKey());
+			ee.makeAttempt(ee.getCurrentElement().getKey());
 		}
 		ee = new Exercise(createExerciseDescriptor());
 		while (!ee.isComplete()) {
-			ee.makeAttempt(ee.getCurrentElement().getNativeKey());
+			ee.makeAttempt(ee.getCurrentElement().getKey());
 		}
 	}
 
