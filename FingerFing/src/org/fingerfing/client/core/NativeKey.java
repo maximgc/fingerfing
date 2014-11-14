@@ -2,7 +2,7 @@ package org.fingerfing.client.core;
 
 import java.util.HashMap;
 import java.util.Map;
-
+ 
 public enum NativeKey {
 
 	KEY_BACKSPACE(8, "Backspace", Key.KEY_BACKSPACE), KEY_TAB(9, "Tab",
