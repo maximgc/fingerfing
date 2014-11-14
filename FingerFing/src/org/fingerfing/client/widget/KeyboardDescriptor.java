@@ -2,17 +2,17 @@ package org.fingerfing.client.widget;
 
 import java.util.List;
 
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.core.Key;
 
 public interface KeyboardDescriptor {
 
 	public static interface KeyDescriptor {
 		
-		public NativeKey getNativeKey();
+		public Key getNativeKey();
 
 		public String getWidth();
 
-		public void setNativeKey(NativeKey nativeKey);
+		public void setNativeKey(Key nativeKey);
 
 		public void setWidth(String width);
 	}

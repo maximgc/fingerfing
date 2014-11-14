@@ -2,12 +2,12 @@ package org.fingerfing.client.widget;
 
 import java.util.Map;
 
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.core.Key;
 
 public interface KeyboardLabelDescriptor {
 
-		Map<NativeKey, String> getLabelMap();
+		Map<Key, String> getLabelMap();
 
-		void setLabelMap(Map<NativeKey, String> map);
+		void setLabelMap(Map<Key, String> map);
 		
 }

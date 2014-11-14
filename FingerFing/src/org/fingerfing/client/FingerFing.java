@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  * 
- * NativeKey
+ * Key
  * Element, Attempt
  * ExerciseDescriptorImpl
  * Exercise

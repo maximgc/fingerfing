@@ -5,13 +5,13 @@ public class Attempt extends Element{
 
 	private int eval;
 	private int number;
-	private NativeKey obtained;
+	private Key obtained;
 	
-	public Attempt(Element expectElement, int number, NativeKey obtained, int eval) {
+	public Attempt(Element expectElement, int number, Key obtained, int eval) {
 		this(expectElement.getPos(), expectElement.getNativeKey(), number, obtained, eval);
 	}
 	
-	public Attempt(int pos, NativeKey expect, int number, NativeKey obtained, int eval) {
+	public Attempt(int pos, Key expect, int number, Key obtained, int eval) {
 		super(pos, expect);
 		this.number = number;
 		this.obtained = obtained;
@@ -26,7 +26,7 @@ public class Attempt extends Element{
 		return number;
 	}
 
-	public NativeKey getObtained() {
+	public Key getObtained() {
 		return obtained;
 	}
 

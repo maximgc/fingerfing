@@ -18,31 +18,31 @@ public class ExerciseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ed = createExerciseDescriptor(NativeKey.KEY_Q, NativeKey.KEY_W,
-				NativeKey.KEY_E);
+		ed = createExerciseDescriptor(Key.KEY_Q, Key.KEY_W,
+				Key.KEY_E);
 		e = new Exercise(ed);
 	}
 
-	private ExerciseDescriptor createExerciseDescriptor(NativeKey... sequence) {
+	private ExerciseDescriptor createExerciseDescriptor(Key... sequence) {
 		return createExerciseDescriptor(Arrays.asList(sequence));
 	}
 
-	private ExerciseDescriptor createExerciseDescriptor(List<NativeKey> sequence) {
+	private ExerciseDescriptor createExerciseDescriptor(List<Key> sequence) {
 		class ExerciseDescriptorImpl implements ExerciseDescriptor {
 
-			private List<NativeKey> sequence;
+			private List<Key> sequence;
 
-			public ExerciseDescriptorImpl(List<NativeKey> sequence) {
+			public ExerciseDescriptorImpl(List<Key> sequence) {
 				this.sequence = sequence;
 			}
 
 			@Override
-			public void setSequence(List<NativeKey> sequence) {
+			public void setSequence(List<Key> sequence) {
 				this.sequence = sequence;
 			}
 
 			@Override
-			public List<NativeKey> getSequence() {
+			public List<Key> getSequence() {
 				return this.sequence;
 			}
 
@@ -59,16 +59,16 @@ public class ExerciseTest {
 
 	@Test
 	public void testGetCurrentElement() {
-		assertEquals(NativeKey.KEY_Q, e.getCurrentElement().getNativeKey());
+		assertEquals(Key.KEY_Q, e.getCurrentElement().getNativeKey());
 	}
 
 	@Test
 	public void testMakeAndGetLastAttempt() {
 		Exercise ee = new Exercise(ed);
 		Attempt a;
-		a = ee.makeAttempt(NativeKey.KEY_0);
+		a = ee.makeAttempt(Key.KEY_0);
 		assertEquals(2, a.getEval());
-		a = ee.makeAttempt(NativeKey.KEY_Q);
+		a = ee.makeAttempt(Key.KEY_Q);
 		assertEquals(1, a.getEval());
 	}
 
@@ -85,7 +85,7 @@ public class ExerciseTest {
 
 	@Test(expected = CoreException.class)
 	public void testNullSequence() {
-		new Exercise(createExerciseDescriptor((List<NativeKey>) null));
+		new Exercise(createExerciseDescriptor((List<Key>) null));
 	}
 
 	@Test

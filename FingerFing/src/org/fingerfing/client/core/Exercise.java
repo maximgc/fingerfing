@@ -8,7 +8,7 @@ public class Exercise {
 	private class ElementNavigator implements Iterator<Element> {
 
 		private int curPos;
-		private List<NativeKey> sequence;
+		private List<Key> sequence;
 
 		public ElementNavigator() {
 			curPos = -1;
@@ -58,7 +58,7 @@ public class Exercise {
 		return exerciseDescriptor;
 	}
 
-	public List<NativeKey> getSequence() {
+	public List<Key> getSequence() {
 		return exerciseDescriptor.getSequence();
 	}
 
@@ -66,7 +66,7 @@ public class Exercise {
 		return currentElement == null;
 	}
 
-	public Attempt makeAttempt(NativeKey nativeKey) {
+	public Attempt makeAttempt(Key nativeKey) {
 		Attempt lastAttempt;
 		requireIncomplete();
 		if (currentElement.is(nativeKey)) {

@@ -5,7 +5,7 @@ import java.util.List;
 import org.fingerfing.client.controller.TrainControllerImpl;
 import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.core.Key;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.resource.KeyboardResource;
 
@@ -39,7 +39,7 @@ public class TrainWidgetImpl extends Composite {
 	private TrainControllerImpl trainController;
 	private DescriptorManager dm = new DescriptorManager();
 
-	private List<NativeKey> keySeq;
+	private List<Key> keySeq;
 	private Element curElement;
 	private Attempt[] attempts;
 
@@ -70,7 +70,7 @@ public class TrainWidgetImpl extends Composite {
 		refresh();
 	}
 
-	public void showSequence(List<NativeKey> sequence) {
+	public void showSequence(List<Key> sequence) {
 		this.keySeq = sequence;
 		this.attempts = new Attempt[keySeq.size()];
 		this.curElement = null;

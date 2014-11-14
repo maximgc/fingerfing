@@ -3,14 +3,14 @@ package org.fingerfing.client.core;
 public class Element {
 	
 	private int pos;
-	private NativeKey nativeKey;
+	private Key nativeKey;
 	
-	public Element(int pos, NativeKey nk) {
+	public Element(int pos, Key nk) {
 		this.pos = pos;
 		this.nativeKey = nk;
 	}
 	
-	public NativeKey getNativeKey() {
+	public Key getNativeKey() {
 		return nativeKey;
 	}
 
@@ -18,7 +18,7 @@ public class Element {
 		return pos;
 	}
 
-	public boolean is(NativeKey nativeKey) {
+	public boolean is(Key nativeKey) {
 		return this.nativeKey.equals(nativeKey);
 	}
 	

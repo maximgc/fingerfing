@@ -3,7 +3,7 @@ package org.fingerfing.client.core;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum NativeKey{
+public enum Key{
 
 	/*
 	 * KEY_BACKSPACE(8), KEY_SHIFT(16), KEY_CTRL(17), KEY_ALT(18),
@@ -82,23 +82,23 @@ public enum NativeKey{
 	
 	KEY_BACKSLASH_ADDITIONAL(226, "\\");
 
-	public static Map<Integer, NativeKey> nativeCodeMap;
+	public static Map<Integer, Key> nativeCodeMap;
 
-	private static void putKeyCode(Integer nativeCode, NativeKey NativeKey2) {
+	private static void putKeyCode(Integer nativeCode, Key nativeKey) {
 		if (nativeCodeMap == null) {
-			nativeCodeMap = new HashMap<Integer, NativeKey>();
+			nativeCodeMap = new HashMap<Integer, Key>();
 		}
-		nativeCodeMap.put(nativeCode, NativeKey2);
+		nativeCodeMap.put(nativeCode, nativeKey);
 	}
 
 	private String textualNotation;
 	private int nativeCode;
 
-	private NativeKey(int nativeCode) {
+	private Key(int nativeCode) {
 		this(nativeCode, "");
 	}
 
-	private NativeKey(int nativeCode, String labelText) {
+	private Key(int nativeCode, String labelText) {
 		this.textualNotation = labelText;
 		this.nativeCode = nativeCode;
 		putKeyCode(Integer.valueOf(nativeCode), this);
@@ -116,8 +116,8 @@ public enum NativeKey{
 		return (this == KEY_SHIFT || this == KEY_CTRL || this == KEY_ALT);
 	}
 
-	public static NativeKey getByNativeCode(Integer nativeCode) {
-		NativeKey ret = nativeCodeMap.get(nativeCode);
+	public static Key getByNativeCode(Integer nativeCode) {
+		Key ret = nativeCodeMap.get(nativeCode);
 		if (ret == null) {
 			throw new IllegalNativeCode(String.valueOf(nativeCode));
 		}

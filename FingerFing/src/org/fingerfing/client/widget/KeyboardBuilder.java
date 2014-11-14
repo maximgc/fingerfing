@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.core.Key;
 import org.fingerfing.client.widget.KeyboardDescriptor.KeyDescriptor;
 import org.fingerfing.client.widget.KeyboardDescriptor.RowDescriptor;
 
@@ -15,15 +15,15 @@ import com.google.gwt.user.client.ui.Widget;
 
 class KeyboardBuilder {
 
-	private class Key extends Button {
+	private class KeyWidget extends Button {
 
 		private int left, top, width, height;
 
-		public Key(int left, int top, int width, int height) {
+		public KeyWidget(int left, int top, int width, int height) {
 			this(left, top, width, height, null);
 		}
 
-		public Key(int left, int top, int width, int height, String label) {
+		public KeyWidget(int left, int top, int width, int height, String label) {
 			super(label);
 			this.left = left;
 			this.top = top;
@@ -50,17 +50,17 @@ class KeyboardBuilder {
 	private AbsolutePanel keyArea;
 
 	// WARN 1 nativeKey не больше 1 кнопки?
-	private Map<NativeKey, Key> keyMap = new HashMap<NativeKey, Key>();
+	private Map<Key, KeyWidget> keyWidgetMap = new HashMap<Key, KeyWidget>();
 
 	public KeyboardBuilder(AbsolutePanel keyArea) {
 		assert (keyArea != null) : "Const: keyArea is null";
 		this.keyArea = keyArea;
 	}
 
-	public Map<NativeKey, ? extends Widget> build(KeyboardDescriptor kd) {
+	public Map<Key, ? extends Widget> build(KeyboardDescriptor kd) {
 		assert (keyArea != null) : "keyArea is null";
 		buildBlock(kd.getBlock(), BLOCK_LEFT, BLOCK_TOP);
-		return keyMap;
+		return keyWidgetMap;
 	}
 
 	private void buildBlock(List<RowDescriptor> rows, int left, int top) {
@@ -81,12 +81,12 @@ class KeyboardBuilder {
 	}
 
 	private void buildBlockLabel(KeyboardLabelDescriptor ld, int left, int top) {
-		for (Map.Entry<NativeKey, Key> e : keyMap.entrySet()){
+		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()){
 			String l = ld.getLabelMap().get(e.getKey());
 			if (l!=null){
-				Key key = e.getValue();
-				int lLeft = (left < 0) ? key.left + key.width + left : key.left	+ left;
-				int lTop = (top < 0) ? key.top + key.height + top : key.top + top;
+				KeyWidget keyWidget = e.getValue();
+				int lLeft = (left < 0) ? keyWidget.left + keyWidget.width + left : keyWidget.left	+ left;
+				int lTop = (top < 0) ? keyWidget.top + keyWidget.height + top : keyWidget.top + top;
 				buildLabel(l, lLeft, lTop);
 			}
 		}
@@ -97,11 +97,11 @@ class KeyboardBuilder {
 		keyArea.add(label, left, top);
 	}
 
-	private void buildKey(NativeKey nativeKey, int left, int top, int width,
+	private void buildKey(Key nativeKey, int left, int top, int width,
 			int height) {
-		Key key = new Key(left, top, width, height); // , nativeKey.toText());
-		keyArea.add(key, left, top);
-		keyMap.put(nativeKey, key);
+		KeyWidget keyWidget = new KeyWidget(left, top, width, height); // , nativeKey.toText());
+		keyArea.add(keyWidget, left, top);
+		keyWidgetMap.put(nativeKey, keyWidget);
 	}
 
 	private void buildRow(List<KeyDescriptor> keys, int left, int top,

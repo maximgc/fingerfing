@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fingerfing.client.core.ExerciseDescriptor;
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.core.Key;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.widget.DesignWidgetImpl;
 
@@ -12,21 +12,21 @@ public class DesignControllerImpl {
 
 	private class DescriptorMaker{
 		
-		private List<NativeKey> keySeq;
+		private List<Key> keySeq;
 		
 		public DescriptorMaker() {
 			if (exerciseDescriptor == null){
 				exerciseDescriptor = dm.create(ExerciseDescriptor.class);
 			}
 			if (exerciseDescriptor.getSequence() == null) {
-				keySeq = new ArrayList<NativeKey>();
+				keySeq = new ArrayList<Key>();
 				exerciseDescriptor.setSequence(keySeq);
 			} else {
 				keySeq = exerciseDescriptor.getSequence();
 			}
 		}
 		
-		private void addKey(NativeKey nativeKey) {
+		private void addKey(Key nativeKey) {
 			keySeq.add(nativeKey);
 		}
 		
@@ -60,7 +60,7 @@ public class DesignControllerImpl {
 	
 	public void onKeyInput(int nativeKeyCode) {
 		mainController.changeExercise(-1);
-		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
+		Key nk = Key.getByNativeCode(nativeKeyCode);
 		descriptorMaker.addKey(nk);
 		showExerciseDescriptor();
 	}

@@ -2,7 +2,7 @@ package org.fingerfing.client.widget;
 
 import java.util.Map;
 
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.core.Key;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,7 +19,7 @@ public class Keyboard extends Composite {
 	@UiField
 	AbsolutePanel keyArea;
 
-	private Map<NativeKey, ? extends Widget> keyMap;
+	private Map<Key, ? extends Widget> keyWidgetMap;
 
 	interface KeyboardUiBinder extends UiBinder<Widget, Keyboard> {
 	}
@@ -32,7 +32,7 @@ public class Keyboard extends Composite {
 			KeyboardLabelDescriptor generalLabelDescriptor,
 			KeyboardLabelDescriptor alternativeLabelDescriptor) {
 		KeyboardBuilder keyBuilder = new KeyboardBuilder(keyArea);
-		keyMap = keyBuilder.build(keyboardDescriptor);
+		keyWidgetMap = keyBuilder.build(keyboardDescriptor);
 		keyBuilder.buildGeneralLabel(generalLabelDescriptor);
 		keyBuilder.buildAlternativeLabel(alternativeLabelDescriptor);
 	}

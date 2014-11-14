@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.fingerfing.client.controller.DesignControllerImpl;
 import org.fingerfing.client.core.ExerciseDescriptor;
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.core.Key;
 import org.fingerfing.client.json.DescriptorManager;
 
 import com.google.gwt.core.client.GWT;
@@ -45,7 +45,7 @@ public class DesignWidgetImpl extends Composite {
  
 	public void showExercise(ExerciseDescriptor exerciseDescriptor) {
 		StringBuilder sb = new StringBuilder();
-		for (NativeKey nk : exerciseDescriptor.getSequence()){
+		for (Key nk : exerciseDescriptor.getSequence()){
 			sb.append(nk.toText());
 			sb.append(" ");
 		}
@@ -56,8 +56,8 @@ public class DesignWidgetImpl extends Composite {
 		jsonArea.setText(json);
 //		DescriptorManager dm = new DescriptorManager();
 //		KeyboardLabelDescriptor kld = dm.create(KeyboardLabelDescriptor.class);
-//		kld.setLabelTextMap(new HashMap<NativeKey, String>());
-//		for (NativeKey nk : NativeKey.values()){
+//		kld.setLabelTextMap(new HashMap<Key, String>());
+//		for (Key nk : Key.values()){
 //			kld.getLabelTextMap().put(nk, nk.toText());
 //		}
 //		jsonArea.setText(dm.encodeToJson(kld));
