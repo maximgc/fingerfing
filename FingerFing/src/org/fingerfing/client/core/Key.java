@@ -51,10 +51,6 @@ public enum Key{
 	private int nativeCode;
 	private String textualNotation;
 
-	private Key(int nativeCode) {
-		this(nativeCode, "");
-	}
-
 	private Key(int nativeCode, String text) {
 		this.nativeCode = nativeCode;
 		this.textualNotation = text;
@@ -69,7 +65,8 @@ public enum Key{
 	}
 
 	public boolean isModificator() {
-		return (this == KEY_SHIFT_RIGHT || this == KEY_CTRL_RIGHT || this == KEY_ALT_RIGHT);
+		return (this == KEY_SHIFT_RIGHT || this == KEY_CTRL_RIGHT || this == KEY_ALT_RIGHT ||
+				this == KEY_SHIFT_LEFT || this == KEY_CTRL_LEFT || this == KEY_ALT_LEFT);
 	}
 
 }

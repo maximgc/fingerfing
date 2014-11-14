@@ -8,12 +8,9 @@ public enum NativeKey {
 	KEY_BACKSPACE(8, "Backspace", Key.KEY_BACKSPACE), KEY_TAB(9, "Tab",
 			Key.KEY_TAB), KEY_ENTER(13, "Enter", Key.KEY_ENTER),
 
-	// KEY_SHIFT(16, "Shift", Key.KEY_SHIFT_RIGHT, Key.KEY_SHIFT_LEFT),
-	// KEY_CTRL(
-	// 17, "Ctrl", Key.KEY_CTRL_RIGHT, Key.KEY_CTRL_LEFT), KEY_ALT(18,
-	// "Alt", Key.KEY_ALT_RIGHT, Key.KEY_ALT_LEFT),
-	KEY_SHIFT(16, "Shift", Key.KEY_SHIFT_RIGHT), KEY_CTRL(17, "Ctrl",
-			Key.KEY_CTRL_RIGHT), KEY_ALT(18, "Alt", Key.KEY_ALT_RIGHT),
+	KEY_SHIFT(16, "Shift", Key.KEY_SHIFT_RIGHT, Key.KEY_SHIFT_LEFT), KEY_CTRL(
+			17, "Ctrl", Key.KEY_CTRL_RIGHT, Key.KEY_CTRL_LEFT), KEY_ALT(18,
+			"Alt", Key.KEY_ALT_RIGHT, Key.KEY_ALT_LEFT),
 
 	KEY_PAUSE(19, "Pause", Key.KEY_PAUSE), KEY_CAPS_LOCK(20, "Caps Lock",
 			Key.KEY_CAPS_LOCK), KEY_ESC(27, "Esc", Key.KEY_ESC), KEY_SPACE(32,
