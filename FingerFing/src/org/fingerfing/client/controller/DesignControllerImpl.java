@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.Key;
+import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.widget.DesignWidgetImpl;
 
@@ -58,9 +59,10 @@ public class DesignControllerImpl {
 		showExerciseDescriptor();
 	}
 	
-	public void onKeyInput(int keyCode) {
+	public void onKeyInput(int nativeKeyCode) {
 		mainController.changeExercise(-1);
-		Key key = Key.getByNativeCode(keyCode);
+		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
+		Key key = nk.getKeys()[0];
 		descriptorMaker.addKey(key);
 		showExerciseDescriptor();
 	}

@@ -1,12 +1,8 @@
 package org.fingerfing.client.widget;
 
-import java.util.HashMap;
-
 import org.fingerfing.client.controller.DesignControllerImpl;
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.Key;
-import org.fingerfing.client.json.DescriptorManager;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;

@@ -49,7 +49,6 @@ class KeyboardBuilder {
 
 	private AbsolutePanel keyArea;
 
-	// WARN 1 key не больше 1 кнопки?
 	private Map<Key, KeyWidget> keyWidgetMap = new HashMap<Key, KeyWidget>();
 
 	public KeyboardBuilder(AbsolutePanel keyArea) {
