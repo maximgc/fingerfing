@@ -66,10 +66,11 @@ public class Exercise {
 		return currentElement == null;
 	}
 
-	public Attempt makeAttempt(Key key) {
+	public Attempt makeAttempt(NativeKey key) {
 		Attempt lastAttempt;
 		requireIncomplete();
-		if (currentElement.is(key)) {
+		//WARN ..
+		if (currentElement.getKey().getNativeCode()==key.getNativeCode()) {
 			lastAttempt = new Attempt(currentElement, 0, key, 1);
 			currentElement = nextElement();
 		} else {

@@ -18,10 +18,4 @@ public class Element {
 		return pos;
 	}
 
-	public boolean is(Key key) {
-		return this.key.equals(key);
-	}
-	
-	
-
 }

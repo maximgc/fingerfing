@@ -2,7 +2,6 @@ package org.fingerfing.client.controller;
 
 import org.fingerfing.client.core.Exercise;
 import org.fingerfing.client.core.ExerciseDescriptor;
-import org.fingerfing.client.core.Key;
 import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.widget.TrainWidgetImpl;
 
@@ -23,8 +22,7 @@ public class TrainControllerImpl {
 	public void onKeyInput(int nativeKeyCode) {
 		if (!exercise.isComplete()) {
 			NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
-			Key key = nk.getKeys()[0];
-			trainWidget.showAttempt(exercise.makeAttempt(key));
+			trainWidget.showAttempt(exercise.makeAttempt(nk));
 			startElement();
 		}
 		if (exercise.isComplete()) {

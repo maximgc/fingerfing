@@ -18,8 +18,7 @@ public class ExerciseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ed = createExerciseDescriptor(Key.KEY_Q, Key.KEY_W,
-				Key.KEY_E);
+		ed = createExerciseDescriptor(Key.KEY_Q, Key.KEY_W, Key.KEY_E);
 		e = new Exercise(ed);
 	}
 
@@ -66,9 +65,9 @@ public class ExerciseTest {
 	public void testMakeAndGetLastAttempt() {
 		Exercise ee = new Exercise(ed);
 		Attempt a;
-		a = ee.makeAttempt(Key.KEY_0);
+		a = ee.makeAttempt(NativeKey.KEY_0);
 		assertEquals(2, a.getEval());
-		a = ee.makeAttempt(Key.KEY_Q);
+		a = ee.makeAttempt(NativeKey.KEY_Q);
 		assertEquals(1, a.getEval());
 	}
 
@@ -95,7 +94,7 @@ public class ExerciseTest {
 		assertNotNull(ee.getSequence());
 		assertTrue(ee.isComplete());
 	}
-	
+
 	@Test(expected = CoreException.class)
 	public void testEmptySequence2() {
 		Exercise ee = new Exercise(createExerciseDescriptor());
@@ -106,11 +105,15 @@ public class ExerciseTest {
 	public void testPassAllElements() {
 		Exercise ee = new Exercise(ed);
 		while (!ee.isComplete()) {
-			ee.makeAttempt(ee.getCurrentElement().getKey());
+			NativeKey nk = NativeKey.getByNativeCode(ee.getCurrentElement()
+					.getKey().getNativeCode());
+			ee.makeAttempt(nk);
 		}
 		ee = new Exercise(createExerciseDescriptor());
 		while (!ee.isComplete()) {
-			ee.makeAttempt(ee.getCurrentElement().getKey());
+			NativeKey nk = NativeKey.getByNativeCode(ee.getCurrentElement()
+					.getKey().getNativeCode());
+			ee.makeAttempt(nk);
 		}
 	}
 
