@@ -6,8 +6,8 @@ import org.fingerfing.client.core.NativeKey;
 
 public interface KeyboardLabelDescriptor {
 
-		Map<NativeKey, String> getLabelTextMap();
+		Map<NativeKey, String> getLabelMap();
 
-		void setLabelTextMap(Map<NativeKey, String> map);
+		void setLabelMap(Map<NativeKey, String> map);
 		
 }

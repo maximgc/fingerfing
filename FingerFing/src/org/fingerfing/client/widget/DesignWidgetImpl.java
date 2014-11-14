@@ -1,8 +1,11 @@
 package org.fingerfing.client.widget;
 
+import java.util.HashMap;
+
 import org.fingerfing.client.controller.DesignControllerImpl;
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.json.DescriptorManager;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -51,5 +54,12 @@ public class DesignWidgetImpl extends Composite {
 	
 	public void showJson(String json) {
 		jsonArea.setText(json);
+//		DescriptorManager dm = new DescriptorManager();
+//		KeyboardLabelDescriptor kld = dm.create(KeyboardLabelDescriptor.class);
+//		kld.setLabelTextMap(new HashMap<NativeKey, String>());
+//		for (NativeKey nk : NativeKey.values()){
+//			kld.getLabelTextMap().put(nk, nk.toText());
+//		}
+//		jsonArea.setText(dm.encodeToJson(kld));
 	}
 }

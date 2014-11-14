@@ -35,16 +35,17 @@ class KeyboardBuilder {
 	}
 
 	private static final int BLOCK_LEFT = 5;
-
 	private static final int BLOCK_TOP = 0;
-	private static final int KEY_WIDTH = 44;
-	private static final int KEY_HEIGHT = 44;
+
+	private static final int KEY_WIDTH = 45;
+	private static final int KEY_HEIGHT = 45;
 	private static final int KEY_SPACE_VERTICAL = 5;
 	private static final int KEY_SPACE_HORIZONTAL = 5;
+	
 	private static final int LABEL_LEFT = 5;
-	private static final int LABEL_TOP = 3;
+	private static final int LABEL_TOP = 0;
 	private static final int ALT_LABEL_BOTTOM = -23;
-	private static final int ALT_LABEL_RIGHT = -10; // 5;
+	private static final int ALT_LABEL_RIGHT = -18; // 5;
 
 	private AbsolutePanel keyArea;
 
@@ -80,11 +81,14 @@ class KeyboardBuilder {
 	}
 
 	private void buildBlockLabel(KeyboardLabelDescriptor ld, int left, int top) {
-		for (Map.Entry<NativeKey, String> e : ld.getLabelTextMap().entrySet()) {
-			Key key = keyMap.get(e.getKey());
-			int lLeft = (left < 0) ? key.left + key.width + left : key.left	+ left;
-			int lTop = (top < 0) ? key.top + key.height + top : key.top + top;
-			buildLabel(e.getValue(), lLeft, lTop);
+		for (Map.Entry<NativeKey, Key> e : keyMap.entrySet()){
+			String l = ld.getLabelMap().get(e.getKey());
+			if (l!=null){
+				Key key = e.getValue();
+				int lLeft = (left < 0) ? key.left + key.width + left : key.left	+ left;
+				int lTop = (top < 0) ? key.top + key.height + top : key.top + top;
+				buildLabel(l, lLeft, lTop);
+			}
 		}
 	}
 
