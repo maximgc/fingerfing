@@ -58,13 +58,15 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 
 		public void showAttempt(int eval) {
 			setAttribute("eval", String.valueOf(eval));
+			setAttribute("heated", String.valueOf(eval));
 			Timer t = new Timer() {
 				@Override
 				public void run() {
 					removeAttribute("eval");
+					removeAttribute("heated");
 				}
 			};
-			t.schedule(500);
+			t.schedule(150);
 		}
 
 		public void showExpected() {
@@ -84,6 +86,14 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 
 		private void setAttribute(String name, String value) {
 			this.getElement().setAttribute(name, value);
+		}
+
+		public void showPressed(int i) {
+			setAttribute("pressed", String.valueOf(i));
+		}
+
+		public void resetPressed() {
+			removeAttribute("pressed");
 		}
 
 		// кнопка:
@@ -149,12 +159,22 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 	}
 
 	@Override
-	public void showAttempt(Attempt attempt) {
+	public void showAttempt(final Attempt attempt) {
 		Key[] keys = attempt.getActualNativeKey().getKeys();
 		for (Key k : keys) {
-			KeyWidget kw = keyWidgetMap.get(k);
-			if (kw != null)
-				kw.showAttempt(attempt.getEval());
+			final KeyWidget kw = keyWidgetMap.get(k);
+			if (kw != null) {
+				kw.showPressed(attempt.getEval());
+				Timer t = new Timer() {
+					@Override
+					public void run() {
+						kw.resetPressed();
+						kw.showAttempt(attempt.getEval());
+					}
+				};
+				t.schedule(150);
+			}
+			
 		}
 	}
 

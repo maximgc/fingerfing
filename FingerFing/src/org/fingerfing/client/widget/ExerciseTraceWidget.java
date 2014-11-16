@@ -31,6 +31,8 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 		this.keySeq = sequence;
 		this.attempts = new Attempt[keySeq.size()];
 		this.curElement = null;
+		//WARN
+		this.setFocus(true);
 		refresh();
 	}
 

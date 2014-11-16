@@ -45,7 +45,8 @@ h1 {
   border-bottom: 1px solid #a0a0a0;
   border-radius: 3px;
  -moz-border-radius: 3px;
-  transition: background-color 1s ease-out 0s;
+  transition: background-color 1s cubic-bezier(0,0,0,0.5) 0s;
+  transition: border-color 10s cubic-bezier(0,0,0,0.5) 0s;
 }
 
 .keyWidget[eval="1"]{
@@ -59,6 +60,22 @@ h1 {
 .keyWidget[expected="true"]{
 	background-color: #8282ff;
 	transition: background-color 0s ease-out 0s;
+}
+.keyWidget[pressed="1"]{
+	background-color: #22ff22;
+	transition: background-color 0s ease-out 0s;
+}
+.keyWidget[pressed="2"]{
+	background-color: #ff2222;
+	transition: background-color 0s ease-out 0s;
+}
+.keyWidget[heated="1"]{
+	border-color: #22ff22;
+	transition: border-color 0s ease-out 0s;
+}
+.keyWidget[heated="2"]{
+	border-color: #ff2222;
+	transition: border-color 0s ease-out 0s;
 }
 .keyWidget:active {
   border: 1px inset #ccc;
