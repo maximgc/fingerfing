@@ -17,7 +17,7 @@ public class Exercise {
 
 		@Override
 		public boolean hasNext() {
-			
+
 			return curPos + 1 < sequence.size();
 		}
 
@@ -26,12 +26,12 @@ public class Exercise {
 			curPos++;
 			return new Element(curPos, sequence.get(curPos));
 		}
-		
+
 		@Override
 		public void remove() {
-	        throw new UnsupportedOperationException("remove");
-	    }
-		
+			throw new UnsupportedOperationException("remove");
+		}
+
 	}
 
 	private ExerciseDescriptor exerciseDescriptor;
@@ -66,16 +66,11 @@ public class Exercise {
 		return currentElement == null;
 	}
 
-	public Attempt makeAttempt(NativeKey key) {
-		Attempt lastAttempt;
+	public Attempt makeAttempt(NativeKey nativeKey) {
 		requireIncomplete();
-		//WARN ..
-		if (currentElement.getKey().getNativeCode()==key.getNativeCode()) {
-			lastAttempt = new Attempt(currentElement, 0, key, 1);
+		Attempt lastAttempt = new Attempt(currentElement, nativeKey);
+		if (lastAttempt.isSuccess())
 			currentElement = nextElement();
-		} else {
-			lastAttempt = new Attempt(currentElement, 0, key, 2);
-		}
 		return lastAttempt;
 	}
 

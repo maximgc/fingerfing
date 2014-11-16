@@ -1,33 +1,32 @@
 package org.fingerfing.client.core;
 
 //WARN наследование?
-public class Attempt extends Element{
+public class Attempt extends Element {
 
 	private int eval;
-	private int number;
-	private NativeKey obtained;
-	
-	public Attempt(Element expectElement, int number, NativeKey obtained, int eval) {
-		this(expectElement.getPos(), expectElement.getKey(), number, obtained, eval);
+	private NativeKey actualNativeKey;
+
+	public NativeKey getActualNativeKey() {
+		return actualNativeKey;
 	}
-	
-	public Attempt(int pos, Key expect, int number, NativeKey obtained, int eval) {
-		super(pos, expect);
-		this.number = number;
-		this.obtained = obtained;
-		this.eval = eval;
+
+	public Attempt(Element expectElement, NativeKey actualNativeKey) {
+		this(expectElement.getPos(), expectElement.getKey(),  actualNativeKey);
+	}
+
+	public Attempt(int pos, Key expectKey, NativeKey actualNativeKey) {
+		super(pos, expectKey);
+		this.actualNativeKey = actualNativeKey;
+		this.eval = (expectKey.getNativeCode() == actualNativeKey.getNativeCode()) ? 1
+				: 2;
 	}
 
 	public int getEval() {
 		return eval;
 	}
 
-	public int getNumber() {
-		return number;
-	}
-
-	public NativeKey getObtained() {
-		return obtained;
+	public boolean isSuccess() {
+		return eval == 1;
 	}
 
 }

@@ -32,3 +32,85 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+.keyWidget {
+  margin: 0;
+  padding: 5px 5px;
+  text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
+  font-size:small;
+  background-color: #f0f0f0;
+  border:1px solid #bbb;
+  border-bottom: 1px solid #a0a0a0;
+  border-radius: 3px;
+ -moz-border-radius: 3px;
+  transition: background-color 1s ease-out 0s;
+}
+
+.keyWidget[eval="1"]{
+	background-color: #82ff82;
+	transition: background-color 0s ease-out 0s;
+}
+.keyWidget[eval="2"]{
+	background-color: #ff8282;
+	transition: background-color 0s ease-out 0s;
+}
+.keyWidget[expected="true"]{
+	background-color: #8282ff;
+	transition: background-color 0s ease-out 0s;
+}
+.keyWidget:active {
+  border: 1px inset #ccc;
+}
+.keyWidget_label{
+	width: 100%;
+	padding: 0;
+	border: 0;
+	border-spacing: 0;
+}
+.keyWidget:hover {
+  border-color: #939393;
+}
+.keyWidget[disabled] {
+  cursor: default;
+  color: #888;
+}
+.keyWidget[disabled]:hover {
+  border: 1px outset #ccc;
+  opacity: 0.2;
+}
+
+.alternative{
+	opacity:0.2;
+	text-align: right;
+}
+.general{
+	opacity:1;
+	text-align: left;
+}
+/* .keyWidget { */
+/* 	background-color: rgb(245,245,245); */
+/* /* 	color: #888; */ */
+/* /* 	color: #0000a0; */ */
+/* 	margin: 0; */
+/* 	padding: 3px 3px; */
+/* 	text-decoration: none; */
+/* 	cursor: pointer; */
+/* 	cursor: hand; */
+/* 	font-size: small; */
+/* /* 	font-weight: bold; */ */
+/* 	opacity: 1; */
+/* 	/*   background: url("images/hborder.png") repeat-x 0px -2077px; */ */
+/* 	border: 1px inset #bbb; */
+/* /* 	border-color: #ff8040; */ */
+/* /* 	border-bottom: 2px solid green; */ */
+/* 	border-radius: 3px; */
+/* 	-moz-border-radius: 3px; */
+/* } */
+
+
+
+
+
+

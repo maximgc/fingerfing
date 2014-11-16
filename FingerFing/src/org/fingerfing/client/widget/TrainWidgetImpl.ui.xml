@@ -8,7 +8,7 @@
 	}
 	</ui:style>
 		<g:HorizontalPanel>
-			<g:TextArea ui:field="textArea" width="80px" height="300px" readOnly="true" />
-			<f:Keyboard ui:field="keyboard"></f:Keyboard>
+			<f:ExerciseTraceWidget ui:field="trace" width="120px" height="300px" readOnly="true" />
+			<f:KeyboardWidget ui:field="keyboard" />
 		</g:HorizontalPanel>
 </ui:UiBinder> 
