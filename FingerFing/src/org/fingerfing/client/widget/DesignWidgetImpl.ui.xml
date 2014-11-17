@@ -1,13 +1,23 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:f="urn:import:org.fingerfing.client.widget">
 	<ui:style>
 	.important {
 		font-weight: bold;
 	}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:TextArea ui:field="textArea" width="300px" height="300px" readOnly="true"/>
-		<g:TextArea ui:field="jsonArea" width="300px" height="300px" readOnly="true"/>
+		<g:VerticalPanel>
+			<g:HorizontalPanel>
+				<g:TextArea ui:field="textArea" width="300px" height="300px"
+					readOnly="true" />
+				<g:TextArea ui:field="jsonArea" width="300px" height="300px"
+					readOnly="true" />
+			</g:HorizontalPanel>
+			<g:VerticalPanel>
+				<g:ListBox ui:field="listFinger"></g:ListBox>
+				<f:KeyboardWidget ui:field="keyboard"></f:KeyboardWidget>
+			</g:VerticalPanel>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
