@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
+import org.fingerfing.client.core.Finger;
 import org.fingerfing.client.core.Key;
 import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
@@ -133,6 +134,14 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 		public void resetInSeq() {
 			removeAttribute("sequence");
 		}
+		
+		public void showFinger(Finger finger) {
+			setAttribute("finger", finger.toString());
+		}
+		
+		public void resetFinger() {
+			removeAttribute("finger");
+		}
 
 	}
 
@@ -212,7 +221,11 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 
 	@Override
 	public void showSequence(List<Key> sequence) {
-		// showBlock(sequence, 0);
+//		 showBlock(sequence, 0);
+	}
+	
+	public KeyWidget getKeyWidget(Key key){
+		return keyWidgetMap.get(key);
 	}
 
 	private Timer t;
