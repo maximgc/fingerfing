@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 class KeyboardBuilder {
 
 	private static final String KEY_WIDGET_STYLE = "keyWidget";
-	
+
 	private static final int BLOCK_LEFT = 5;
 	private static final int BLOCK_TOP = 0;
 
@@ -32,9 +32,12 @@ class KeyboardBuilder {
 		this.keyArea = keyArea;
 	}
 
-	public Map<Key, KeyWidget> build(KeyboardDescriptor kd) {
+	public Map<Key, KeyWidget> build(KeyboardDescriptor kd,
+			KeyboardLabelDescriptor gld, KeyboardLabelDescriptor ald) {
 		assert (kd != null) : "KeyboardDescriptor is null";
 		buildBlock(kd.getBlock(), BLOCK_LEFT, BLOCK_TOP);
+		buildGeneralLabel(gld);
+		buildAlternativeLabel(ald);
 		return keyWidgetMap;
 	}
 
@@ -45,7 +48,7 @@ class KeyboardBuilder {
 		}
 	}
 
-	public void buildAlternativeLabel(KeyboardLabelDescriptor ld) {
+	private void buildAlternativeLabel(KeyboardLabelDescriptor ld) {
 		assert (ld != null) : "alternative label descriptor null";
 		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
 			String l = ld.getLabelMap().get(e.getKey());
@@ -56,7 +59,7 @@ class KeyboardBuilder {
 		}
 	}
 
-	public void buildGeneralLabel(KeyboardLabelDescriptor ld) {
+	private void buildGeneralLabel(KeyboardLabelDescriptor ld) {
 		assert (ld != null) : "general label descriptor null";
 		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
 			String l = ld.getLabelMap().get(e.getKey());
@@ -67,6 +70,7 @@ class KeyboardBuilder {
 		}
 	}
 
+	// WARN пробег по мапе 3 раза?
 	private void buildKey(Key key, int left, int top, int width, int height) {
 		KeyWidget keyWidget = new KeyWidget(left, top, width, height);
 		keyWidget.setStyleName(KEY_WIDGET_STYLE);

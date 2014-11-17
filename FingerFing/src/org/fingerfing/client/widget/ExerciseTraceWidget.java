@@ -5,7 +5,12 @@ import java.util.List;
 import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.Key;
+import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.widget.event.ElementInputEvent;
+import org.fingerfing.client.widget.event.ElementInputHandler;
 
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.TextArea;
 
 public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
@@ -14,6 +19,16 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 	private Element curElement;
 	private Attempt[] attempts;
 
+	public ExerciseTraceWidget() {
+		this.addKeyDownHandler(new KeyDownHandler() {
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				NativeKey nativeKey = NativeKey.getByNativeCode(event.getNativeKeyCode());
+				fireElementInput(new ElementInputEvent(nativeKey));
+			}
+		});
+	}
+	
 	@Override
 	public void showCurrentElement(Element element) {
 		this.curElement = element;
@@ -49,6 +64,17 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 			sb.append((char) 13);
 		}
 		this.setText(sb.toString());
+	}
+
+	private ElementInputHandler elementInputHandler;
+
+	private void fireElementInput(ElementInputEvent event) {
+		elementInputHandler.onElementInput(event);
+	}
+	
+	@Override
+	public void setElementInputHandler(ElementInputHandler handler) {
+		this.elementInputHandler = handler;
 	}
 	
 }

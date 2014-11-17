@@ -6,17 +6,49 @@ import java.util.Map;
 import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.Key;
+import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.resource.KeyboardResource;
+import org.fingerfing.client.widget.event.ElementInputEvent;
+import org.fingerfing.client.widget.event.ElementInputHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+
+//кнопка:
+// видимость
+// цвет
+// прозрачность/enabled
+// жирность обводки (по сторонам)
+// цвет обводки (по сторонам)
+//
+// текст:
+// видимость
+// цвет
+// жирность - рябит глаза
+//
+
+// постоянные:
+// текущая раскладка (прозрачность текста в div)
+// изученность (видимость)
+// зона упражнения (enabled/прозрачность)
+// палец (нижний бордер)
+// ср. оценка(нагретость) (бордер - цвет и жирность)
+// время нажатия/темп(нагретость2) (бордер - цвет и жирность)
+
+// временные:
+// активная (цвет)
+// нажатие (цвет в нажатие)
+// тек оценка (цвет после отпускания)
 
 public class KeyboardWidget extends Composite implements ExerciseWidget {
 
@@ -40,10 +72,7 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 			// this.height = height;
 			super.setWidth(width + "px");
 			super.setHeight(height + "px");
-		}
-
-		public void resetExpected() {
-			removeAttribute("expected");
+			setAttribute("finger", "l1");
 		}
 
 		public void setAlternativeLabel(String alternativeLabel) {
@@ -56,21 +85,14 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 			applyLabel();
 		}
 
-		public void showAttempt(int eval) {
+		public void showEval(int eval) {
 			setAttribute("eval", String.valueOf(eval));
 			setAttribute("heated", String.valueOf(eval));
-			Timer t = new Timer() {
-				@Override
-				public void run() {
-					removeAttribute("eval");
-					removeAttribute("heated");
-				}
-			};
-			t.schedule(150);
 		}
 
-		public void showExpected() {
-			setAttribute("expected", "true");
+		public void resetEval() {
+			removeAttribute("eval");
+			removeAttribute("heated");
 		}
 
 		private void applyLabel() {
@@ -88,6 +110,14 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 			this.getElement().setAttribute(name, value);
 		}
 
+		public void resetExpected() {
+			removeAttribute("expected");
+		}
+
+		public void showExpected() {
+			setAttribute("expected", "next");
+		}
+
 		public void showPressed(int i) {
 			setAttribute("pressed", String.valueOf(i));
 		}
@@ -96,31 +126,13 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 			removeAttribute("pressed");
 		}
 
-		// кнопка:
-		// видимость
-		// цвет
-		// прозрачность/enabled
-		// жирность обводки (по сторонам)
-		// цвет обводки (по сторонам)
-		//
-		// текст:
-		// видимость
-		// цвет
-		// жирность - рябит глаза
-		//
+		public void showInSeq() {
+			setAttribute("sequence", "next");
+		}
 
-		// постоянные:
-		// текущая раскладка (прозрачность текста в div)
-		// изученность (видимость)
-		// зона упражнения (enabled/прозрачность)
-		// палец (нижний бордер)
-		// ср. оценка(нагретость) (бордер - цвет и жирность)
-		// время нажатия/темп(нагретость2) (бордер - цвет и жирность)
-
-		// временные:
-		// активная (цвет)
-		// нажатие (цвет в нажатие)
-		// тек оценка (цвет после отпускания)
+		public void resetInSeq() {
+			removeAttribute("sequence");
+		}
 
 	}
 
@@ -129,6 +141,9 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 
 	@UiField
 	AbsolutePanel keyArea;
+
+	@UiField
+	FocusPanel focusPanel;
 
 	private DescriptorManager dm = new DescriptorManager();
 
@@ -153,9 +168,8 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 			KeyboardLabelDescriptor generalLabelDescriptor,
 			KeyboardLabelDescriptor alternativeLabelDescriptor) {
 		KeyboardBuilder keyBuilder = new KeyboardBuilder(keyArea);
-		keyWidgetMap = keyBuilder.build(keyboardDescriptor);
-		keyBuilder.buildGeneralLabel(generalLabelDescriptor);
-		keyBuilder.buildAlternativeLabel(alternativeLabelDescriptor);
+		keyWidgetMap = keyBuilder.build(keyboardDescriptor,
+				generalLabelDescriptor, alternativeLabelDescriptor);
 	}
 
 	@Override
@@ -169,12 +183,19 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 					@Override
 					public void run() {
 						kw.resetPressed();
-						kw.showAttempt(attempt.getEval());
+						kw.showEval(attempt.getEval());
+						Timer tt = new Timer() {
+							@Override
+							public void run() {
+								kw.resetEval();
+							}
+						};
+						tt.schedule(150);
 					}
 				};
 				t.schedule(150);
 			}
-			
+
 		}
 	}
 
@@ -186,13 +207,60 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 		}
 		KeyWidget kw = keyWidgetMap.get(element.getKey());
 		kw.showExpected();
-		// kw.resetExpected();
 		curElement = element;
 	}
 
 	@Override
 	public void showSequence(List<Key> sequence) {
+		// showBlock(sequence, 0);
+	}
 
+	private Timer t;
+
+	private void showBlock(final List<Key> sequence, final int i) {
+		if (t != null)
+			t.cancel();
+		t = new Timer() {
+			int n = i;
+			KeyWidget kw;
+
+			@Override
+			public void run() {
+				if (n < sequence.size()) {
+					if (kw != null)
+						kw.resetInSeq();
+					kw = keyWidgetMap.get(sequence.get(n));
+					kw.showInSeq();
+					n++;
+				} else if (n == sequence.size()) {
+					if (kw != null)
+						kw.resetInSeq();
+					// this.cancel();
+					n = i;
+				}
+			}
+		};
+		t.scheduleRepeating(200);
+	}
+
+	@Override
+	public void setElementInputHandler(ElementInputHandler handler) {
+		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
+			addElementInpurHandlerToKeyWidget(e.getValue(), handler, e.getKey());
+		}
+	}
+
+	//WARN что то не то (ответсвенность процедуры?)
+	private void addElementInpurHandlerToKeyWidget(KeyWidget kw,
+			final ElementInputHandler handler, Key key) {
+		final NativeKey nativeKey = NativeKey.getByNativeCode(key
+				.getNativeCode());
+		kw.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				handler.onElementInput(new ElementInputEvent(nativeKey));
+			}
+		});
 	}
 
 }

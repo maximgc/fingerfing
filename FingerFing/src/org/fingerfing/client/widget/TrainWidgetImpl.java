@@ -2,24 +2,24 @@ package org.fingerfing.client.widget;
 
 import java.util.List;
 
-import org.fingerfing.client.controller.TrainControllerImpl;
 import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.Key;
+import org.fingerfing.client.widget.event.ElementInputHandler;
+import org.fingerfing.client.widget.event.HasElementInputHandler;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.event.dom.client.KeyDownEvent;
 
 /**
  * Widget for demonstrate exercise.
  * 
  * @author Max
  */
-public class TrainWidgetImpl extends Composite {
+public class TrainWidgetImpl extends Composite implements HasElementInputHandler {
 
 	interface TrainWidgetImplUiBinder extends UiBinder<Widget, TrainWidgetImpl> {
 	}
@@ -32,14 +32,8 @@ public class TrainWidgetImpl extends Composite {
 	@UiField
 	ExerciseWidget keyboard;
 
-	private TrainControllerImpl trainController;
-
 	public TrainWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	public void setTrainController(TrainControllerImpl trainController) {
-		this.trainController = trainController;
 	}
 
 	public void showCurrentElement(Element element) {
@@ -57,9 +51,10 @@ public class TrainWidgetImpl extends Composite {
 		keyboard.showSequence(sequence);
 	}
 
-	@UiHandler("trace")
-	void onTraceKeyDown(KeyDownEvent event) {
-		trainController.onKeyInput(event.getNativeKeyCode());
+	@Override
+	public void setElementInputHandler(ElementInputHandler handler) {
+		trace.setElementInputHandler(handler);
+		keyboard.setElementInputHandler(handler);
 	}
-
+	
 }
