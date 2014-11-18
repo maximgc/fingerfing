@@ -2,11 +2,11 @@ package org.fingerfing.client.widget.event;
 
 import org.fingerfing.client.core.NativeKey;
 
-public class ElementInputEvent {
+public class NativeKeyInputEvent {
 	
 	private NativeKey nativeKey;
 
-	public ElementInputEvent(NativeKey nativeKey) {
+	public NativeKeyInputEvent(NativeKey nativeKey) {
 		this.nativeKey = nativeKey;
 	}
 	

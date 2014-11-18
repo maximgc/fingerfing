@@ -6,8 +6,8 @@ import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.Key;
 import org.fingerfing.client.core.NativeKey;
-import org.fingerfing.client.widget.event.ElementInputEvent;
-import org.fingerfing.client.widget.event.ElementInputHandler;
+import org.fingerfing.client.widget.event.NativeKeyInputEvent;
+import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -24,7 +24,7 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				NativeKey nativeKey = NativeKey.getByNativeCode(event.getNativeKeyCode());
-				fireElementInput(new ElementInputEvent(nativeKey));
+				fireElementInput(new NativeKeyInputEvent(nativeKey));
 			}
 		});
 	}
@@ -66,14 +66,14 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 		this.setText(sb.toString());
 	}
 
-	private ElementInputHandler elementInputHandler;
+	private NativeKeyInputHandler elementInputHandler;
 
-	private void fireElementInput(ElementInputEvent event) {
-		elementInputHandler.onElementInput(event);
+	private void fireElementInput(NativeKeyInputEvent event) {
+		elementInputHandler.onNativeKeyInput(event);
 	}
 	
 	@Override
-	public void setElementInputHandler(ElementInputHandler handler) {
+	public void setNativeKeyInputHandler(NativeKeyInputHandler handler) {
 		this.elementInputHandler = handler;
 	}
 	

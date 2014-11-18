@@ -7,17 +7,11 @@
 	}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:VerticalPanel>
-			<g:HorizontalPanel>
-				<g:TextArea ui:field="textArea" width="300px" height="300px"
-					readOnly="true" />
-				<g:TextArea ui:field="jsonArea" width="300px" height="300px"
-					readOnly="true" />
-			</g:HorizontalPanel>
-			<g:VerticalPanel>
-				<g:ListBox ui:field="listFinger"></g:ListBox>
-				<f:KeyboardWidget ui:field="keyboard"></f:KeyboardWidget>
-			</g:VerticalPanel>
-		</g:VerticalPanel>
+		<g:HorizontalPanel>
+			<g:TextArea ui:field="textArea" width="300px" height="300px"
+				readOnly="true" />
+			<g:TextArea ui:field="jsonArea" width="300px" height="300px"
+				readOnly="true" />
+		</g:HorizontalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

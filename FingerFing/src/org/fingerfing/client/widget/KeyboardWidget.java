@@ -10,8 +10,8 @@ import org.fingerfing.client.core.Key;
 import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.resource.KeyboardResource;
-import org.fingerfing.client.widget.event.ElementInputEvent;
-import org.fingerfing.client.widget.event.ElementInputHandler;
+import org.fingerfing.client.widget.event.NativeKeyInputEvent;
+import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -257,7 +257,7 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 	}
 
 	@Override
-	public void setElementInputHandler(ElementInputHandler handler) {
+	public void setNativeKeyInputHandler(NativeKeyInputHandler handler) {
 		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
 			addElementInpurHandlerToKeyWidget(e.getValue(), handler, e.getKey());
 		}
@@ -265,13 +265,13 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 
 	//WARN что то не то (ответсвенность процедуры?)
 	private void addElementInpurHandlerToKeyWidget(KeyWidget kw,
-			final ElementInputHandler handler, Key key) {
+			final NativeKeyInputHandler handler, Key key) {
 		final NativeKey nativeKey = NativeKey.getByNativeCode(key
 				.getNativeCode());
 		kw.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				handler.onElementInput(new ElementInputEvent(nativeKey));
+				handler.onNativeKeyInput(new NativeKeyInputEvent(nativeKey));
 			}
 		});
 	}

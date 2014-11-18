@@ -24,9 +24,12 @@ public class MainWidget extends Composite {
 	@UiField
 	VerticalPanel pTrain;
 	@UiField
-	VerticalPanel pDesign;
+	VerticalPanel pCourseDesigner;
 	@UiField
-	public TabPanel tabPanel;
+	VerticalPanel pKeyboardDesigner;
+	
+	@UiField
+	TabPanel tabPanel;
 	@UiField
 	ListBox exerciseSelector;
 
@@ -44,7 +47,7 @@ public class MainWidget extends Composite {
 	}
 
 	public void setDesignWidget(Widget w) {
-		pDesign.add(w);
+		pCourseDesigner.add(w);
 	}
 
 	public void setMainController(MainController mainController) {

@@ -4,8 +4,8 @@ import org.fingerfing.client.core.Exercise;
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.widget.TrainWidgetImpl;
-import org.fingerfing.client.widget.event.ElementInputEvent;
-import org.fingerfing.client.widget.event.ElementInputHandler;
+import org.fingerfing.client.widget.event.NativeKeyInputEvent;
+import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 
 public class TrainControllerImpl {
 
@@ -18,9 +18,9 @@ public class TrainControllerImpl {
 
 	public TrainControllerImpl(TrainWidgetImpl trainWidget) {
 		this.trainWidget = trainWidget;
-		trainWidget.setElementInputHandler(new ElementInputHandler() {
+		trainWidget.setNativeKeyInputHandler(new NativeKeyInputHandler() {
 			@Override
-			public void onElementInput(ElementInputEvent event) {
+			public void onNativeKeyInput(NativeKeyInputEvent event) {
 				onKeyInput(event.getNativeKey().getNativeCode());
 			}
 		});

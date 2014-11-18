@@ -5,8 +5,8 @@ import java.util.List;
 import org.fingerfing.client.core.Attempt;
 import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.Key;
-import org.fingerfing.client.widget.event.ElementInputHandler;
-import org.fingerfing.client.widget.event.HasElementInputHandler;
+import org.fingerfing.client.widget.event.NativeKeyInputHandler;
+import org.fingerfing.client.widget.event.HasNativeKeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Max
  */
-public class TrainWidgetImpl extends Composite implements HasElementInputHandler {
+public class TrainWidgetImpl extends Composite implements HasNativeKeyInputHandler {
 
 	interface TrainWidgetImplUiBinder extends UiBinder<Widget, TrainWidgetImpl> {
 	}
@@ -52,9 +52,9 @@ public class TrainWidgetImpl extends Composite implements HasElementInputHandler
 	}
 
 	@Override
-	public void setElementInputHandler(ElementInputHandler handler) {
-		trace.setElementInputHandler(handler);
-		keyboard.setElementInputHandler(handler);
+	public void setNativeKeyInputHandler(NativeKeyInputHandler handler) {
+		trace.setNativeKeyInputHandler(handler);
+		keyboard.setNativeKeyInputHandler(handler);
 	}
 	
 }

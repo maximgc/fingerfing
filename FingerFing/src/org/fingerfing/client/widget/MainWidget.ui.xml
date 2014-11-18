@@ -7,13 +7,16 @@
 	}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:ListBox ui:field="exerciseSelector"/>
+		<g:ListBox ui:field="exerciseSelector" />
 		<g:TabPanel width="810px" height="374px" ui:field="tabPanel">
-			<g:Tab text="Train" >
-				<g:VerticalPanel ui:field="pTrain"/>
+			<g:Tab text="Train">
+				<g:VerticalPanel ui:field="pTrain" />
 			</g:Tab>
-			<g:Tab text="Designer">
-				<g:VerticalPanel ui:field="pDesign"/>
+			<g:Tab text="CourseDesigner">
+				<g:VerticalPanel ui:field="pCourseDesigner" />
+			</g:Tab>
+			<g:Tab text="KeyboardDesigner">
+				<g:VerticalPanel ui:field="pKeyboardDesigner" />
 			</g:Tab>
 		</g:TabPanel>
 	</g:HTMLPanel>
