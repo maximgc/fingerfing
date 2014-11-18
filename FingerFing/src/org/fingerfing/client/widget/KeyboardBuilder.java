@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.fingerfing.client.core.Key;
+import org.fingerfing.client.json.DescriptorManager;
+import org.fingerfing.client.resource.KeyboardResource;
 import org.fingerfing.client.widget.KeyboardDescriptor.KeyDescriptor;
 import org.fingerfing.client.widget.KeyboardDescriptor.RowDescriptor;
 import org.fingerfing.client.widget.KeyboardWidget.KeyWidget;
@@ -26,18 +28,28 @@ class KeyboardBuilder {
 	private AbsolutePanel keyArea;
 
 	private Map<Key, KeyWidget> keyWidgetMap = new HashMap<Key, KeyWidget>();
+	
+	private DescriptorManager dm = new DescriptorManager();
 
 	public KeyboardBuilder(AbsolutePanel keyArea) {
 		assert (keyArea != null) : "keyArea is null";
 		this.keyArea = keyArea;
 	}
 
-	public Map<Key, KeyWidget> build(KeyboardDescriptor kd,
-			KeyboardLabelDescriptor gld, KeyboardLabelDescriptor ald) {
+	public Map<Key, KeyWidget> build() {
+		KeyboardDescriptor kd = dm.decodeFromJson(KeyboardDescriptor.class,
+				KeyboardResource.INST.getKeyboardDescriptor1().getText());
 		assert (kd != null) : "KeyboardDescriptor is null";
+		KeyboardLabelDescriptor kldEN = dm.decodeFromJson(
+				KeyboardLabelDescriptor.class, KeyboardResource.INST
+						.getKeyboardLabelDescriptorEN().getText());
+		KeyboardLabelDescriptor kldRU = dm.decodeFromJson(
+				KeyboardLabelDescriptor.class, KeyboardResource.INST
+						.getKeyboardLabelDescriptorRU().getText());
+
 		buildBlock(kd.getBlock(), BLOCK_LEFT, BLOCK_TOP);
-		buildGeneralLabel(gld);
-		buildAlternativeLabel(ald);
+		buildGeneralLabel(kldEN);
+		buildAlternativeLabel(kldRU);
 		return keyWidgetMap;
 	}
 

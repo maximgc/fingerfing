@@ -183,7 +183,6 @@ public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyI
 	@UiField
 	FocusPanel focusPanel;
 
-	private DescriptorManager dm = new DescriptorManager();
 
 	private Map<Key, KeyWidget> keyWidgetMap;
 
@@ -191,23 +190,7 @@ public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyI
 
 	public KeyboardWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		KeyboardDescriptor kd = dm.decodeFromJson(KeyboardDescriptor.class,
-				KeyboardResource.INST.getKeyboardDescriptor1().getText());
-		KeyboardLabelDescriptor kldEN = dm.decodeFromJson(
-				KeyboardLabelDescriptor.class, KeyboardResource.INST
-						.getKeyboardLabelDescriptorEN().getText());
-		KeyboardLabelDescriptor kldRU = dm.decodeFromJson(
-				KeyboardLabelDescriptor.class, KeyboardResource.INST
-						.getKeyboardLabelDescriptorRU().getText());
-		this.setDescriptor(kd, kldEN, kldRU);
-	}
-
-	public void setDescriptor(KeyboardDescriptor keyboardDescriptor,
-			KeyboardLabelDescriptor generalLabelDescriptor,
-			KeyboardLabelDescriptor alternativeLabelDescriptor) {
-		KeyboardBuilder keyBuilder = new KeyboardBuilder(keyArea);
-		keyWidgetMap = keyBuilder.build(keyboardDescriptor,
-				generalLabelDescriptor, alternativeLabelDescriptor);
+		keyWidgetMap = new KeyboardBuilder(keyArea).build();
 	}
 
 	@Override
