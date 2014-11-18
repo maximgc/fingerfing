@@ -8,8 +8,6 @@ import org.fingerfing.client.core.Element;
 import org.fingerfing.client.core.Finger;
 import org.fingerfing.client.core.Key;
 import org.fingerfing.client.core.NativeKey;
-import org.fingerfing.client.json.DescriptorManager;
-import org.fingerfing.client.resource.KeyboardResource;
 import org.fingerfing.client.widget.event.HasKeyInputHandler;
 import org.fingerfing.client.widget.event.HasNativeKeyInputHandler;
 import org.fingerfing.client.widget.event.KeyInputEvent;
@@ -242,6 +240,8 @@ public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyI
 
 	private Timer t;
 
+	//WARN unused
+	@SuppressWarnings("unused")
 	private void showBlock(final List<Key> sequence, final int i) {
 		if (t != null)
 			t.cancel();

@@ -79,24 +79,29 @@ h1 {
 	transition: border-color 0s ease-out 0s;
 }
 .keyWidget[finger="LEFT_THUMB"] {
-	border-bottom: 1px solid #50d060;
-	border-right: 1px solid #50d060;
+	border-bottom: 1px solid #ff80c0;
+	border-right: 1px solid #ff80c0;
+	transition: border-color 0s ease-out 0s;
 }
 .keyWidget[finger="LEFT_INDEX"] {
-	border-bottom: 1px solid #50d060;
-	border-right: 1px solid #50d060;
+	border-bottom: 1px solid #ff80ff;
+	border-right: 1px solid #ff80ff;
+	transition: border-color 0s ease-out 0s;
 }
 .keyWidget[finger="LEFT_MIDDLE"] {
-	border-bottom: 1px solid #50d060;
-	border-right: 1px solid #50d060;
+	border-bottom: 1px solid #ff00ff;
+	border-right: 1px solid #ff00ff;
+	transition: border-color 0s ease-out 0s;
 }
 .keyWidget[finger="LEFT_RING"] {
-	border-bottom: 1px solid #50d060;
-	border-right: 1px solid #50d060;
+	border-bottom: 1px solid #ff0080;
+	border-right: 1px solid #ff0080;
+	transition: border-color 0s ease-out 0s;
 }
 .keyWidget[finger="LEFT_LITTLE"] {
-	border-bottom: 1px solid #50d060;
-	border-right: 1px solid #50d060;
+	border-bottom: 1px solid #8000ff;
+	border-right: 1px solid #8000ff;
+	transition: border-color 0s ease-out 0s;
 }
 
 .keyWidget_label {
@@ -123,6 +128,7 @@ h1 {
 .keyWidget[disabled] {
 	cursor: default;
 	color: #888;
+	opacity: 0.2;
 }
 .keyWidget[disabled]:hover {
 	border: 1px outset #ccc;

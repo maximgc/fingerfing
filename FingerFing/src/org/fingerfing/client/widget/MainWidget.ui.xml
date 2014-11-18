@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:org.fingerfing.client">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:org.fingerfing.client" xmlns:f="urn:import:org.fingerfing.client.widget">
 	<ui:style>
 	.important {
 		font-weight: bold;
@@ -16,7 +16,9 @@
 				<g:VerticalPanel ui:field="pCourseDesigner" />
 			</g:Tab>
 			<g:Tab text="KeyboardDesigner">
-				<g:VerticalPanel ui:field="pKeyboardDesigner" />
+				<g:VerticalPanel ui:field="pKeyboardDesigner">
+					<f:KeyboardDesignerWidget></f:KeyboardDesignerWidget>
+				</g:VerticalPanel>
 			</g:Tab>
 		</g:TabPanel>
 	</g:HTMLPanel>
