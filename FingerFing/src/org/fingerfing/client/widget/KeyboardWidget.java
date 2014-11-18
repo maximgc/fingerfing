@@ -10,6 +10,10 @@ import org.fingerfing.client.core.Key;
 import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.resource.KeyboardResource;
+import org.fingerfing.client.widget.event.HasKeyInputHandler;
+import org.fingerfing.client.widget.event.HasNativeKeyInputHandler;
+import org.fingerfing.client.widget.event.KeyInputEvent;
+import org.fingerfing.client.widget.event.KeyInputHandler;
 import org.fingerfing.client.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 
@@ -51,29 +55,54 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 // нажатие (цвет в нажатие)
 // тек оценка (цвет после отпускания)
 
-public class KeyboardWidget extends Composite implements ExerciseWidget {
+public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyInputHandler {
 
 	interface KeyboardUiBinder extends UiBinder<Widget, KeyboardWidget> {
 	}
 
-	static class KeyWidget extends Button {
+	static class KeyWidget extends Button implements HasNativeKeyInputHandler, HasKeyInputHandler {
 		// private int left, top, width, height;
 		private String generalLabel = "";
 		private String alternativeLabel = "";
+		private Key key;
 
-		public KeyWidget(int left, int top, int width, int height) {
-			this(left, top, width, height, null);
+		public KeyWidget(Key key, int left, int top, int width, int height) {
+			this(key, left, top, width, height, null);
 		}
 
-		public KeyWidget(int left, int top, int width, int height, String label) {
+		public KeyWidget(Key key, int left, int top, int width, int height,
+				String label) {
 			super(label);
 			// this.left = left;
 			// this.top = top;
 			// this.width = width;
 			// this.height = height;
+			this.key = key;
 			super.setWidth(width + "px");
 			super.setHeight(height + "px");
 			setAttribute("finger", "l1");
+		}
+
+		@Override
+		public void addNativeKeyInputHandler(final NativeKeyInputHandler handler) {
+			final NativeKey nativeKey = NativeKey.getByNativeCode(key
+					.getNativeCode());
+			addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					handler.onNativeKeyInput(new NativeKeyInputEvent(nativeKey));
+				}
+			});
+		}
+
+		@Override
+		public void addKeyInputHandler(final KeyInputHandler handler) {
+			this.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					handler.onKeyInput(new KeyInputEvent(key));
+				}
+			});	
 		}
 
 		public void setAlternativeLabel(String alternativeLabel) {
@@ -134,11 +163,11 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 		public void resetInSeq() {
 			removeAttribute("sequence");
 		}
-		
+
 		public void showFinger(Finger finger) {
 			setAttribute("finger", finger.toString());
 		}
-		
+
 		public void resetFinger() {
 			removeAttribute("finger");
 		}
@@ -221,10 +250,10 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 
 	@Override
 	public void showSequence(List<Key> sequence) {
-//		 showBlock(sequence, 0);
+		// showBlock(sequence, 0);
 	}
-	
-	public KeyWidget getKeyWidget(Key key){
+
+	public KeyWidget getKeyWidget(Key key) {
 		return keyWidgetMap.get(key);
 	}
 
@@ -257,23 +286,17 @@ public class KeyboardWidget extends Composite implements ExerciseWidget {
 	}
 
 	@Override
-	public void setNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
-			addElementInpurHandlerToKeyWidget(e.getValue(), handler, e.getKey());
+	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
+		for (KeyWidget kw : keyWidgetMap.values()) {
+			kw.addNativeKeyInputHandler(handler);
 		}
 	}
 
-	//WARN что то не то (ответсвенность процедуры?)
-	private void addElementInpurHandlerToKeyWidget(KeyWidget kw,
-			final NativeKeyInputHandler handler, Key key) {
-		final NativeKey nativeKey = NativeKey.getByNativeCode(key
-				.getNativeCode());
-		kw.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				handler.onNativeKeyInput(new NativeKeyInputEvent(nativeKey));
-			}
-		});
+	@Override
+	public void addKeyInputHandler(KeyInputHandler handler) {
+		for (KeyWidget kw : keyWidgetMap.values()) {
+			kw.addKeyInputHandler(handler);
+		}
 	}
 
 }

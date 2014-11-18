@@ -59,8 +59,8 @@ public class MainWidget extends Composite {
 		mainController.onChangeTab(event.getSelectedItem());
 	}
 
-	public void switchToTrain() {
-		tabPanel.selectTab(0);
+	public void switchToTab(int i) {
+		tabPanel.selectTab(i);
 	}
 	
 	public void setExerciseList(List<String> nameList) {

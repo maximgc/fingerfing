@@ -52,9 +52,9 @@ public class TrainWidgetImpl extends Composite implements HasNativeKeyInputHandl
 	}
 
 	@Override
-	public void setNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		trace.setNativeKeyInputHandler(handler);
-		keyboard.setNativeKeyInputHandler(handler);
+	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
+		trace.addNativeKeyInputHandler(handler);
+		keyboard.addNativeKeyInputHandler(handler);
 	}
 	
 }

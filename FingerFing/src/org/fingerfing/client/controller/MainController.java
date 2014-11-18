@@ -36,7 +36,7 @@ public class MainController {
 	public void start() {
 		currentEd = edLoader.loadExerciseDescriptor(0);
 		mainWidget.setExerciseList(edLoader.getDescriptorNameList());
-		mainWidget.switchToTrain();
+		mainWidget.switchToTab(2);
 	}
 
 	public void onChangeTab(Integer newTabIndex) {

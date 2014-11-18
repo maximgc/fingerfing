@@ -72,7 +72,7 @@ class KeyboardBuilder {
 
 	// WARN пробег по мапе 3 раза?
 	private void buildKey(Key key, int left, int top, int width, int height) {
-		KeyWidget keyWidget = new KeyWidget(left, top, width, height);
+		KeyWidget keyWidget = new KeyWidget(key, left, top, width, height);
 		keyWidget.setStyleName(KEY_WIDGET_STYLE);
 		keyArea.add(keyWidget, left, top);
 		keyWidgetMap.put(key, keyWidget);

@@ -73,7 +73,7 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 	}
 	
 	@Override
-	public void setNativeKeyInputHandler(NativeKeyInputHandler handler) {
+	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
 		this.elementInputHandler = handler;
 	}
 	

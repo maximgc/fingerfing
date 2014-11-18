@@ -18,7 +18,7 @@ public class TrainControllerImpl {
 
 	public TrainControllerImpl(TrainWidgetImpl trainWidget) {
 		this.trainWidget = trainWidget;
-		trainWidget.setNativeKeyInputHandler(new NativeKeyInputHandler() {
+		trainWidget.addNativeKeyInputHandler(new NativeKeyInputHandler() {
 			@Override
 			public void onNativeKeyInput(NativeKeyInputEvent event) {
 				onKeyInput(event.getNativeKey().getNativeCode());
