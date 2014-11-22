@@ -3,9 +3,9 @@ package org.fingerfing.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fingerfing.client.core.ExerciseDescriptor;
-import org.fingerfing.client.core.Key;
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.domain.ExerciseDescriptor;
+import org.fingerfing.client.domain.Key;
+import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.widget.CourseDesignerView;
 

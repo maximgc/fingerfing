@@ -1,8 +1,8 @@
 package org.fingerfing.client.presenter;
 
-import org.fingerfing.client.core.Exercise;
-import org.fingerfing.client.core.ExerciseDescriptor;
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.domain.Exercise;
+import org.fingerfing.client.domain.ExerciseDescriptor;
+import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.widget.TrainView;
 import org.fingerfing.client.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.widget.event.NativeKeyInputHandler;

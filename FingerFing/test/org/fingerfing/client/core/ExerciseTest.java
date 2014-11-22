@@ -3,6 +3,12 @@ package org.fingerfing.client.core;
 import java.util.Arrays;
 import java.util.List;
 
+import org.fingerfing.client.domain.Attempt;
+import org.fingerfing.client.domain.CoreException;
+import org.fingerfing.client.domain.Exercise;
+import org.fingerfing.client.domain.ExerciseDescriptor;
+import org.fingerfing.client.domain.Key;
+import org.fingerfing.client.domain.NativeKey;
 import org.junit.Before;
 import org.junit.Test;
 

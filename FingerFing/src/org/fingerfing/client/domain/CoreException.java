@@ -1,4 +1,4 @@
-package org.fingerfing.client.core;
+package org.fingerfing.client.domain;
 
 @SuppressWarnings("serial")
 public class CoreException extends RuntimeException{

@@ -1,6 +1,6 @@
 package org.fingerfing.client.presenter;
 
-import org.fingerfing.client.core.ExerciseDescriptor;
+import org.fingerfing.client.domain.ExerciseDescriptor;
 import org.fingerfing.client.widget.CourseDesignerView;
 import org.fingerfing.client.widget.MainView;
 import org.fingerfing.client.widget.TrainView;

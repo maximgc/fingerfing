@@ -1,6 +1,6 @@
 package org.fingerfing.client.widget.event;
 
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.domain.NativeKey;
 
 public class NativeKeyInputEvent {
 	

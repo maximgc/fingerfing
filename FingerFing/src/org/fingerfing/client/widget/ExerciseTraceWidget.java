@@ -2,10 +2,10 @@ package org.fingerfing.client.widget;
 
 import java.util.List;
 
-import org.fingerfing.client.core.Attempt;
-import org.fingerfing.client.core.Element;
-import org.fingerfing.client.core.Key;
-import org.fingerfing.client.core.NativeKey;
+import org.fingerfing.client.domain.Attempt;
+import org.fingerfing.client.domain.Element;
+import org.fingerfing.client.domain.Key;
+import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 

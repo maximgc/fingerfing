@@ -2,7 +2,7 @@ package org.fingerfing.client.widget;
 
 import java.util.Map;
 
-import org.fingerfing.client.core.Key;
+import org.fingerfing.client.domain.Key;
 
 public interface KeyboardLabelDescriptor {
 

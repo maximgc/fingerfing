@@ -1,7 +1,7 @@
 package org.fingerfing.client.widget;
 
-import org.fingerfing.client.core.ExerciseDescriptor;
-import org.fingerfing.client.core.Key;
+import org.fingerfing.client.domain.ExerciseDescriptor;
+import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.presenter.CourseDesignerPresenter;
 
 import com.google.gwt.core.client.GWT;

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.fingerfing.client.core.Key;
+import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.resource.KeyboardResource;
 import org.fingerfing.client.widget.KeyboardDescriptor.KeyDescriptor;

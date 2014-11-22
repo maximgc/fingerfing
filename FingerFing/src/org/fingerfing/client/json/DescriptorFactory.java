@@ -1,6 +1,6 @@
 package org.fingerfing.client.json;
 
-import org.fingerfing.client.core.ExerciseDescriptor;
+import org.fingerfing.client.domain.ExerciseDescriptor;
 import org.fingerfing.client.widget.KeyboardDescriptor;
 import org.fingerfing.client.widget.KeyboardLabelDescriptor;
 

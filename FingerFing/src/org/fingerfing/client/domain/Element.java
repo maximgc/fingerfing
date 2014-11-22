@@ -1,4 +1,4 @@
-package org.fingerfing.client.core;
+package org.fingerfing.client.domain;
 
 public class Element {
 	

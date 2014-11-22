@@ -1,7 +1,7 @@
 package org.fingerfing.client.widget;
 
-import org.fingerfing.client.core.Finger;
-import org.fingerfing.client.core.Key;
+import org.fingerfing.client.domain.Finger;
+import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.widget.event.KeyInputEvent;
 import org.fingerfing.client.widget.event.KeyInputHandler;
 
@@ -36,8 +36,6 @@ public class KeyboardDesignerView extends Composite {
 			public void onKeyInput(KeyInputEvent event) {
 				Key key = event.getKey();
 				keyboard.getKeyWidget(key).showFinger(curFinger);
-				
-				System.out.println(key.toString() + " - " + curFinger.toString());
 			}
 		});
 	}

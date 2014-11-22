@@ -1,6 +1,6 @@
 package org.fingerfing.client.widget.event;
 
-import org.fingerfing.client.core.Key;
+import org.fingerfing.client.domain.Key;
 
 public class KeyInputEvent {
 

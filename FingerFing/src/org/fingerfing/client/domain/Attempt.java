@@ -1,4 +1,4 @@
-package org.fingerfing.client.core;
+package org.fingerfing.client.domain;
 
 //WARN наследование?
 public class Attempt extends Element {
