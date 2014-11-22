@@ -1,9 +1,9 @@
 package org.fingerfing.client.presenter;
 
+import org.fingerfing.client.Settings;
 import org.fingerfing.client.domain.Exercise;
-import org.fingerfing.client.domain.ExerciseDescriptor;
 import org.fingerfing.client.domain.NativeKey;
-import org.fingerfing.client.widget.TrainView;
+import org.fingerfing.client.view.TrainView;
 import org.fingerfing.client.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 
@@ -11,10 +11,6 @@ public class TrainPresenter {
 
 	private TrainView trainWidget;
 	private Exercise exercise;
-
-	@SuppressWarnings("unused")
-	// WARN unused
-	private MainPresenter mainController;
 
 	public TrainPresenter(TrainView trainWidget) {
 		this.trainWidget = trainWidget;
@@ -38,15 +34,9 @@ public class TrainPresenter {
 		}
 	}
 
-	public void setMainPresenter(MainPresenter mainController) {
-		this.mainController = mainController;
-	}
-
-	public void startNewExercise(ExerciseDescriptor exerciseDescriptor) {
-		if (exerciseDescriptor != null) {
-			exercise = new Exercise(exerciseDescriptor);
+	public void start() {
+			exercise = new Exercise(Settings.exerciseDescriptor);
 			startExercise();
-		}
 	}
 
 	private void startElement() {

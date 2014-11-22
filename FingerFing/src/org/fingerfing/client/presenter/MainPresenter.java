@@ -1,58 +1,37 @@
 package org.fingerfing.client.presenter;
 
-import org.fingerfing.client.domain.ExerciseDescriptor;
-import org.fingerfing.client.widget.MainView;
+import org.fingerfing.client.view.MainView;
+
+import com.google.gwt.user.client.History;
 
 public class MainPresenter {
 
 	private MainView mainView;
-	private TrainPresenter trainPresenter;
-	private CourseDesignerPresenter designPresenter;
 	
-	private ExerciseDescriptorLoader edLoader;
-	private ExerciseDescriptor currentEd;
 
 	public MainPresenter(MainView mw) {
 		this.mainView = mw;
 		this.mainView.setMainController(this);
 
-		this.trainPresenter = new TrainPresenter(mainView.getTrainView());
-		this.designPresenter = new CourseDesignerPresenter(mainView.getCourseDesignerView());
-		
-		this.trainPresenter.setMainPresenter(this);
-		this.designPresenter.setMainPresenter(this);
-		
-
-		this.edLoader = new ExerciseDescriptorLoader();
 	}
 
-	public void start() {
-		currentEd = edLoader.loadExerciseDescriptor(0);
-		mainView.setExerciseList(edLoader.getDescriptorNameList());
-		mainView.switchToTab(2);
+	public void switchTab(int tab) {
+		mainView.switchToTab(tab);
 	}
 
 	public void onChangeTab(Integer newTabIndex) {
 		switch (newTabIndex) {
 		case 0:
-			trainPresenter.startNewExercise(currentEd);
+			History.newItem("train");
 			break;
 		case 1:
-			designPresenter.setExerciseDescriptor(currentEd);
+			History.newItem("courseDesign");
+			break;
+		case 2:
+			History.newItem("keyboardDesign");
 			break;
 		}
 
 	}
 
-	public void changeExercise(int index) {
-		mainView.setExerciseListSelected(index);
-	}
-
-	public void onChangeExercise(int index) {
-		if (index != -1) {
-			currentEd = edLoader.loadExerciseDescriptor(index);
-			trainPresenter.startNewExercise(currentEd);
-			designPresenter.setExerciseDescriptor(currentEd);
-		}
-	}
 }

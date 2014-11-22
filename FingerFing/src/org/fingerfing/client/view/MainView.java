@@ -1,19 +1,15 @@
-package org.fingerfing.client.widget;
-
-import java.util.List;
+package org.fingerfing.client.view;
 
 import org.fingerfing.client.presenter.MainPresenter;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.event.dom.client.ChangeEvent;
 
 public class MainView extends Composite {
 
@@ -22,9 +18,6 @@ public class MainView extends Composite {
 
 	@UiField
 	TabPanel tabPanel;
-	@UiField
-	ListBox exerciseSelector;
-	
 	
 	@UiField
 	CourseDesignerView courseDesignerView;
@@ -45,7 +38,7 @@ public class MainView extends Composite {
 		return keyboardDesignerView;
 	}
 
-	private MainPresenter mainController;
+	private MainPresenter mainPresenter;
 
 	interface MainWidgetUiBinder extends UiBinder<Widget, MainView> {
 	}
@@ -55,30 +48,16 @@ public class MainView extends Composite {
 	}
 
 	public void setMainController(MainPresenter mainController) {
-		this.mainController = mainController;
+		this.mainPresenter = mainController;
 	}
 
 	@UiHandler("tabPanel")
 	void onTabPanelSelection(SelectionEvent<Integer> event) {
-		mainController.onChangeTab(event.getSelectedItem());
+		mainPresenter.onChangeTab(event.getSelectedItem());
 	}
 
 	public void switchToTab(int i) {
 		tabPanel.selectTab(i);
 	}
 	
-	public void setExerciseList(List<String> nameList) {
-		for (String s : nameList){
-			exerciseSelector.addItem(s);
-		}
-	}
-	
-	public void setExerciseListSelected(int index){
-		exerciseSelector.setSelectedIndex(index);
-	}
-	
-	@UiHandler("exerciseSelector")
-	void onExerciseSelectorChange(ChangeEvent event) {
-		mainController.onChangeExercise(exerciseSelector.getSelectedIndex());
-	}
 }

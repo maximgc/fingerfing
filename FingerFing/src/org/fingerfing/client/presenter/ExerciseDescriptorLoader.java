@@ -7,7 +7,7 @@ import org.fingerfing.client.domain.ExerciseDescriptor;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.resource.ExerciseResource;
 
-class ExerciseDescriptorLoader {
+public class ExerciseDescriptorLoader {
 
 	private ExerciseResource er = ExerciseResource.INST;
 	private DescriptorManager dm = new DescriptorManager();

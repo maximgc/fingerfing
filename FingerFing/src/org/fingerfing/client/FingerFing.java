@@ -1,29 +1,64 @@
 package org.fingerfing.client;
 
+import org.fingerfing.client.presenter.CourseDesignerPresenter;
+import org.fingerfing.client.presenter.ExerciseDescriptorLoader;
 import org.fingerfing.client.presenter.MainPresenter;
-import org.fingerfing.client.widget.MainView;
+import org.fingerfing.client.presenter.TrainPresenter;
+import org.fingerfing.client.view.MainView;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  * 
- * Key
- * Element, Attempt
- * ExerciseDescriptorImpl
- * Exercise
- * 
  */
 public class FingerFing implements EntryPoint {
 
+	int i = 0;
+
+	private ExerciseDescriptorLoader exDescLoader;
+
 	public void onModuleLoad() {
-		
-		MainView mw = new MainView();
-		MainPresenter mc = new MainPresenter(mw);
 
-		RootPanel.get("mainArea").add(mw);
-		mc.start();
+		// TEMP
+		this.exDescLoader = new ExerciseDescriptorLoader();
+		Settings.exerciseDescriptor = exDescLoader.loadExerciseDescriptor(0);
 
+		final MainView mv = new MainView();
+		final MainPresenter mp = new MainPresenter(mv);
+		final TrainPresenter tp;
+		final CourseDesignerPresenter dp;
+
+		tp = new TrainPresenter(mv.getTrainView());
+		dp = new CourseDesignerPresenter(mv.getCourseDesignerView());
+		RootPanel.get("mainArea").add(mv);
+
+
+		History.addValueChangeHandler(new ValueChangeHandler<String>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				switch (event.getValue()) {
+				case "train":
+					mp.switchTab(0);
+					tp.start();
+					break;
+				case "courseDesign":
+					mp.switchTab(1);
+					dp.start();
+					break;
+				case "keyboardDesign":
+					mp.switchTab(2);
+					break;
+				default:
+					History.newItem("train");
+					break;
+				}
+			}
+		});
+		History.fireCurrentHistoryState();
 	}
 }

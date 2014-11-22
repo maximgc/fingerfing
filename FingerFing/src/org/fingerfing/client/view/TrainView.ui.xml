@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
-	xmlns:f="urn:import:org.fingerfing.client.widget">
+	xmlns:f="urn:import:org.fingerfing.client.view">
 	<ui:style>
 	.important {
 		font-weight: bold;

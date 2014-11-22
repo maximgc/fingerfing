@@ -1,4 +1,4 @@
-package org.fingerfing.client.widget;
+package org.fingerfing.client.view;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Map;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.resource.KeyboardResource;
-import org.fingerfing.client.widget.KeyboardDescriptor.KeyDescriptor;
-import org.fingerfing.client.widget.KeyboardDescriptor.RowDescriptor;
-import org.fingerfing.client.widget.KeyboardWidget.KeyWidget;
+import org.fingerfing.client.view.KeyboardDescriptor.KeyDescriptor;
+import org.fingerfing.client.view.KeyboardDescriptor.RowDescriptor;
+import org.fingerfing.client.view.KeyboardWidget.KeyWidget;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 

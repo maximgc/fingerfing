@@ -3,11 +3,12 @@ package org.fingerfing.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fingerfing.client.Settings;
 import org.fingerfing.client.domain.ExerciseDescriptor;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
-import org.fingerfing.client.widget.CourseDesignerView;
+import org.fingerfing.client.view.CourseDesignerView;
 
 public class CourseDesignerPresenter {
 
@@ -38,7 +39,6 @@ public class CourseDesignerPresenter {
 
 	private ExerciseDescriptor exerciseDescriptor;
 	private DescriptorMaker descriptorMaker;
-	private MainPresenter mainController;
 
 	public CourseDesignerPresenter(CourseDesignerView designWidget) {
 		this.designWidget = designWidget;
@@ -50,17 +50,16 @@ public class CourseDesignerPresenter {
 		return exerciseDescriptor;
 	}
 
-	public void setExerciseDescriptor(ExerciseDescriptor exerciseDescriptor) {
+	public void start() {
+		exerciseDescriptor = Settings.exerciseDescriptor;
 		if (exerciseDescriptor == null) {
 			throw new ClientException("ExerciseDescriptor is null");
 		}
-		this.exerciseDescriptor = exerciseDescriptor;
 		descriptorMaker = new DescriptorMaker();
 		showExerciseDescriptor();
 	}
 	
 	public void onKeyInput(int nativeKeyCode) {
-		mainController.changeExercise(-1);
 		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
 		Key key = nk.getKeys()[0];
 		descriptorMaker.addKey(key);
@@ -70,10 +69,6 @@ public class CourseDesignerPresenter {
 	private void showExerciseDescriptor() {
 		designWidget.showExercise(exerciseDescriptor);
 		designWidget.showJson(dm.encodeToJson(exerciseDescriptor));
-	}
-
-	public void setMainPresenter(MainPresenter mainController) {
-		this.mainController = mainController;
 	}
 
 }
