@@ -38,7 +38,7 @@ public class TrainPresenter {
 		}
 	}
 
-	public void setMainController(MainPresenter mainController) {
+	public void setMainPresenter(MainPresenter mainController) {
 		this.mainController = mainController;
 	}
 

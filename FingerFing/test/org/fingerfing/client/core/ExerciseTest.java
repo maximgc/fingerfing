@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.fingerfing.client.domain.Attempt;
-import org.fingerfing.client.domain.CoreException;
+import org.fingerfing.client.domain.DomainException;
 import org.fingerfing.client.domain.Exercise;
 import org.fingerfing.client.domain.ExerciseDescriptor;
 import org.fingerfing.client.domain.Key;
@@ -83,12 +83,12 @@ public class ExerciseTest {
 		assertFalse(ee.isComplete());
 	}
 
-	@Test(expected = CoreException.class)
+	@Test(expected = DomainException.class)
 	public void testNullExerciseDescription() {
 		new Exercise(null);
 	}
 
-	@Test(expected = CoreException.class)
+	@Test(expected = DomainException.class)
 	public void testNullSequence() {
 		new Exercise(createExerciseDescriptor((List<Key>) null));
 	}
@@ -101,7 +101,7 @@ public class ExerciseTest {
 		assertTrue(ee.isComplete());
 	}
 
-	@Test(expected = CoreException.class)
+	@Test(expected = DomainException.class)
 	public void testEmptySequence2() {
 		Exercise ee = new Exercise(createExerciseDescriptor());
 		ee.getCurrentElement();

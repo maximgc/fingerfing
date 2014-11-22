@@ -1,33 +1,26 @@
 package org.fingerfing.client.presenter;
 
 import org.fingerfing.client.domain.ExerciseDescriptor;
-import org.fingerfing.client.widget.CourseDesignerView;
 import org.fingerfing.client.widget.MainView;
-import org.fingerfing.client.widget.TrainView;
 
 public class MainPresenter {
 
-	private MainView mainWidget;
-	private TrainPresenter trainController;
-	private CourseDesignerPresenter designController;
+	private MainView mainView;
+	private TrainPresenter trainPresenter;
+	private CourseDesignerPresenter designPresenter;
+	
 	private ExerciseDescriptorLoader edLoader;
 	private ExerciseDescriptor currentEd;
 
 	public MainPresenter(MainView mw) {
-		this.mainWidget = mw;
-		this.mainWidget.setMainController(this);
+		this.mainView = mw;
+		this.mainView.setMainController(this);
 
-		TrainView tw = new TrainView();
-		CourseDesignerView dw = new CourseDesignerView();
-
-		this.mainWidget.setTrainWidget(tw);
-		this.mainWidget.setDesignWidget(dw);
-
-		this.trainController = new TrainPresenter(tw);
-		this.designController = new CourseDesignerPresenter(dw);
+		this.trainPresenter = new TrainPresenter(mainView.getTrainView());
+		this.designPresenter = new CourseDesignerPresenter(mainView.getCourseDesignerView());
 		
-		this.trainController.setMainController(this);
-		this.designController.setMainController(this);
+		this.trainPresenter.setMainPresenter(this);
+		this.designPresenter.setMainPresenter(this);
 		
 
 		this.edLoader = new ExerciseDescriptorLoader();
@@ -35,31 +28,31 @@ public class MainPresenter {
 
 	public void start() {
 		currentEd = edLoader.loadExerciseDescriptor(0);
-		mainWidget.setExerciseList(edLoader.getDescriptorNameList());
-		mainWidget.switchToTab(2);
+		mainView.setExerciseList(edLoader.getDescriptorNameList());
+		mainView.switchToTab(2);
 	}
 
 	public void onChangeTab(Integer newTabIndex) {
 		switch (newTabIndex) {
 		case 0:
-			trainController.startNewExercise(currentEd);
+			trainPresenter.startNewExercise(currentEd);
 			break;
 		case 1:
-			designController.setExerciseDescriptor(currentEd);
+			designPresenter.setExerciseDescriptor(currentEd);
 			break;
 		}
 
 	}
 
 	public void changeExercise(int index) {
-		mainWidget.setExerciseListSelected(index);
+		mainView.setExerciseListSelected(index);
 	}
 
 	public void onChangeExercise(int index) {
 		if (index != -1) {
 			currentEd = edLoader.loadExerciseDescriptor(index);
-			trainController.startNewExercise(currentEd);
-			designController.setExerciseDescriptor(currentEd);
+			trainPresenter.startNewExercise(currentEd);
+			designPresenter.setExerciseDescriptor(currentEd);
 		}
 	}
 }

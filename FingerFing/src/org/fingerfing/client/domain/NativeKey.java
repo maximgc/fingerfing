@@ -2,7 +2,7 @@ package org.fingerfing.client.domain;
 
 import java.util.HashMap;
 import java.util.Map;
- 
+
 public enum NativeKey {
 
 	KEY_BACKSPACE(8, "Backspace", Key.KEY_BACKSPACE), KEY_TAB(9, "Tab",
@@ -79,7 +79,8 @@ public enum NativeKey {
 	public static NativeKey getByNativeCode(Integer nativeCode) {
 		NativeKey ret = nativeCodeMap.get(nativeCode);
 		if (ret == null) {
-			throw new IllegalNativeCode(String.valueOf(nativeCode));
+			throw new DomainException("Illegal native code (" + nativeCode
+					+ ")");
 		}
 		return ret;
 	}

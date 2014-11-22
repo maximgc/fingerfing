@@ -32,6 +32,26 @@ public class MainView extends Composite {
 	TabPanel tabPanel;
 	@UiField
 	ListBox exerciseSelector;
+	
+	
+	@UiField
+	CourseDesignerView courseDesignerView;
+	@UiField
+	TrainView trainView;
+	@UiField
+	KeyboardDesignerView keyboardDesignerView;
+
+	public CourseDesignerView getCourseDesignerView() {
+		return courseDesignerView;
+	}
+
+	public TrainView getTrainView() {
+		return trainView;
+	}
+
+	public KeyboardDesignerView getKeyboardDesignerView() {
+		return keyboardDesignerView;
+	}
 
 	private MainPresenter mainController;
 
@@ -40,14 +60,6 @@ public class MainView extends Composite {
 
 	public MainView() {
 		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	public void setTrainWidget(Widget w) {
-		pTrain.add(w);
-	}
-
-	public void setDesignWidget(Widget w) {
-		pCourseDesigner.add(w);
 	}
 
 	public void setMainController(MainPresenter mainController) {

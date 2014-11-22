@@ -1,9 +1,9 @@
 package org.fingerfing.client.domain;
 
 @SuppressWarnings("serial")
-public class CoreException extends RuntimeException{
+public class DomainException extends RuntimeException{
 
-	public CoreException(String string) {
+	public DomainException(String string) {
 		super(string);
 	}
 

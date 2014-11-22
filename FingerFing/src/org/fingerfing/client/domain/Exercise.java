@@ -41,7 +41,7 @@ public class Exercise {
 	public Exercise(ExerciseDescriptor exerciseDescriptor) {
 		if (exerciseDescriptor == null
 				|| exerciseDescriptor.getSequence() == null) {
-			throw new CoreException(
+			throw new DomainException(
 					"ExerciseDescriptor doesn't define sequence");
 		}
 		this.exerciseDescriptor = exerciseDescriptor;
@@ -80,7 +80,7 @@ public class Exercise {
 
 	private void requireIncomplete() {
 		if (isComplete()) {
-			throw new CoreException("Exercise is completed");
+			throw new DomainException("Exercise is completed");
 		}
 	}
 }
