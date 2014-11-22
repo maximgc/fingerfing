@@ -10,19 +10,13 @@
 		<g:ListBox ui:field="exerciseSelector" />
 		<g:TabPanel width="810px" height="374px" ui:field="tabPanel">
 			<g:Tab text="Train">
-				<g:VerticalPanel ui:field="pTrain">
 					<f:TrainView ui:field="trainView"></f:TrainView>
-				</g:VerticalPanel>
 			</g:Tab>
 			<g:Tab text="CourseDesigner">
-				<g:VerticalPanel ui:field="pCourseDesigner">
 					<f:CourseDesignerView ui:field="courseDesignerView"></f:CourseDesignerView>
-				</g:VerticalPanel>
 			</g:Tab>
 			<g:Tab text="KeyboardDesigner">
-				<g:VerticalPanel ui:field="pKeyboardDesigner">
 					<f:KeyboardDesignerView ui:field="keyboardDesignerView"></f:KeyboardDesignerView>
-				</g:VerticalPanel>
 			</g:Tab>
 		</g:TabPanel>
 	</g:HTMLPanel>

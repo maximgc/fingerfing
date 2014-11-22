@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.user.client.ui.ListBox;
@@ -21,13 +20,6 @@ public class MainView extends Composite {
 	private static MainWidgetUiBinder uiBinder = GWT
 			.create(MainWidgetUiBinder.class);
 
-	@UiField
-	VerticalPanel pTrain;
-	@UiField
-	VerticalPanel pCourseDesigner;
-	@UiField
-	VerticalPanel pKeyboardDesigner;
-	
 	@UiField
 	TabPanel tabPanel;
 	@UiField
