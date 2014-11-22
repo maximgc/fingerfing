@@ -1,4 +1,4 @@
-package org.fingerfing.client.controller;
+package org.fingerfing.client.presenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.Key;
 import org.fingerfing.client.core.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
-import org.fingerfing.client.widget.DesignWidgetImpl;
+import org.fingerfing.client.widget.CourseDesignerView;
 
-public class DesignControllerImpl {
+public class CourseDesignerPresenter {
 
 	private class DescriptorMaker{
 		
@@ -33,14 +33,14 @@ public class DesignControllerImpl {
 		
 	}
 	
-	private DesignWidgetImpl designWidget;
+	private CourseDesignerView designWidget;
 	private DescriptorManager dm = new DescriptorManager();
 
 	private ExerciseDescriptor exerciseDescriptor;
 	private DescriptorMaker descriptorMaker;
-	private MainController mainController;
+	private MainPresenter mainController;
 
-	public DesignControllerImpl(DesignWidgetImpl designWidget) {
+	public CourseDesignerPresenter(CourseDesignerView designWidget) {
 		this.designWidget = designWidget;
 		this.designWidget.setDesignController(this);
 		descriptorMaker = new DescriptorMaker();
@@ -72,7 +72,7 @@ public class DesignControllerImpl {
 		designWidget.showJson(dm.encodeToJson(exerciseDescriptor));
 	}
 
-	public void setMainController(MainController mainController) {
+	public void setMainController(MainPresenter mainController) {
 		this.mainController = mainController;
 	}
 

@@ -17,7 +17,7 @@
 			</g:Tab>
 			<g:Tab text="KeyboardDesigner">
 				<g:VerticalPanel ui:field="pKeyboardDesigner">
-					<f:KeyboardDesignerWidget></f:KeyboardDesignerWidget>
+					<f:KeyboardDesignerView></f:KeyboardDesignerView>
 				</g:VerticalPanel>
 			</g:Tab>
 		</g:TabPanel>

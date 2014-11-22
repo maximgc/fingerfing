@@ -1,7 +1,7 @@
 package org.fingerfing.client;
 
-import org.fingerfing.client.controller.MainController;
-import org.fingerfing.client.widget.MainWidget;
+import org.fingerfing.client.presenter.MainPresenter;
+import org.fingerfing.client.widget.MainView;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -19,8 +19,8 @@ public class FingerFing implements EntryPoint {
 
 	public void onModuleLoad() {
 		
-		MainWidget mw = new MainWidget();
-		MainController mc = new MainController(mw);
+		MainView mw = new MainView();
+		MainPresenter mc = new MainPresenter(mw);
 
 		RootPanel.get("mainArea").add(mw);
 		mc.start();

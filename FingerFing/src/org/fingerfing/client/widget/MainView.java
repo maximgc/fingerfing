@@ -2,7 +2,7 @@ package org.fingerfing.client.widget;
 
 import java.util.List;
 
-import org.fingerfing.client.controller.MainController;
+import org.fingerfing.client.presenter.MainPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -16,7 +16,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.event.dom.client.ChangeEvent;
 
-public class MainWidget extends Composite {
+public class MainView extends Composite {
 
 	private static MainWidgetUiBinder uiBinder = GWT
 			.create(MainWidgetUiBinder.class);
@@ -33,12 +33,12 @@ public class MainWidget extends Composite {
 	@UiField
 	ListBox exerciseSelector;
 
-	private MainController mainController;
+	private MainPresenter mainController;
 
-	interface MainWidgetUiBinder extends UiBinder<Widget, MainWidget> {
+	interface MainWidgetUiBinder extends UiBinder<Widget, MainView> {
 	}
 
-	public MainWidget() {
+	public MainView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -50,7 +50,7 @@ public class MainWidget extends Composite {
 		pCourseDesigner.add(w);
 	}
 
-	public void setMainController(MainController mainController) {
+	public void setMainController(MainPresenter mainController) {
 		this.mainController = mainController;
 	}
 

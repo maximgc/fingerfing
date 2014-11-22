@@ -1,22 +1,22 @@
-package org.fingerfing.client.controller;
+package org.fingerfing.client.presenter;
 
 import org.fingerfing.client.core.Exercise;
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.NativeKey;
-import org.fingerfing.client.widget.TrainWidgetImpl;
+import org.fingerfing.client.widget.TrainView;
 import org.fingerfing.client.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 
-public class TrainControllerImpl {
+public class TrainPresenter {
 
-	private TrainWidgetImpl trainWidget;
+	private TrainView trainWidget;
 	private Exercise exercise;
 
 	@SuppressWarnings("unused")
 	// WARN unused
-	private MainController mainController;
+	private MainPresenter mainController;
 
-	public TrainControllerImpl(TrainWidgetImpl trainWidget) {
+	public TrainPresenter(TrainView trainWidget) {
 		this.trainWidget = trainWidget;
 		trainWidget.addNativeKeyInputHandler(new NativeKeyInputHandler() {
 			@Override
@@ -38,7 +38,7 @@ public class TrainControllerImpl {
 		}
 	}
 
-	public void setMainController(MainController mainController) {
+	public void setMainController(MainPresenter mainController) {
 		this.mainController = mainController;
 	}
 

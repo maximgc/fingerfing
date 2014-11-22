@@ -1,4 +1,4 @@
-package org.fingerfing.client.controller;
+package org.fingerfing.client.presenter;
 
 import java.util.Arrays;
 import java.util.List;

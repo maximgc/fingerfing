@@ -1,8 +1,8 @@
 package org.fingerfing.client.widget;
 
-import org.fingerfing.client.controller.DesignControllerImpl;
 import org.fingerfing.client.core.ExerciseDescriptor;
 import org.fingerfing.client.core.Key;
+import org.fingerfing.client.presenter.CourseDesignerPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 
-public class DesignWidgetImpl extends Composite {
+public class CourseDesignerView extends Composite {
 
 	private static DesignWidgetImplUiBinder uiBinder = GWT
 			.create(DesignWidgetImplUiBinder.class);
@@ -22,17 +22,17 @@ public class DesignWidgetImpl extends Composite {
 	@UiField
 	TextArea jsonArea;
 	
-	private DesignControllerImpl designController;
+	private CourseDesignerPresenter designController;
 
 	interface DesignWidgetImplUiBinder extends
-			UiBinder<Widget, DesignWidgetImpl> {
+			UiBinder<Widget, CourseDesignerView> {
 	}
 
-	public DesignWidgetImpl() {
+	public CourseDesignerView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public void setDesignController(DesignControllerImpl designController) {
+	public void setDesignController(CourseDesignerPresenter designController) {
 		this.designController = designController;
 	}
 	

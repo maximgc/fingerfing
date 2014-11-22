@@ -16,16 +16,16 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 
-public class KeyboardDesignerWidget extends Composite {
+public class KeyboardDesignerView extends Composite {
 
 	private static KeyboardDesignerWidgetUiBinder uiBinder = GWT
 			.create(KeyboardDesignerWidgetUiBinder.class);
 
 	interface KeyboardDesignerWidgetUiBinder extends
-			UiBinder<Widget, KeyboardDesignerWidget> {
+			UiBinder<Widget, KeyboardDesignerView> {
 	}
 
-	public KeyboardDesignerWidget() {
+	public KeyboardDesignerView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		for (Finger f : Finger.values()){
 			fingerList.addItem(f.toString());

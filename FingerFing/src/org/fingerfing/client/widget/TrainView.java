@@ -19,9 +19,9 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Max
  */
-public class TrainWidgetImpl extends Composite implements HasNativeKeyInputHandler {
+public class TrainView extends Composite implements HasNativeKeyInputHandler {
 
-	interface TrainWidgetImplUiBinder extends UiBinder<Widget, TrainWidgetImpl> {
+	interface TrainWidgetImplUiBinder extends UiBinder<Widget, TrainView> {
 	}
 
 	private static TrainWidgetImplUiBinder uiBinder = GWT
@@ -32,7 +32,7 @@ public class TrainWidgetImpl extends Composite implements HasNativeKeyInputHandl
 	@UiField
 	ExerciseWidget keyboard;
 
-	public TrainWidgetImpl() {
+	public TrainView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

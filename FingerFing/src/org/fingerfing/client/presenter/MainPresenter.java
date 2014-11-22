@@ -1,30 +1,30 @@
-package org.fingerfing.client.controller;
+package org.fingerfing.client.presenter;
 
 import org.fingerfing.client.core.ExerciseDescriptor;
-import org.fingerfing.client.widget.DesignWidgetImpl;
-import org.fingerfing.client.widget.MainWidget;
-import org.fingerfing.client.widget.TrainWidgetImpl;
+import org.fingerfing.client.widget.CourseDesignerView;
+import org.fingerfing.client.widget.MainView;
+import org.fingerfing.client.widget.TrainView;
 
-public class MainController {
+public class MainPresenter {
 
-	private MainWidget mainWidget;
-	private TrainControllerImpl trainController;
-	private DesignControllerImpl designController;
+	private MainView mainWidget;
+	private TrainPresenter trainController;
+	private CourseDesignerPresenter designController;
 	private ExerciseDescriptorLoader edLoader;
 	private ExerciseDescriptor currentEd;
 
-	public MainController(MainWidget mw) {
+	public MainPresenter(MainView mw) {
 		this.mainWidget = mw;
 		this.mainWidget.setMainController(this);
 
-		TrainWidgetImpl tw = new TrainWidgetImpl();
-		DesignWidgetImpl dw = new DesignWidgetImpl();
+		TrainView tw = new TrainView();
+		CourseDesignerView dw = new CourseDesignerView();
 
 		this.mainWidget.setTrainWidget(tw);
 		this.mainWidget.setDesignWidget(dw);
 
-		this.trainController = new TrainControllerImpl(tw);
-		this.designController = new DesignControllerImpl(dw);
+		this.trainController = new TrainPresenter(tw);
+		this.designController = new CourseDesignerPresenter(dw);
 		
 		this.trainController.setMainController(this);
 		this.designController.setMainController(this);
