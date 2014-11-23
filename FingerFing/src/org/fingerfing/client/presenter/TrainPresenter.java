@@ -3,11 +3,13 @@ package org.fingerfing.client.presenter;
 import org.fingerfing.client.Settings;
 import org.fingerfing.client.domain.Exercise;
 import org.fingerfing.client.domain.NativeKey;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEventHandler;
 import org.fingerfing.client.view.TrainView;
 import org.fingerfing.client.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.widget.event.NativeKeyInputHandler;
 
-public class TrainPresenter {
+public class TrainPresenter implements ExerciseDescriptorChangeEventHandler{
 
 	private TrainView trainWidget;
 	private Exercise exercise;
@@ -35,8 +37,8 @@ public class TrainPresenter {
 	}
 
 	public void start() {
-			exercise = new Exercise(Settings.exerciseDescriptor);
-			startExercise();
+//			exercise = new Exercise(Settings.exerciseDescriptor);
+//			startExercise();
 	}
 
 	private void startElement() {
@@ -50,6 +52,12 @@ public class TrainPresenter {
 			trainWidget.showSequence(exercise.getSequence());
 			startElement();
 		}
+	}
+
+	@Override
+	public void onExerciseDescriptorChange(ExerciseDescriptorChangeEvent event) {
+		exercise = new Exercise(Settings.exerciseDescriptor);
+		startExercise();
 	}
 
 }
