@@ -2,8 +2,8 @@ package org.fingerfing.client.view;
 
 import org.fingerfing.client.domain.Finger;
 import org.fingerfing.client.domain.Key;
-import org.fingerfing.client.widget.event.KeyInputEvent;
-import org.fingerfing.client.widget.event.KeyInputHandler;
+import org.fingerfing.client.view.event.KeyInputEvent;
+import org.fingerfing.client.view.event.KeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

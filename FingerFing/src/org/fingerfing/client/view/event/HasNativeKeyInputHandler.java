@@ -1,4 +1,4 @@
-package org.fingerfing.client.widget.event;
+package org.fingerfing.client.view.event;
 
 public interface HasNativeKeyInputHandler {
 

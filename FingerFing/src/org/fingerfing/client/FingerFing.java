@@ -1,9 +1,11 @@
 package org.fingerfing.client;
 
+import org.fingerfing.client.presenter.Action;
 import org.fingerfing.client.presenter.CourseDesignerPresenter;
-import org.fingerfing.client.presenter.ExerciseDescriptorLoader;
 import org.fingerfing.client.presenter.MainPresenter;
+import org.fingerfing.client.presenter.SettingsPresenter;
 import org.fingerfing.client.presenter.TrainPresenter;
+import org.fingerfing.client.presenter.event.ActionChangeEvent;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
 import org.fingerfing.client.view.MainView;
 
@@ -23,41 +25,36 @@ public class FingerFing implements EntryPoint {
 
 	int i = 0;
 
-	private ExerciseDescriptorLoader exDescLoader;
-
 	public void onModuleLoad() {
 
-
-		EventBus eventBus = new SimpleEventBus();
-		
 		final MainView mv = new MainView();
-		final MainPresenter mp = new MainPresenter(mv);
-		final TrainPresenter tp;
-		final CourseDesignerPresenter dp;
-
-		tp = new TrainPresenter(mv.getTrainView());
-		dp = new CourseDesignerPresenter(mv.getCourseDesignerView());
 		RootPanel.get("mainArea").add(mv);
 		
+		final EventBus eventBus = new SimpleEventBus();
+
+		final MainPresenter mp = new MainPresenter(mv);
+		final TrainPresenter tp = new TrainPresenter(mv.getTrainView(), eventBus);
+		final CourseDesignerPresenter dp = new CourseDesignerPresenter(mv.getCourseDesignerView(), eventBus);
+		final SettingsPresenter sp = new SettingsPresenter(mv.getSettingsView(), eventBus);
 		
 		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, tp);
-
-
+		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, dp);
+		eventBus.addHandler(ActionChangeEvent.TYPE, mp);
+		eventBus.addHandler(ActionChangeEvent.TYPE, tp);
+		eventBus.addHandler(ActionChangeEvent.TYPE, dp);
 
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				switch (event.getValue()) {
 				case "train":
-					mp.switchTab(0);
-					tp.start();
+					eventBus.fireEvent(new ActionChangeEvent(Action.TRAIN));
 					break;
 				case "courseDesign":
-					mp.switchTab(1);
-					dp.start();
+					eventBus.fireEvent(new ActionChangeEvent(Action.COURSE_DESIGNER));
 					break;
 				case "keyboardDesign":
-					mp.switchTab(2);
+					eventBus.fireEvent(new ActionChangeEvent(Action.KEYBOARD_DESIGNER));
 					break;
 				default:
 					History.newItem("train");
@@ -66,11 +63,7 @@ public class FingerFing implements EntryPoint {
 			}
 		});
 		
-		
 		// TEMP
-		this.exDescLoader = new ExerciseDescriptorLoader();
-		Settings.exerciseDescriptor = exDescLoader.loadExerciseDescriptor(0);
-		eventBus.fireEvent(new ExerciseDescriptorChangeEvent());
 		History.fireCurrentHistoryState();
 	}
 }

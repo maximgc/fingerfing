@@ -10,16 +10,19 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.CaptionPanel;
 
 public class MainView extends Composite {
 
+	interface MainWidgetUiBinder extends UiBinder<Widget, MainView> {
+	}
+
 	private static MainWidgetUiBinder uiBinder = GWT
 			.create(MainWidgetUiBinder.class);
-
+	
 	@UiField
 	TabPanel tabPanel;
-	
+	@UiField
+	SettingsView settingsView;
 	@UiField
 	CourseDesignerView courseDesignerView;
 	@UiField
@@ -27,38 +30,39 @@ public class MainView extends Composite {
 	@UiField
 	KeyboardDesignerView keyboardDesignerView;
 
-	public CourseDesignerView getCourseDesignerView() {
-		return courseDesignerView;
+	private MainPresenter presenter;
+
+	public MainView() {
+		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public TrainView getTrainView() {
-		return trainView;
+	public CourseDesignerView getCourseDesignerView() {
+		return courseDesignerView;
 	}
 
 	public KeyboardDesignerView getKeyboardDesignerView() {
 		return keyboardDesignerView;
 	}
 
-	private MainPresenter mainPresenter;
-
-	interface MainWidgetUiBinder extends UiBinder<Widget, MainView> {
+	public SettingsView getSettingsView() {
+		return settingsView;
 	}
 
-	public MainView() {
-		initWidget(uiBinder.createAndBindUi(this));
+	public TrainView getTrainView() {
+		return trainView;
 	}
 
-	public void setMainController(MainPresenter mainController) {
-		this.mainPresenter = mainController;
+	public void setPresenter(MainPresenter presenter) {
+		this.presenter = presenter;
+	}
+
+	public void switchTab(int i) {
+		tabPanel.selectTab(i);
 	}
 
 	@UiHandler("tabPanel")
 	void onTabPanelSelection(SelectionEvent<Integer> event) {
-		mainPresenter.onChangeTab(event.getSelectedItem());
-	}
-
-	public void switchToTab(int i) {
-		tabPanel.selectTab(i);
+		presenter.onSelectTab(event.getSelectedItem());
 	}
 	
 }

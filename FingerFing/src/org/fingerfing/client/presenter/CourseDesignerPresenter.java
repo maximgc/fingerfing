@@ -8,16 +8,23 @@ import org.fingerfing.client.domain.ExerciseDescriptor;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
+import org.fingerfing.client.presenter.event.ActionChangeEvent;
+import org.fingerfing.client.presenter.event.ActionChangeEventHandler;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEventHandler;
 import org.fingerfing.client.view.CourseDesignerView;
 
-public class CourseDesignerPresenter {
+import com.google.gwt.event.shared.EventBus;
 
-	private class DescriptorMaker{
-		
+public class CourseDesignerPresenter implements ActionChangeEventHandler,
+		ExerciseDescriptorChangeEventHandler {
+
+	private class DescriptorMaker {
+
 		private List<Key> keySeq;
-		
+
 		public DescriptorMaker() {
-			if (exerciseDescriptor == null){
+			if (exerciseDescriptor == null) {
 				exerciseDescriptor = dm.create(ExerciseDescriptor.class);
 			}
 			if (exerciseDescriptor.getSequence() == null) {
@@ -27,21 +34,24 @@ public class CourseDesignerPresenter {
 				keySeq = exerciseDescriptor.getSequence();
 			}
 		}
-		
+
 		private void addKey(Key key) {
 			keySeq.add(key);
 		}
-		
+
 	}
-	
+
 	private CourseDesignerView designWidget;
 	private DescriptorManager dm = new DescriptorManager();
 
 	private ExerciseDescriptor exerciseDescriptor;
 	private DescriptorMaker descriptorMaker;
+	private EventBus eventBus;
 
-	public CourseDesignerPresenter(CourseDesignerView designWidget) {
+	public CourseDesignerPresenter(CourseDesignerView designWidget,
+			EventBus eventBus) {
 		this.designWidget = designWidget;
+		this.eventBus = eventBus;
 		this.designWidget.setDesignController(this);
 		descriptorMaker = new DescriptorMaker();
 	}
@@ -50,15 +60,6 @@ public class CourseDesignerPresenter {
 		return exerciseDescriptor;
 	}
 
-	public void start() {
-		exerciseDescriptor = Settings.exerciseDescriptor;
-		if (exerciseDescriptor == null) {
-			throw new ClientException("ExerciseDescriptor is null");
-		}
-		descriptorMaker = new DescriptorMaker();
-		showExerciseDescriptor();
-	}
-	
 	public void onKeyInput(int nativeKeyCode) {
 		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
 		Key key = nk.getKeys()[0];
@@ -69,6 +70,28 @@ public class CourseDesignerPresenter {
 	private void showExerciseDescriptor() {
 		designWidget.showExercise(exerciseDescriptor);
 		designWidget.showJson(dm.encodeToJson(exerciseDescriptor));
+	}
+
+	@Override
+	public void onExerciseDescriptorChange(ExerciseDescriptorChangeEvent event) {
+		exerciseDescriptor = Settings.exerciseDescriptor;
+		if (exerciseDescriptor == null) {
+			throw new ClientException("ExerciseDescriptor is null");
+		}
+		descriptorMaker = new DescriptorMaker();
+		showExerciseDescriptor();
+	}
+
+	@Override
+	public void onActionChange(ActionChangeEvent event) {
+		if (event.getAction() == Action.COURSE_DESIGNER) {
+			exerciseDescriptor = Settings.exerciseDescriptor;
+			if (exerciseDescriptor == null) {
+				throw new ClientException("ExerciseDescriptor is null");
+			}
+			descriptorMaker = new DescriptorMaker();
+			showExerciseDescriptor();
+		}
 	}
 
 }

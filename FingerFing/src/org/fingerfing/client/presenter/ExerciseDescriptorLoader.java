@@ -25,7 +25,7 @@ public class ExerciseDescriptorLoader {
 					.getJsonExerciseDescriptor1().getText());
 		case 1:
 			return dm.decodeFromJson(ExerciseDescriptor.class, er
-					.getJsonExerciseDescriptor1().getText());
+					.getJsonExerciseDescriptor2().getText());
 		default:
 			throw new ClientException("Descriptor not found");
 		}

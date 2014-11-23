@@ -8,12 +8,12 @@ import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Finger;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
-import org.fingerfing.client.widget.event.HasKeyInputHandler;
-import org.fingerfing.client.widget.event.HasNativeKeyInputHandler;
-import org.fingerfing.client.widget.event.KeyInputEvent;
-import org.fingerfing.client.widget.event.KeyInputHandler;
-import org.fingerfing.client.widget.event.NativeKeyInputEvent;
-import org.fingerfing.client.widget.event.NativeKeyInputHandler;
+import org.fingerfing.client.view.event.HasKeyInputHandler;
+import org.fingerfing.client.view.event.HasNativeKeyInputHandler;
+import org.fingerfing.client.view.event.KeyInputEvent;
+import org.fingerfing.client.view.event.KeyInputHandler;
+import org.fingerfing.client.view.event.NativeKeyInputEvent;
+import org.fingerfing.client.view.event.NativeKeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

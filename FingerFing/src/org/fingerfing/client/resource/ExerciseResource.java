@@ -11,4 +11,7 @@ public interface ExerciseResource extends ClientBundle{
 	@Source("ExerciseDescriptor1.json")
 	public TextResource getJsonExerciseDescriptor1(); 
 
+	@Source("ExerciseDescriptor2.json")
+	public TextResource getJsonExerciseDescriptor2(); 
+
 }

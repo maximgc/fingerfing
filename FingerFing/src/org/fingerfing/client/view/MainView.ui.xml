@@ -8,6 +8,7 @@
 	}
 	</ui:style>
 	<g:HTMLPanel>
+		<f:SettingsView ui:field="settingsView" />
 		<g:TabPanel width="810px" height="374px" ui:field="tabPanel">
 			<g:Tab text="Train">
 					<f:TrainView ui:field="trainView"></f:TrainView>

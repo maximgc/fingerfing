@@ -6,8 +6,8 @@ import org.fingerfing.client.domain.Attempt;
 import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
-import org.fingerfing.client.widget.event.NativeKeyInputEvent;
-import org.fingerfing.client.widget.event.NativeKeyInputHandler;
+import org.fingerfing.client.view.event.NativeKeyInputEvent;
+import org.fingerfing.client.view.event.NativeKeyInputHandler;
 
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;

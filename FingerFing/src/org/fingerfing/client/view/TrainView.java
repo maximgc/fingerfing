@@ -5,8 +5,8 @@ import java.util.List;
 import org.fingerfing.client.domain.Attempt;
 import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
-import org.fingerfing.client.widget.event.NativeKeyInputHandler;
-import org.fingerfing.client.widget.event.HasNativeKeyInputHandler;
+import org.fingerfing.client.view.event.HasNativeKeyInputHandler;
+import org.fingerfing.client.view.event.NativeKeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
