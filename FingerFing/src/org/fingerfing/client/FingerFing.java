@@ -1,6 +1,5 @@
 package org.fingerfing.client;
 
-import org.fingerfing.client.presenter.Action;
 import org.fingerfing.client.presenter.CourseDesignerPresenter;
 import org.fingerfing.client.presenter.MainPresenter;
 import org.fingerfing.client.presenter.SettingsPresenter;
@@ -10,8 +9,6 @@ import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
 import org.fingerfing.client.view.MainView;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.History;
@@ -31,8 +28,9 @@ public class FingerFing implements EntryPoint {
 		RootPanel.get("mainArea").add(mv);
 		
 		final EventBus eventBus = new SimpleEventBus();
+		final FlowController flowController = new FlowController(eventBus);
 
-		final MainPresenter mp = new MainPresenter(mv);
+		final MainPresenter mp = new MainPresenter(mv, eventBus);
 		final TrainPresenter tp = new TrainPresenter(mv.getTrainView(), eventBus);
 		final CourseDesignerPresenter dp = new CourseDesignerPresenter(mv.getCourseDesignerView(), eventBus);
 		final SettingsPresenter sp = new SettingsPresenter(mv.getSettingsView(), eventBus);
@@ -42,26 +40,9 @@ public class FingerFing implements EntryPoint {
 		eventBus.addHandler(ActionChangeEvent.TYPE, mp);
 		eventBus.addHandler(ActionChangeEvent.TYPE, tp);
 		eventBus.addHandler(ActionChangeEvent.TYPE, dp);
+		eventBus.addHandler(ActionChangeEvent.TYPE, flowController);
 
-		History.addValueChangeHandler(new ValueChangeHandler<String>() {
-			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				switch (event.getValue()) {
-				case "train":
-					eventBus.fireEvent(new ActionChangeEvent(Action.TRAIN));
-					break;
-				case "courseDesign":
-					eventBus.fireEvent(new ActionChangeEvent(Action.COURSE_DESIGNER));
-					break;
-				case "keyboardDesign":
-					eventBus.fireEvent(new ActionChangeEvent(Action.KEYBOARD_DESIGNER));
-					break;
-				default:
-					History.newItem("train");
-					break;
-				}
-			}
-		});
+		History.addValueChangeHandler(flowController);
 		
 		// TEMP
 		History.fireCurrentHistoryState();
