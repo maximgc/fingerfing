@@ -13,6 +13,7 @@ import org.fingerfing.client.presenter.event.KeyboardDescriptorChangeEvent;
 import org.fingerfing.client.resource.ExerciseResource;
 import org.fingerfing.client.resource.KeyboardResource;
 import org.fingerfing.client.view.KeyboardDescriptor;
+import org.fingerfing.client.view.KeyboardLabelDescriptor;
 import org.fingerfing.client.view.SettingsView;
 
 import com.google.gwt.event.shared.EventBus;
@@ -56,12 +57,21 @@ public class SettingsPresenter implements ExerciseDescriptorModifyHandler {
 		this.exDescLoader = new ExerciseDescriptorLoader();
 		this.settingsView.setExerciseDescriptorNameList(exDescLoader
 				.getDescriptorNameList());
-		this.settingsView.setKeyboardDescriptorNameList(Arrays.asList("Keyboard 1","Keyboard 2"));
-		this.settingsView.setKeyboardGeneralLabelDescriptorNameList(Arrays.asList("Label RU","Label EN"));
-		this.settingsView.setKeyboardAlternativeLabelDescriptorNameList(Arrays.asList("Label RU","Label EN"));
+		this.settingsView.setKeyboardDescriptorNameList(Arrays.asList(
+				"Keyboard 1", "Keyboard 2"));
+		this.settingsView.setKeyboardGeneralLabelDescriptorNameList(Arrays
+				.asList("Label RU", "Label EN"));
+		this.settingsView.setKeyboardAlternativeLabelDescriptorNameList(Arrays
+				.asList("Label RU", "Label EN"));
 
 		Settings.exerciseDescriptor = exDescLoader.loadExerciseDescriptor(0);
 		Settings.keyboardDescriptor = loadKeyboardDescriptor(0);
+		Settings.keyboardGeneralLabelDescriptor = dm.decodeFromJson(
+				KeyboardLabelDescriptor.class, KeyboardResource.INST
+						.getKeyboardLabelDescriptorEN().getText());
+		Settings.keyboardAlternativeLabelDescriptor = dm.decodeFromJson(
+				KeyboardLabelDescriptor.class, KeyboardResource.INST
+						.getKeyboardLabelDescriptorRU().getText());
 	}
 
 	public void onSelectExerciseDescriptorIndex(int selectedIndex) {
@@ -83,26 +93,44 @@ public class SettingsPresenter implements ExerciseDescriptorModifyHandler {
 	private KeyboardDescriptor loadKeyboardDescriptor(int selectedIndex) {
 		switch (selectedIndex) {
 		case 0:
-			 return dm.decodeFromJson(
-					KeyboardDescriptor.class, KeyboardResource.INST
-							.getKeyboardDescriptor1().getText());
+			return dm.decodeFromJson(KeyboardDescriptor.class,
+					KeyboardResource.INST.getKeyboardDescriptor1().getText());
 		case 1:
-			return dm.decodeFromJson(
-					KeyboardDescriptor.class, KeyboardResource.INST
-							.getKeyboardDescriptor2().getText());
+			return dm.decodeFromJson(KeyboardDescriptor.class,
+					KeyboardResource.INST.getKeyboardDescriptor2().getText());
 		}
 		return null;
 	}
 
 	public void onSelectKeyboardGeneralLabelDescriptorIndex(int selectedIndex) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Select "+selectedIndex);
+		switch (selectedIndex) {
+		case 0:
+			Settings.keyboardGeneralLabelDescriptor = dm.decodeFromJson(
+					KeyboardLabelDescriptor.class, KeyboardResource.INST
+							.getKeyboardLabelDescriptorRU().getText());
+		case 1:
+			Settings.keyboardGeneralLabelDescriptor = dm.decodeFromJson(
+					KeyboardLabelDescriptor.class, KeyboardResource.INST
+							.getKeyboardLabelDescriptorEN().getText());
+		}
+		eventBus.fireEventFromSource(new KeyboardDescriptorChangeEvent(), this);
 	}
 
 	public void onSelectKeyboardAlternativeLabelDescriptorIndex(
 			int selectedIndex) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Select "+selectedIndex);
+		switch (selectedIndex) {
+		case 0:
+			Settings.keyboardAlternativeLabelDescriptor = dm.decodeFromJson(
+					KeyboardLabelDescriptor.class, KeyboardResource.INST
+							.getKeyboardLabelDescriptorRU().getText());
+		case 1:
+			Settings.keyboardAlternativeLabelDescriptor = dm.decodeFromJson(
+					KeyboardLabelDescriptor.class, KeyboardResource.INST
+							.getKeyboardLabelDescriptorEN().getText());
+		}
+		eventBus.fireEventFromSource(new KeyboardDescriptorChangeEvent(), this);
 	}
 
 }

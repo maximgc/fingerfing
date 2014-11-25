@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.fingerfing.client.domain.Key;
-import org.fingerfing.client.json.DescriptorManager;
-import org.fingerfing.client.resource.KeyboardResource;
 import org.fingerfing.client.view.KeyboardDescriptor.KeyDescriptor;
 import org.fingerfing.client.view.KeyboardDescriptor.RowDescriptor;
 import org.fingerfing.client.view.KeyboardWidget.KeyWidget;
+import org.fingerfing.client.view.event.KeyInputHandler;
+import org.fingerfing.client.view.event.NativeKeyInputHandler;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
@@ -28,29 +28,39 @@ class KeyboardBuilder {
 	private AbsolutePanel keyArea;
 
 	private Map<Key, KeyWidget> keyWidgetMap = new HashMap<Key, KeyWidget>();
-	
-	private DescriptorManager dm = new DescriptorManager();
 
-	public KeyboardBuilder(AbsolutePanel keyArea) {
-		assert (keyArea != null) : "keyArea is null";
-		this.keyArea = keyArea;
+	private Map<Key, String> generalLabelMap;
+
+	private Map<Key, String> alternativeLabelMap;
+
+	private NativeKeyInputHandler nativeKeyInputHandler;
+
+	private KeyInputHandler keyInputHandler;
+
+	public KeyboardBuilder(AbsolutePanel keyPanel) {
+		assert (keyPanel != null) : "keyArea is null";
+		this.keyArea = keyPanel;
 	}
 
-	public Map<Key, KeyWidget> build() {
-		KeyboardDescriptor kd = dm.decodeFromJson(KeyboardDescriptor.class,
-				KeyboardResource.INST.getKeyboardDescriptor1().getText());
-		assert (kd != null) : "KeyboardBuilder: KeyboardDescriptor is null";
-		KeyboardLabelDescriptor kldEN = dm.decodeFromJson(
-				KeyboardLabelDescriptor.class, KeyboardResource.INST
-						.getKeyboardLabelDescriptorEN().getText());
-		KeyboardLabelDescriptor kldRU = dm.decodeFromJson(
-				KeyboardLabelDescriptor.class, KeyboardResource.INST
-						.getKeyboardLabelDescriptorRU().getText());
-
-		buildBlock(kd.getBlock(), BLOCK_LEFT, BLOCK_TOP);
-		buildGeneralLabel(kldEN);
-		buildAlternativeLabel(kldRU);
+	public Map<Key, KeyWidget> buildKeyboard(
+			KeyboardDescriptor keyboardDescriptor) {
+		keyArea.clear();
+		buildBlock(keyboardDescriptor.getBlock(), BLOCK_LEFT, BLOCK_TOP);
 		return keyWidgetMap;
+	}
+
+	public void setGeneralLabelDescriptor(
+			KeyboardLabelDescriptor labelDescriptor) {
+		this.generalLabelMap = labelDescriptor.getLabelMap();
+		if (keyWidgetMap != null)
+			buildGeneralLabelBlock();
+	}
+
+	public void setAlternativeLabelDescriptor(
+			KeyboardLabelDescriptor labelDescriptor) {
+		this.alternativeLabelMap = labelDescriptor.getLabelMap();
+		if (keyWidgetMap != null)
+			buildAlternativeLabelBlock();
 	}
 
 	private void buildBlock(List<RowDescriptor> rows, int left, int top) {
@@ -60,47 +70,76 @@ class KeyboardBuilder {
 		}
 	}
 
-	private void buildAlternativeLabel(KeyboardLabelDescriptor ld) {
-		assert (ld != null) : "alternative label descriptor null";
+	private void buildAlternativeLabelBlock() {
+		assert (alternativeLabelMap != null) : "alternative label descriptor null";
 		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
-			String l = ld.getLabelMap().get(e.getKey());
-			if (l != null) {
-				KeyWidget keyWidget = e.getValue();
-				keyWidget.setAlternativeLabel(l);
-			}
+			buildAlternativeLabelKey(e.getKey(), e.getValue());
 		}
 	}
 
-	private void buildGeneralLabel(KeyboardLabelDescriptor ld) {
-		assert (ld != null) : "general label descriptor null";
-		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
-			String l = ld.getLabelMap().get(e.getKey());
-			if (l != null) {
-				KeyWidget keyWidget = e.getValue();
-				keyWidget.setGeneralLabel(l);
-			}
+	private void buildAlternativeLabelKey(Key key, KeyWidget keyWidget) {
+		String label = alternativeLabelMap.get(key);
+		if (label != null) {
+			keyWidget.setAlternativeLabel(label);
 		}
 	}
 
-	// WARN пробег по мапе 3 раза?
+	private void buildGeneralLabelBlock() {
+		assert (generalLabelMap != null) : "general label descriptor null";
+		for (Map.Entry<Key, KeyWidget> e : keyWidgetMap.entrySet()) {
+			buildGeneralLabelKey(e.getKey(), e.getValue());
+		}
+	}
+
+	private void buildGeneralLabelKey(Key key, KeyWidget keyWidget) {
+		String label = generalLabelMap.get(key);
+		if (label != null) {
+			keyWidget.setGeneralLabel(label);
+		}
+	}
+
 	private void buildKey(Key key, int left, int top, int width, int height) {
 		KeyWidget keyWidget = new KeyWidget(key, left, top, width, height);
 		keyWidget.setStyleName(KEY_WIDGET_STYLE);
 		keyArea.add(keyWidget, left, top);
 		keyWidgetMap.put(key, keyWidget);
+
+		if (generalLabelMap != null)
+			buildGeneralLabelKey(key, keyWidget);
+		if (alternativeLabelMap != null)
+			buildAlternativeLabelKey(key, keyWidget);
+
 	}
 
 	private void buildRow(List<KeyDescriptor> keys, int left, int top,
 			int height) {
-		for (KeyDescriptor r : keys) {
+		for (KeyDescriptor keyDescriptor : keys) {
 			int width;
-			if (r.getWidth() == null) {
+			if (keyDescriptor.getWidth() == null) {
 				width = KEY_WIDTH;
 			} else {
-				width = Integer.parseInt(r.getWidth());
+				width = Integer.parseInt(keyDescriptor.getWidth());
 			}
-			buildKey(r.getKey(), left, top, width, height);
+			buildKey(keyDescriptor.getKey(), left, top, width, height);
 			left += width + KEY_SPACE_HORIZONTAL;
+		}
+	}
+
+	public void addKeyInputHandler(KeyInputHandler handler) {
+		this.keyInputHandler = handler;
+		if (keyWidgetMap == null)
+			return;
+		for (KeyWidget kw : keyWidgetMap.values()) {
+			kw.addKeyInputHandler(handler);
+		}
+	}
+
+	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
+		this.nativeKeyInputHandler = handler;
+		if (keyWidgetMap == null)
+			return;
+		for (KeyWidget kw : keyWidgetMap.values()) {
+			kw.addNativeKeyInputHandler(handler);
 		}
 	}
 }

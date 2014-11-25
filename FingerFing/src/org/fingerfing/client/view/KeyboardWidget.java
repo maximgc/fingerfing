@@ -58,18 +58,6 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 		}
 
 		@Override
-		public void addNativeKeyInputHandler(final NativeKeyInputHandler handler) {
-			final NativeKey nativeKey = NativeKey.getByNativeCode(key
-					.getNativeCode());
-			addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					handler.onNativeKeyInput(new NativeKeyInputEvent(nativeKey));
-				}
-			});
-		}
-
-		@Override
 		public void addKeyInputHandler(final KeyInputHandler handler) {
 			this.addClickHandler(new ClickHandler() {
 				@Override
@@ -79,24 +67,16 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 			});
 		}
 
-		public void setAlternativeLabel(String alternativeLabel) {
-			this.alternativeLabel = alternativeLabel;
-			applyLabel();
-		}
-
-		public void setGeneralLabel(String generalLabel) {
-			this.generalLabel = generalLabel;
-			applyLabel();
-		}
-
-		public void showEval(int eval) {
-			setAttribute("eval", String.valueOf(eval));
-			setAttribute("heated", String.valueOf(eval));
-		}
-
-		public void resetEval() {
-			removeAttribute("eval");
-			removeAttribute("heated");
+		@Override
+		public void addNativeKeyInputHandler(final NativeKeyInputHandler handler) {
+			final NativeKey nativeKey = NativeKey.getByNativeCode(key
+					.getNativeCode());
+			addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					handler.onNativeKeyInput(new NativeKeyInputEvent(nativeKey));
+				}
+			});
 		}
 
 		private void applyLabel() {
@@ -110,40 +90,60 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 			this.getElement().removeAttribute(name);
 		}
 
-		private void setAttribute(String name, String value) {
-			this.getElement().setAttribute(name, value);
+		public void resetEval() {
+			removeAttribute("eval");
+			removeAttribute("heated");
 		}
 
 		public void resetExpected() {
 			removeAttribute("expected");
 		}
 
-		public void showExpected() {
-			setAttribute("expected", "next");
-		}
-
-		public void showPressed(int i) {
-			setAttribute("pressed", String.valueOf(i));
-		}
-
-		public void resetPressed() {
-			removeAttribute("pressed");
-		}
-
-		public void showInSeq() {
-			setAttribute("sequence", "next");
+		public void resetFinger() {
+			removeAttribute("finger");
 		}
 
 		public void resetInSeq() {
 			removeAttribute("sequence");
 		}
 
+		public void resetPressed() {
+			removeAttribute("pressed");
+		}
+
+		public void setAlternativeLabel(String alternativeLabel) {
+			this.alternativeLabel = alternativeLabel;
+			applyLabel();
+		}
+
+		private void setAttribute(String name, String value) {
+			this.getElement().setAttribute(name, value);
+		}
+
+		public void setGeneralLabel(String generalLabel) {
+			this.generalLabel = generalLabel;
+			applyLabel();
+		}
+
+		public void showEval(int eval) {
+			setAttribute("eval", String.valueOf(eval));
+			setAttribute("heated", String.valueOf(eval));
+		}
+
+		public void showExpected() {
+			setAttribute("expected", "next");
+		}
+
 		public void showFinger(Finger finger) {
 			setAttribute("finger", finger.toString());
 		}
 
-		public void resetFinger() {
-			removeAttribute("finger");
+		public void showInSeq() {
+			setAttribute("sequence", "next");
+		}
+
+		public void showPressed(int i) {
+			setAttribute("pressed", String.valueOf(i));
 		}
 
 	}
@@ -160,14 +160,39 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 	private Map<Key, KeyWidget> keyWidgetMap;
 
 	private Element curElement;
+	
+	private KeyboardBuilder keyboardBuilder;
+
+	private Timer t;
 
 	public KeyboardWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		keyWidgetMap = new KeyboardBuilder(keyArea).build();
+		keyboardBuilder = new KeyboardBuilder(keyArea);
+	}
+
+	@Override
+	public void addKeyInputHandler(KeyInputHandler handler) {
+		keyboardBuilder.addKeyInputHandler(handler);
+	}
+
+	@Override
+	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
+		keyboardBuilder.addNativeKeyInputHandler(handler);
+	}
+
+	public KeyWidget getKeyWidget(Key key) {
+		return keyWidgetMap.get(key);
+	}
+
+	@Override
+	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
+		keyWidgetMap = keyboardBuilder.buildKeyboard(keyboardDescriptor);
 	}
 
 	@Override
 	public void showAttempt(final Attempt attempt) {
+		if (keyWidgetMap == null)
+			return;
 		Key[] keys = attempt.getActualNativeKey().getKeys();
 		for (Key k : keys) {
 			final KeyWidget kw = keyWidgetMap.get(k);
@@ -193,31 +218,10 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 		}
 	}
 
-	@Override
-	public void showCurrentElement(Element element) {
-		if (curElement != null) {
-			KeyWidget kw = keyWidgetMap.get(curElement.getKey());
-			kw.resetExpected();
-		}
-		KeyWidget kw = keyWidgetMap.get(element.getKey());
-		kw.showExpected();
-		curElement = element;
-	}
-
-	@Override
-	public void showSequence(List<Key> sequence) {
-		// showBlock(sequence, 0);
-	}
-
-	public KeyWidget getKeyWidget(Key key) {
-		return keyWidgetMap.get(key);
-	}
-
-	private Timer t;
-
 	// WARN unused
 	@SuppressWarnings("unused")
 	private void showBlock(final List<Key> sequence, final int i) {
+		if (keyWidgetMap==null) return;
 		if (t != null)
 			t.cancel();
 		t = new Timer() {
@@ -242,25 +246,32 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 		};
 		t.scheduleRepeating(200);
 	}
+	
+	public void setGeneralLabelDescriptor(
+			KeyboardLabelDescriptor labelDescriptor) {
+		keyboardBuilder.setGeneralLabelDescriptor(labelDescriptor);
+	}
 
-	@Override
-	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		for (KeyWidget kw : keyWidgetMap.values()) {
-			kw.addNativeKeyInputHandler(handler);
-		}
+	public void setAlternativeLabelDescriptor(
+			KeyboardLabelDescriptor labelDescriptor) {
+		keyboardBuilder.setAlternativeLabelDescriptor(labelDescriptor);
 	}
 
 	@Override
-	public void addKeyInputHandler(KeyInputHandler handler) {
-		for (KeyWidget kw : keyWidgetMap.values()) {
-			kw.addKeyInputHandler(handler);
+	public void showCurrentElement(Element element) {
+		if (keyWidgetMap==null) return;
+		if (curElement != null) {
+			KeyWidget kw = keyWidgetMap.get(curElement.getKey());
+			kw.resetExpected();
 		}
+		KeyWidget kw = keyWidgetMap.get(element.getKey());
+		kw.showExpected();
+		curElement = element;
 	}
 
 	@Override
-	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
-		// TODO Auto-generated method stub
-
+	public void showSequence(List<Key> sequence) {
+		// showBlock(sequence, 0);
 	}
 
 }

@@ -18,15 +18,12 @@ import com.google.gwt.event.shared.EventBus;
 public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 		ActionChangeHandler, KeyboardDescriptorChangeHandler {
 
-	private TrainView trainWidget;
+	private TrainView trainView;
 	private Exercise exercise;
 
-	// private EventBus eventBus;
-
-	public TrainPresenter(TrainView trainWidget, EventBus eventBus) {
-		this.trainWidget = trainWidget;
-		// this.eventBus = eventBus;
-		trainWidget.addNativeKeyInputHandler(new NativeKeyInputHandler() {
+	public TrainPresenter(TrainView trainView, EventBus eventBus) {
+		this.trainView = trainView;
+		this.trainView.addNativeKeyInputHandler(new NativeKeyInputHandler() {
 			@Override
 			public void onNativeKeyInput(NativeKeyInputEvent event) {
 				onKeyInput(event.getNativeKey());
@@ -36,7 +33,7 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 
 	public void onKeyInput(NativeKey nativeKey) {
 		if (!exercise.isComplete()) {
-			trainWidget.showAttempt(exercise.makeAttempt(nativeKey));
+			trainView.showAttempt(exercise.makeAttempt(nativeKey));
 			startElement();
 		}
 		if (exercise.isComplete()) {
@@ -46,14 +43,14 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 
 	private void startElement() {
 		if (!exercise.isComplete()) {
-			trainWidget.showCurrentElement(exercise.getCurrentElement());
+			trainView.showCurrentElement(exercise.getCurrentElement());
 		}
 	}
 
 	private void startExercise() {
 		exercise = new Exercise(Settings.exerciseDescriptor);
 		if (exercise != null) {
-			trainWidget.showSequence(exercise.getSequence());
+			trainView.showSequence(exercise.getSequence());
 			startElement();
 		}
 	}
@@ -72,7 +69,9 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 
 	@Override
 	public void onKeyboardDescriptorChange(KeyboardDescriptorChangeEvent event) {
-		trainWidget.setKeyboardDescriptor(Settings.keyboardDescriptor);
+		trainView.setKeyboardDescriptor(Settings.keyboardDescriptor);
+		trainView.setKeyboardGeneralLabelDescriptor(Settings.keyboardGeneralLabelDescriptor);
+		trainView.setKeyboardAlternativeLabelDescriptor(Settings.keyboardAlternativeLabelDescriptor);
 	}
 
 }

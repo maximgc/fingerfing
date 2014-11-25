@@ -30,7 +30,7 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 	@UiField
 	ExerciseWidget trace;
 	@UiField
-	ExerciseWidget keyboard;
+	KeyboardWidget keyboard;
 
 	public TrainView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -59,6 +59,16 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
 		keyboard.setKeyboardDescriptor(keyboardDescriptor);
+	}
+
+	public void setKeyboardGeneralLabelDescriptor(
+			KeyboardLabelDescriptor labelDescriptor) {
+		keyboard.setGeneralLabelDescriptor(labelDescriptor);
+	}
+
+	public void setKeyboardAlternativeLabelDescriptor(
+			KeyboardLabelDescriptor labelDescriptor) {
+		keyboard.setAlternativeLabelDescriptor(labelDescriptor);
 	}
 	
 }
