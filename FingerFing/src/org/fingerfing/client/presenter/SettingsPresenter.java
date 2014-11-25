@@ -24,7 +24,7 @@ public class SettingsPresenter {
 
 	public void onSelectExerciseDescriptorName(int selectedIndex) {
 		Settings.exerciseDescriptor = exDescLoader.loadExerciseDescriptor(selectedIndex);
-		eventBus.fireEvent(new ExerciseDescriptorChangeEvent());
+		eventBus.fireEventFromSource(new ExerciseDescriptorChangeEvent(), this);
 	}
 
 }

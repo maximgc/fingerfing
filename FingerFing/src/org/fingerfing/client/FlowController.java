@@ -21,17 +21,16 @@ public class FlowController implements ValueChangeHandler<String>, ActionChangeE
 	public void onValueChange(ValueChangeEvent<String> event) {
 		switch (event.getValue()) {
 		case "train":
-			eventBus.fireEvent(new ActionChangeEvent(Action.TRAIN));
+			eventBus.fireEventFromSource(new ActionChangeEvent(Action.TRAIN), this);
 			break;
 		case "courseDesign":
-			eventBus.fireEvent(new ActionChangeEvent(Action.COURSE_DESIGNER));
+			eventBus.fireEventFromSource(new ActionChangeEvent(Action.COURSE_DESIGNER), this);
 			break;
 		case "keyboardDesign":
-			eventBus.fireEvent(new ActionChangeEvent(Action.KEYBOARD_DESIGNER));
+			eventBus.fireEventFromSource(new ActionChangeEvent(Action.KEYBOARD_DESIGNER), this);
 			break;
 		default:
-			eventBus.fireEvent(new ActionChangeEvent(Action.TRAIN));
-//			History.newItem("train");
+			eventBus.fireEventFromSource(new ActionChangeEvent(Action.TRAIN), this);
 			break;
 		}
 	}
