@@ -39,7 +39,7 @@ class KeyboardBuilder {
 	public Map<Key, KeyWidget> build() {
 		KeyboardDescriptor kd = dm.decodeFromJson(KeyboardDescriptor.class,
 				KeyboardResource.INST.getKeyboardDescriptor1().getText());
-		assert (kd != null) : "KeyboardDescriptor is null";
+		assert (kd != null) : "KeyboardBuilder: KeyboardDescriptor is null";
 		KeyboardLabelDescriptor kldEN = dm.decodeFromJson(
 				KeyboardLabelDescriptor.class, KeyboardResource.INST
 						.getKeyboardLabelDescriptorEN().getText());

@@ -1,12 +1,12 @@
 package org.fingerfing.client.presenter;
 
 import org.fingerfing.client.presenter.event.ActionChangeEvent;
-import org.fingerfing.client.presenter.event.ActionChangeEventHandler;
+import org.fingerfing.client.presenter.event.ActionChangeHandler;
 import org.fingerfing.client.view.MainView;
 
 import com.google.gwt.event.shared.EventBus;
 
-public class MainPresenter implements ActionChangeEventHandler {
+public class MainPresenter implements ActionChangeHandler {
 
 	private MainView mainView;
 	private EventBus eventBus;

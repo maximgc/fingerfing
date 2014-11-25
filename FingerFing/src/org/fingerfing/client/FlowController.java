@@ -2,7 +2,7 @@ package org.fingerfing.client;
 
 import org.fingerfing.client.presenter.Action;
 import org.fingerfing.client.presenter.event.ActionChangeEvent;
-import org.fingerfing.client.presenter.event.ActionChangeEventHandler;
+import org.fingerfing.client.presenter.event.ActionChangeHandler;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -10,7 +10,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.History;
 
 public class FlowController implements ValueChangeHandler<String>,
-		ActionChangeEventHandler {
+		ActionChangeHandler {
 
 	private final EventBus eventBus;
 

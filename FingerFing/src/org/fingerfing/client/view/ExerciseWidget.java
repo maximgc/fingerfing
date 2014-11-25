@@ -15,4 +15,6 @@ public interface ExerciseWidget extends HasNativeKeyInputHandler {
 
 	public void showSequence(List<Key> sequence);
 
+	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor);
+
 }

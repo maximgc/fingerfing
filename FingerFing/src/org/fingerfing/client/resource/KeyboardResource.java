@@ -11,6 +11,9 @@ public interface KeyboardResource extends ClientBundle{
 	@Source("KeyboardDescriptor1.json")
 	public TextResource getKeyboardDescriptor1();
 
+	@Source("KeyboardDescriptor2.json")
+	public TextResource getKeyboardDescriptor2();
+
 	@Source("KeyboardLabelDescriptorEN.json")
 	public TextResource getKeyboardLabelDescriptorEN();
 	

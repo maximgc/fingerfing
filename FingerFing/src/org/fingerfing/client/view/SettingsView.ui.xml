@@ -6,7 +6,12 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:CaptionPanel captionText="Settings">
-			<g:ListBox ui:field="exerciseDescriptorSelector"/>
+			<g:FlowPanel>
+				<g:ListBox ui:field="exerciseDescriptorSelector" />
+				<g:ListBox ui:field="keyboardDescriptorSelector" />
+				<g:ListBox ui:field="keyboardGeneralLabelDescriptorSelector" />
+				<g:ListBox ui:field="keyboardAlternativeLabelDescriptorSelector" />
+			</g:FlowPanel>
 		</g:CaptionPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -27,38 +27,14 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
-//кнопка:
-// видимость
-// цвет
-// прозрачность/enabled
-// жирность обводки (по сторонам)
-// цвет обводки (по сторонам)
-//
-// текст:
-// видимость
-// цвет
-// жирность - рябит глаза
-//
-
-// постоянные:
-// текущая раскладка (прозрачность текста в div)
-// изученность (видимость)
-// зона упражнения (enabled/прозрачность)
-// палец (нижний бордер)
-// ср. оценка(нагретость) (бордер - цвет и жирность)
-// время нажатия/темп(нагретость2) (бордер - цвет и жирность)
-
-// временные:
-// активная (цвет)
-// нажатие (цвет в нажатие)
-// тек оценка (цвет после отпускания)
-
-public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyInputHandler {
+public class KeyboardWidget extends Composite implements ExerciseWidget,
+		HasKeyInputHandler {
 
 	interface KeyboardUiBinder extends UiBinder<Widget, KeyboardWidget> {
 	}
 
-	static class KeyWidget extends Button implements HasNativeKeyInputHandler, HasKeyInputHandler {
+	static class KeyWidget extends Button implements HasNativeKeyInputHandler,
+			HasKeyInputHandler {
 		// private int left, top, width, height;
 		private String generalLabel = "";
 		private String alternativeLabel = "";
@@ -100,7 +76,7 @@ public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyI
 				public void onClick(ClickEvent event) {
 					handler.onKeyInput(new KeyInputEvent(key));
 				}
-			});	
+			});
 		}
 
 		public void setAlternativeLabel(String alternativeLabel) {
@@ -181,7 +157,6 @@ public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyI
 	@UiField
 	FocusPanel focusPanel;
 
-
 	private Map<Key, KeyWidget> keyWidgetMap;
 
 	private Element curElement;
@@ -240,7 +215,7 @@ public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyI
 
 	private Timer t;
 
-	//WARN unused
+	// WARN unused
 	@SuppressWarnings("unused")
 	private void showBlock(final List<Key> sequence, final int i) {
 		if (t != null)
@@ -282,4 +257,36 @@ public class KeyboardWidget extends Composite implements ExerciseWidget, HasKeyI
 		}
 	}
 
+	@Override
+	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
+
+// кнопка:
+// видимость
+// цвет
+// прозрачность/enabled
+// жирность обводки (по сторонам)
+// цвет обводки (по сторонам)
+//
+// текст:
+// видимость
+// цвет
+// жирность - рябит глаза
+//
+
+// постоянные:
+// текущая раскладка (прозрачность текста в div)
+// изученность (видимость)
+// зона упражнения (enabled/прозрачность)
+// палец (нижний бордер)
+// ср. оценка(нагретость) (бордер - цвет и жирность)
+// время нажатия/темп(нагретость2) (бордер - цвет и жирность)
+
+// временные:
+// активная (цвет)
+// нажатие (цвет в нажатие)
+// тек оценка (цвет после отпускания)

@@ -9,16 +9,16 @@ import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.json.DescriptorManager;
 import org.fingerfing.client.presenter.event.ActionChangeEvent;
-import org.fingerfing.client.presenter.event.ActionChangeEventHandler;
+import org.fingerfing.client.presenter.event.ActionChangeHandler;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
-import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEventHandler;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeHandler;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorModifyEvent;
 import org.fingerfing.client.view.CourseDesignerView;
 
 import com.google.gwt.event.shared.EventBus;
 
-public class CourseDesignerPresenter implements ActionChangeEventHandler,
-		ExerciseDescriptorChangeEventHandler {
+public class CourseDesignerPresenter implements ActionChangeHandler,
+		ExerciseDescriptorChangeHandler {
 
 	private class DescriptorMaker {
 
@@ -78,7 +78,7 @@ public class CourseDesignerPresenter implements ActionChangeEventHandler,
 	public void onExerciseDescriptorChange(ExerciseDescriptorChangeEvent event) {
 		exerciseDescriptor = Settings.exerciseDescriptor;
 		if (exerciseDescriptor == null) {
-			throw new ClientException("ExerciseDescriptor is null");
+			throw new PresenterLevelException("ExerciseDescriptor is null");
 		}
 		descriptorMaker = new DescriptorMaker();
 		showExerciseDescriptor();
@@ -89,7 +89,7 @@ public class CourseDesignerPresenter implements ActionChangeEventHandler,
 		if (event.getAction() == Action.COURSE_DESIGNER) {
 			exerciseDescriptor = Settings.exerciseDescriptor;
 			if (exerciseDescriptor == null) {
-				throw new ClientException("ExerciseDescriptor is null");
+				throw new PresenterLevelException("ExerciseDescriptor is null");
 			}
 			descriptorMaker = new DescriptorMaker();
 			showExerciseDescriptor();

@@ -56,5 +56,9 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 		trace.addNativeKeyInputHandler(handler);
 		keyboard.addNativeKeyInputHandler(handler);
 	}
+
+	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
+		keyboard.setKeyboardDescriptor(keyboardDescriptor);
+	}
 	
 }

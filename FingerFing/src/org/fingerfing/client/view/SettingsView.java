@@ -5,48 +5,103 @@ import java.util.List;
 import org.fingerfing.client.presenter.SettingsPresenter;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Widget;
 
 public class SettingsView extends Composite {
+	
+	interface SettingsViewUiBinder extends UiBinder<Widget, SettingsView> {
+	}
 
 	private static SettingsViewUiBinder uiBinder = GWT
 			.create(SettingsViewUiBinder.class);
-
 	@UiField
 	ListBox exerciseDescriptorSelector;
-	
+	@UiField
+	ListBox keyboardDescriptorSelector;
+	@UiField
+	ListBox keyboardGeneralLabelDescriptorSelector;
+	@UiField
+	ListBox keyboardAlternativeLabelDescriptorSelector;
 	private SettingsPresenter presenter;
-
-	public void setPresenter(SettingsPresenter presenter) {
-		this.presenter = presenter;
-	}
-
-	interface SettingsViewUiBinder extends UiBinder<Widget, SettingsView> {
-	}
 
 	public SettingsView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public void setExerciseDescriptorNameList(List<String> exerciseDescriptorNameList) {
-		for (String ex : exerciseDescriptorNameList) {
-			exerciseDescriptorSelector.addItem(ex);
-		}
-	}
-
 	@UiHandler("exerciseDescriptorSelector")
 	void onExerciseDescriptorSelectorChange(ChangeEvent event) {
-		assert(presenter!=null) : "SettingsView.onExerciseDescriptorSelectorChange: presenter not set";
-		presenter.onSelectExerciseDescriptorName(exerciseDescriptorSelector.getSelectedIndex());
+		presenter.onSelectExerciseDescriptorIndex(exerciseDescriptorSelector
+				.getSelectedIndex());
+	}
+
+	@UiHandler("keyboardAlternativeLabelDescriptorSelector")
+	void onKeyboardAlternativeLabelDescriptorSelectorChange(ChangeEvent event) {
+		presenter
+				.onSelectKeyboardAlternativeLabelDescriptorIndex(keyboardAlternativeLabelDescriptorSelector
+						.getSelectedIndex());
+	}
+
+	@UiHandler("keyboardDescriptorSelector")
+	void onKeyboardDescriptorSelectorChange(ChangeEvent event) {
+		presenter.onSelectKeyboardDescriptorIndex(keyboardDescriptorSelector
+				.getSelectedIndex());
+	}
+
+	@UiHandler("keyboardGeneralLabelDescriptorSelector")
+	void onKeyboardGeneralLabelDescriptorSelectorChange(ChangeEvent event) {
+		presenter
+				.onSelectKeyboardGeneralLabelDescriptorIndex(keyboardGeneralLabelDescriptorSelector
+						.getSelectedIndex());
 	}
 
 	public void resetExerciseDescriptorSelector() {
 		exerciseDescriptorSelector.setSelectedIndex(-1);
+	}
+
+	public void resetKeyboardAlternativeLabelDescriptorSelector() {
+		keyboardAlternativeLabelDescriptorSelector.setSelectedIndex(-1);
+	}
+
+	public void resetKeyboardDescriptorSelector() {
+		keyboardDescriptorSelector.setSelectedIndex(-1);
+	}
+
+	public void resetKeyboardGeneralLabelDescriptorSelector() {
+		keyboardGeneralLabelDescriptorSelector.setSelectedIndex(-1);
+	}
+
+	public void setExerciseDescriptorNameList(List<String> nameList) {
+		for (String ex : nameList) {
+			exerciseDescriptorSelector.addItem(ex);
+		}
+	}
+
+	public void setKeyboardAlternativeLabelDescriptorNameList(
+			List<String> nameList) {
+		for (String ex : nameList) {
+			keyboardAlternativeLabelDescriptorSelector.addItem(ex);
+		}
+	}
+
+	public void setKeyboardDescriptorNameList(List<String> nameList) {
+		for (String ex : nameList) {
+			keyboardDescriptorSelector.addItem(ex);
+		}
+	}
+
+	public void setKeyboardGeneralLabelDescriptorNameList(List<String> nameList) {
+		for (String ex : nameList) {
+			keyboardGeneralLabelDescriptorSelector.addItem(ex);
+		}
+	}
+
+	public void setPresenter(SettingsPresenter presenter) {
+		this.presenter = presenter;
 	}
 }

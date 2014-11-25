@@ -4,17 +4,19 @@ import org.fingerfing.client.Settings;
 import org.fingerfing.client.domain.Exercise;
 import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.presenter.event.ActionChangeEvent;
-import org.fingerfing.client.presenter.event.ActionChangeEventHandler;
+import org.fingerfing.client.presenter.event.ActionChangeHandler;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
-import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEventHandler;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeHandler;
+import org.fingerfing.client.presenter.event.KeyboardDescriptorChangeEvent;
+import org.fingerfing.client.presenter.event.KeyboardDescriptorChangeHandler;
 import org.fingerfing.client.view.TrainView;
 import org.fingerfing.client.view.event.NativeKeyInputEvent;
 import org.fingerfing.client.view.event.NativeKeyInputHandler;
 
 import com.google.gwt.event.shared.EventBus;
 
-public class TrainPresenter implements ExerciseDescriptorChangeEventHandler,
-		ActionChangeEventHandler {
+public class TrainPresenter implements ExerciseDescriptorChangeHandler,
+		ActionChangeHandler, KeyboardDescriptorChangeHandler {
 
 	private TrainView trainWidget;
 	private Exercise exercise;
@@ -27,15 +29,14 @@ public class TrainPresenter implements ExerciseDescriptorChangeEventHandler,
 		trainWidget.addNativeKeyInputHandler(new NativeKeyInputHandler() {
 			@Override
 			public void onNativeKeyInput(NativeKeyInputEvent event) {
-				onKeyInput(event.getNativeKey().getNativeCode());
+				onKeyInput(event.getNativeKey());
 			}
 		});
 	}
 
-	public void onKeyInput(int nativeKeyCode) {
+	public void onKeyInput(NativeKey nativeKey) {
 		if (!exercise.isComplete()) {
-			NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
-			trainWidget.showAttempt(exercise.makeAttempt(nk));
+			trainWidget.showAttempt(exercise.makeAttempt(nativeKey));
 			startElement();
 		}
 		if (exercise.isComplete()) {
@@ -67,6 +68,11 @@ public class TrainPresenter implements ExerciseDescriptorChangeEventHandler,
 		if (event.getAction() == Action.TRAIN) {
 			startExercise();
 		}
+	}
+
+	@Override
+	public void onKeyboardDescriptorChange(KeyboardDescriptorChangeEvent event) {
+		trainWidget.setKeyboardDescriptor(Settings.keyboardDescriptor);
 	}
 
 }

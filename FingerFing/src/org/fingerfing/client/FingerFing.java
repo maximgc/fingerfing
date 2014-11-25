@@ -21,8 +21,6 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class FingerFing implements EntryPoint {
 
-	int i = 0;
-
 	public void onModuleLoad() {
 
 		final MainView mv = new MainView();
@@ -31,19 +29,19 @@ public class FingerFing implements EntryPoint {
 		final EventBus eventBus = new SimpleEventBus();
 		final FlowController flowController = new FlowController(eventBus);
 
-		final MainPresenter mp = new MainPresenter(mv, eventBus);
-		final TrainPresenter tp = new TrainPresenter(mv.getTrainView(), eventBus);
-		final CourseDesignerPresenter dp = new CourseDesignerPresenter(mv.getCourseDesignerView(), eventBus);
-		final SettingsPresenter sp = new SettingsPresenter(mv.getSettingsView(), eventBus);
+		final SettingsPresenter settingsPresenter = new SettingsPresenter(mv.getSettingsView(), eventBus);
+		final MainPresenter mainPresenter = new MainPresenter(mv, eventBus);
+		final TrainPresenter trainPresenter = new TrainPresenter(mv.getTrainView(), eventBus);
+		final CourseDesignerPresenter courseDesignerPresenter = new CourseDesignerPresenter(mv.getCourseDesignerView(), eventBus);
 		
-		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, tp);
-		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, dp);
+		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, trainPresenter);
+		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, courseDesignerPresenter);
 		
-		eventBus.addHandler(ExerciseDescriptorModifyEvent.TYPE, sp);
+		eventBus.addHandler(ExerciseDescriptorModifyEvent.TYPE, settingsPresenter);
 		
-		eventBus.addHandler(ActionChangeEvent.TYPE, mp);
-		eventBus.addHandler(ActionChangeEvent.TYPE, tp);
-		eventBus.addHandler(ActionChangeEvent.TYPE, dp);
+		eventBus.addHandler(ActionChangeEvent.TYPE, mainPresenter);
+		eventBus.addHandler(ActionChangeEvent.TYPE, trainPresenter);
+		eventBus.addHandler(ActionChangeEvent.TYPE, courseDesignerPresenter);
 		eventBus.addHandler(ActionChangeEvent.TYPE, flowController);
 
 		History.addValueChangeHandler(flowController);

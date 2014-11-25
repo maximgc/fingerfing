@@ -4,9 +4,9 @@ import org.fingerfing.client.presenter.Action;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ActionChangeEvent extends GwtEvent<ActionChangeEventHandler>{
+public class ActionChangeEvent extends GwtEvent<ActionChangeHandler>{
 
-	public static final Type<ActionChangeEventHandler> TYPE = new Type<ActionChangeEventHandler>();
+	public static final Type<ActionChangeHandler> TYPE = new Type<ActionChangeHandler>();
 	
 	private Action action;
 	
@@ -19,12 +19,12 @@ public class ActionChangeEvent extends GwtEvent<ActionChangeEventHandler>{
 	}
 
 	@Override
-	public Type<ActionChangeEventHandler> getAssociatedType() {
+	public Type<ActionChangeHandler> getAssociatedType() {
 		return TYPE;
 	}
 	
 	@Override
-	protected void dispatch(ActionChangeEventHandler handler) {
+	protected void dispatch(ActionChangeHandler handler) {
 		handler.onActionChange(this);
 	}
 
