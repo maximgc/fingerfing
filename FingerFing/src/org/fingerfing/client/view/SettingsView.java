@@ -45,4 +45,8 @@ public class SettingsView extends Composite {
 		assert(presenter!=null) : "SettingsView.onExerciseDescriptorSelectorChange: presenter not set";
 		presenter.onSelectExerciseDescriptorName(exerciseDescriptorSelector.getSelectedIndex());
 	}
+
+	public void resetExerciseDescriptorSelector() {
+		exerciseDescriptorSelector.setSelectedIndex(-1);
+	}
 }

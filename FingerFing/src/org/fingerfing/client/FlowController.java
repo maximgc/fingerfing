@@ -9,8 +9,9 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.History;
 
-public class FlowController implements ValueChangeHandler<String>, ActionChangeEventHandler {
-	
+public class FlowController implements ValueChangeHandler<String>,
+		ActionChangeEventHandler {
+
 	private final EventBus eventBus;
 
 	public FlowController(EventBus eventBus) {
@@ -19,34 +20,21 @@ public class FlowController implements ValueChangeHandler<String>, ActionChangeE
 
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
-		switch (event.getValue()) {
-		case "train":
-			eventBus.fireEventFromSource(new ActionChangeEvent(Action.TRAIN), this);
-			break;
-		case "courseDesign":
-			eventBus.fireEventFromSource(new ActionChangeEvent(Action.COURSE_DESIGNER), this);
-			break;
-		case "keyboardDesign":
-			eventBus.fireEventFromSource(new ActionChangeEvent(Action.KEYBOARD_DESIGNER), this);
-			break;
-		default:
-			eventBus.fireEventFromSource(new ActionChangeEvent(Action.TRAIN), this);
-			break;
+		Action a;
+		if (event.getValue().equals("")) {
+			a = Action.TRAIN;
+		} else {
+			try {
+				a = Action.valueOf(event.getValue());
+			} catch (IllegalArgumentException e) {
+				a = Action.TRAIN;
+			}
 		}
+		eventBus.fireEventFromSource(new ActionChangeEvent(a), this);
 	}
 
 	@Override
 	public void onActionChange(ActionChangeEvent event) {
-		switch (event.getAction()) {
-		case TRAIN:
-			History.newItem("train", false);
-			break;
-		case COURSE_DESIGNER:
-			History.newItem("courseDesign", false);
-			break;
-		case KEYBOARD_DESIGNER:
-			History.newItem("keyboardDesign", false);
-			break;
-		}		
+		History.newItem(event.getAction().name(), false);
 	}
 }

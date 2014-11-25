@@ -6,6 +6,7 @@ import org.fingerfing.client.presenter.SettingsPresenter;
 import org.fingerfing.client.presenter.TrainPresenter;
 import org.fingerfing.client.presenter.event.ActionChangeEvent;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorModifyEvent;
 import org.fingerfing.client.view.MainView;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -37,14 +38,15 @@ public class FingerFing implements EntryPoint {
 		
 		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, tp);
 		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, dp);
+		
+		eventBus.addHandler(ExerciseDescriptorModifyEvent.TYPE, sp);
+		
 		eventBus.addHandler(ActionChangeEvent.TYPE, mp);
 		eventBus.addHandler(ActionChangeEvent.TYPE, tp);
 		eventBus.addHandler(ActionChangeEvent.TYPE, dp);
 		eventBus.addHandler(ActionChangeEvent.TYPE, flowController);
 
 		History.addValueChangeHandler(flowController);
-		
-		// TEMP
 		History.fireCurrentHistoryState();
 	}
 }

@@ -5,7 +5,6 @@ import org.fingerfing.client.presenter.event.ActionChangeEventHandler;
 import org.fingerfing.client.view.MainView;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.History;
 
 public class MainPresenter implements ActionChangeEventHandler {
 
@@ -14,8 +13,8 @@ public class MainPresenter implements ActionChangeEventHandler {
 
 	public MainPresenter(MainView mw, EventBus eventBus) {
 		this.mainView = mw;
-		this.eventBus = eventBus;
 		this.mainView.setPresenter(this);
+		this.eventBus = eventBus;
 	}
 
 	public void switchTab(int tab) {

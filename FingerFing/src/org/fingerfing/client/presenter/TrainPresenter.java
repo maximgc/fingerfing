@@ -18,11 +18,12 @@ public class TrainPresenter implements ExerciseDescriptorChangeEventHandler,
 
 	private TrainView trainWidget;
 	private Exercise exercise;
-	private EventBus eventBus;
+
+	// private EventBus eventBus;
 
 	public TrainPresenter(TrainView trainWidget, EventBus eventBus) {
 		this.trainWidget = trainWidget;
-		this.eventBus = eventBus;
+		// this.eventBus = eventBus;
 		trainWidget.addNativeKeyInputHandler(new NativeKeyInputHandler() {
 			@Override
 			public void onNativeKeyInput(NativeKeyInputEvent event) {
@@ -38,7 +39,6 @@ public class TrainPresenter implements ExerciseDescriptorChangeEventHandler,
 			startElement();
 		}
 		if (exercise.isComplete()) {
-			exercise = new Exercise(exercise.getExerciseDescriptor());
 			startExercise();
 		}
 	}
@@ -50,6 +50,7 @@ public class TrainPresenter implements ExerciseDescriptorChangeEventHandler,
 	}
 
 	private void startExercise() {
+		exercise = new Exercise(Settings.exerciseDescriptor);
 		if (exercise != null) {
 			trainWidget.showSequence(exercise.getSequence());
 			startElement();
@@ -58,14 +59,12 @@ public class TrainPresenter implements ExerciseDescriptorChangeEventHandler,
 
 	@Override
 	public void onExerciseDescriptorChange(ExerciseDescriptorChangeEvent event) {
-		exercise = new Exercise(Settings.exerciseDescriptor);
 		startExercise();
 	}
 
 	@Override
 	public void onActionChange(ActionChangeEvent event) {
 		if (event.getAction() == Action.TRAIN) {
-			exercise = new Exercise(Settings.exerciseDescriptor);
 			startExercise();
 		}
 	}

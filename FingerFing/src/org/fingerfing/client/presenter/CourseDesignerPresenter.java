@@ -12,6 +12,7 @@ import org.fingerfing.client.presenter.event.ActionChangeEvent;
 import org.fingerfing.client.presenter.event.ActionChangeEventHandler;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEventHandler;
+import org.fingerfing.client.presenter.event.ExerciseDescriptorModifyEvent;
 import org.fingerfing.client.view.CourseDesignerView;
 
 import com.google.gwt.event.shared.EventBus;
@@ -61,6 +62,7 @@ public class CourseDesignerPresenter implements ActionChangeEventHandler,
 	}
 
 	public void onKeyInput(int nativeKeyCode) {
+		eventBus.fireEventFromSource(new ExerciseDescriptorModifyEvent(), this);
 		NativeKey nk = NativeKey.getByNativeCode(nativeKeyCode);
 		Key key = nk.getKeys()[0];
 		descriptorMaker.addKey(key);
