@@ -79,9 +79,8 @@ class KeyboardBuilder {
 
 	private void buildAlternativeLabelKey(Key key, KeyWidget keyWidget) {
 		String label = alternativeLabelMap.get(key);
-		if (label != null) {
-			keyWidget.setAlternativeLabel(label);
-		}
+		label = (label == null) ? "" : label;
+		keyWidget.setAlternativeLabel(label);
 	}
 
 	private void buildGeneralLabelBlock() {
@@ -93,9 +92,8 @@ class KeyboardBuilder {
 
 	private void buildGeneralLabelKey(Key key, KeyWidget keyWidget) {
 		String label = generalLabelMap.get(key);
-		if (label != null) {
-			keyWidget.setGeneralLabel(label);
-		}
+		label = (label == null) ? "" : label;
+		keyWidget.setGeneralLabel(label);
 	}
 
 	private void buildKey(Key key, int left, int top, int width, int height) {

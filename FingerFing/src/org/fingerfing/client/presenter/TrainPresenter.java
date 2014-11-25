@@ -69,9 +69,9 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 
 	@Override
 	public void onKeyboardDescriptorChange(KeyboardDescriptorChangeEvent event) {
-		trainView.setKeyboardDescriptor(Settings.keyboardDescriptor);
 		trainView.setKeyboardGeneralLabelDescriptor(Settings.keyboardGeneralLabelDescriptor);
 		trainView.setKeyboardAlternativeLabelDescriptor(Settings.keyboardAlternativeLabelDescriptor);
+		trainView.setKeyboardDescriptor(Settings.keyboardDescriptor);
 	}
 
 }
