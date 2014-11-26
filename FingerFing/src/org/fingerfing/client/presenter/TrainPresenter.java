@@ -7,8 +7,8 @@ import org.fingerfing.client.presenter.event.ActionChangeEvent;
 import org.fingerfing.client.presenter.event.ActionChangeHandler;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeHandler;
-import org.fingerfing.client.presenter.event.KeyboardDescriptorChangeEvent;
-import org.fingerfing.client.presenter.event.KeyboardDescriptorChangeHandler;
+import org.fingerfing.client.presenter.event.KeyboardDescriptorsChangeEvent;
+import org.fingerfing.client.presenter.event.KeyboardDescriptorsChangeHandler;
 import org.fingerfing.client.view.TrainView;
 import org.fingerfing.client.view.event.NativeKeyInputEvent;
 import org.fingerfing.client.view.event.NativeKeyInputHandler;
@@ -16,7 +16,7 @@ import org.fingerfing.client.view.event.NativeKeyInputHandler;
 import com.google.gwt.event.shared.EventBus;
 
 public class TrainPresenter implements ExerciseDescriptorChangeHandler,
-		ActionChangeHandler, KeyboardDescriptorChangeHandler {
+		ActionChangeHandler, KeyboardDescriptorsChangeHandler {
 
 	private TrainView trainView;
 	private Exercise exercise;
@@ -63,12 +63,12 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 	@Override
 	public void onActionChange(ActionChangeEvent event) {
 		if (event.getAction() == Action.TRAIN) {
-			startExercise();
+//			startExercise();
 		}
 	}
 
 	@Override
-	public void onKeyboardDescriptorChange(KeyboardDescriptorChangeEvent event) {
+	public void onKeyboardDescriptorsChange(KeyboardDescriptorsChangeEvent event) {
 		trainView.setKeyboardGeneralLabelDescriptor(Settings.keyboardGeneralLabelDescriptor);
 		trainView.setKeyboardAlternativeLabelDescriptor(Settings.keyboardAlternativeLabelDescriptor);
 		trainView.setKeyboardDescriptor(Settings.keyboardDescriptor);

@@ -184,7 +184,6 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 		return keyWidgetMap.get(key);
 	}
 
-	@Override
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
 		keyWidgetMap = keyboardBuilder.buildKeyboard(keyboardDescriptor);
 	}

@@ -7,8 +7,7 @@ import org.fingerfing.client.presenter.TrainPresenter;
 import org.fingerfing.client.presenter.event.ActionChangeEvent;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeEvent;
 import org.fingerfing.client.presenter.event.ExerciseDescriptorModifyEvent;
-import org.fingerfing.client.presenter.event.KeyboardDescriptorChangeEvent;
-import org.fingerfing.client.view.KeyboardDescriptor;
+import org.fingerfing.client.presenter.event.KeyboardDescriptorsChangeEvent;
 import org.fingerfing.client.view.MainView;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -46,7 +45,7 @@ public class FingerFing implements EntryPoint {
 		eventBus.addHandler(ActionChangeEvent.TYPE, courseDesignerPresenter);
 		eventBus.addHandler(ActionChangeEvent.TYPE, flowController);
 		
-		eventBus.addHandler(KeyboardDescriptorChangeEvent.TYPE, trainPresenter);
+		eventBus.addHandler(KeyboardDescriptorsChangeEvent.TYPE, trainPresenter);
 
 		History.addValueChangeHandler(flowController);
 		History.fireCurrentHistoryState();

@@ -77,9 +77,4 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 		this.elementInputHandler = handler;
 	}
 
-	@Override
-	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
-		throw new ViewLevelException("Operation not supported. ExerciseTraceWidget.setKeyboardDescriptor()");
-	}
-	
 }

@@ -83,10 +83,11 @@ public class SettingsView extends Composite {
 	}
 
 	public void setKeyboardAlternativeLabelDescriptorNameList(
-			List<String> nameList) {
+			List<String> nameList, int selectIndex) {
 		for (String ex : nameList) {
 			keyboardAlternativeLabelDescriptorSelector.addItem(ex);
 		}
+		keyboardAlternativeLabelDescriptorSelector.setSelectedIndex(selectIndex);
 	}
 
 	public void setKeyboardDescriptorNameList(List<String> nameList) {
@@ -95,10 +96,11 @@ public class SettingsView extends Composite {
 		}
 	}
 
-	public void setKeyboardGeneralLabelDescriptorNameList(List<String> nameList) {
+	public void setKeyboardGeneralLabelDescriptorNameList(List<String> nameList, int selectIndex) {
 		for (String ex : nameList) {
 			keyboardGeneralLabelDescriptorSelector.addItem(ex);
 		}
+		keyboardGeneralLabelDescriptorSelector.setSelectedIndex(selectIndex);
 	}
 
 	public void setPresenter(SettingsPresenter presenter) {

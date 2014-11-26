@@ -21,14 +21,10 @@ public class FlowController implements ValueChangeHandler<String>,
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		Action a;
-		if (event.getValue().equals("")) {
+		try {
+			a = Action.valueOf(event.getValue());
+		} catch (IllegalArgumentException e) {
 			a = Action.TRAIN;
-		} else {
-			try {
-				a = Action.valueOf(event.getValue());
-			} catch (IllegalArgumentException e) {
-				a = Action.TRAIN;
-			}
 		}
 		eventBus.fireEventFromSource(new ActionChangeEvent(a), this);
 	}
