@@ -70,5 +70,11 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 			KeyboardLabelDescriptor labelDescriptor) {
 		keyboard.setAlternativeLabelDescriptor(labelDescriptor);
 	}
+
+	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor,
+			KeyboardLabelDescriptor keyboardGeneralLabelDescriptor,
+			KeyboardLabelDescriptor keyboardAlternativeLabelDescriptor) {
+		keyboard.setKeyboardDescriptor(keyboardDescriptor, keyboardGeneralLabelDescriptor, keyboardAlternativeLabelDescriptor);		
+	}
 	
 }

@@ -63,15 +63,15 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 	@Override
 	public void onActionChange(ActionChangeEvent event) {
 		if (event.getAction() == Action.TRAIN) {
-//			startExercise();
+			trainView.setKeyboardDescriptor(Settings.keyboardDescriptor,Settings.keyboardGeneralLabelDescriptor,Settings.keyboardAlternativeLabelDescriptor);
+			startExercise();
 		}
 	}
 
 	@Override
 	public void onKeyboardDescriptorsChange(KeyboardDescriptorsChangeEvent event) {
-		trainView.setKeyboardGeneralLabelDescriptor(Settings.keyboardGeneralLabelDescriptor);
-		trainView.setKeyboardAlternativeLabelDescriptor(Settings.keyboardAlternativeLabelDescriptor);
-		trainView.setKeyboardDescriptor(Settings.keyboardDescriptor);
+		trainView.setKeyboardDescriptor(Settings.keyboardDescriptor,Settings.keyboardGeneralLabelDescriptor,Settings.keyboardAlternativeLabelDescriptor);
+		startExercise();
 	}
 
 }
