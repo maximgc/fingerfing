@@ -27,11 +27,13 @@ public class KeyboardDesignerView extends Composite {
 
 	public KeyboardDesignerView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		for (Finger f : Finger.values()){
+		keyboardBuilder = new KeyboardConstructor();
+		keyboard.setKeyboardBuilder(keyboardBuilder);
+		for (Finger f : Finger.values()) {
 			fingerList.addItem(f.toString());
 		}
 		keyboard.addKeyInputHandler(new KeyInputHandler() {
-			
+
 			@Override
 			public void onKeyInput(KeyInputEvent event) {
 				Key key = event.getKey();
@@ -44,17 +46,20 @@ public class KeyboardDesignerView extends Composite {
 	ListBox fingerList;
 	@UiField
 	KeyboardWidget keyboard;
-	@UiField Button nextFinger;
+	@UiField
+	Button nextFinger;
 
-	Finger curFinger = Finger.LEFT_THUMB;
+	private Finger curFinger = Finger.LEFT_THUMB;
+	private KeyboardConstructor keyboardBuilder;
 
 	@UiHandler("fingerList")
 	void onFingerListChange(ChangeEvent event) {
-		curFinger = Finger.valueOf(fingerList.getValue(fingerList.getSelectedIndex()));
+		curFinger = Finger.valueOf(fingerList.getValue(fingerList
+				.getSelectedIndex()));
 	}
-	
+
 	@UiHandler("nextFinger")
 	void onNextFingerClick(ClickEvent event) {
-		fingerList.setSelectedIndex(fingerList.getSelectedIndex()+1);
+		fingerList.setSelectedIndex(fingerList.getSelectedIndex() + 1);
 	}
 }

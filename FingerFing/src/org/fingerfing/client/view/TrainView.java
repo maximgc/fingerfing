@@ -34,6 +34,7 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 
 	public TrainView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		keyboard.setKeyboardBuilder(new KeyboardBuilderSimple());
 	}
 
 	public void showCurrentElement(Element element) {

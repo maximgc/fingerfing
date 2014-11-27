@@ -21,12 +21,13 @@ import com.google.gwt.user.client.ui.Button;
 class KeyWidget extends Button implements HasNativeKeyInputHandler,
 		HasKeyInputHandler {
 
-	public static final int POS_RIGHT_BOTTOM = 3;
-	public static final int POS_LEFT_BOTTOM = 2;
-	public static final int POS_RIGHT_TOP = 1;
-	public static final int POS_LEFT_TOP = 0;
+	public static final int LABEL_RIGHT_BOTTOM = 3;
+	public static final int LABEL_LEFT_BOTTOM = 2;
+	public static final int LABEL_RIGHT_TOP = 1;
+	public static final int LABEL_LEFT_TOP = 0;
 
 	private class DellayedEffect extends Timer {
+
 		private KeyWidget.Effect prev;
 
 		@Override
@@ -112,14 +113,13 @@ class KeyWidget extends Button implements HasNativeKeyInputHandler,
 
 	private void applyLabel() {
 		this.setHTML("<table class=\"keyWidget_label\"><tr><td class=\"general\">"
-				+ labels[POS_LEFT_TOP]
+				+ labels[LABEL_LEFT_TOP]
 				+ "</td><td>"
-				+ labels[POS_RIGHT_TOP]
+				+ labels[LABEL_RIGHT_TOP]
 				+ "</td></tr><tr><td>"
-				+ labels[POS_LEFT_BOTTOM]
+				+ labels[LABEL_LEFT_BOTTOM]
 				+ "</td><td class=\"alternative\">"
-				+ labels[POS_RIGHT_BOTTOM]
-				+ "</td></tr></table>");
+				+ labels[LABEL_RIGHT_BOTTOM] + "</td></tr></table>");
 	}
 
 	private void putEffect(String name, String value, int showMillis) {
@@ -151,13 +151,13 @@ class KeyWidget extends Button implements HasNativeKeyInputHandler,
 
 	public void setLabel(String[] label) {
 		for (int i = 0; i < 4; i++) {
-			this.labels[i] = label[i];
+			this.labels[i] = (label[i] == null) ? "" : label[i];
 		}
 		applyLabel();
 	}
-	
+
 	public void setLabel(int pos, String label) {
-		this.labels[pos] = label;
+		this.labels[pos] = (label == null) ? "" : label;
 		applyLabel();
 	}
 

@@ -46,7 +46,6 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 
 	public KeyboardWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		keyboardBuilder = new KeyboardBuilder(keyArea);
 		focusPanel.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
@@ -58,6 +57,11 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 				}
 			}
 		});
+	}
+
+	public void setKeyboardBuilder(KeyboardBuilder keyboardBuilder) {
+		this.keyboardBuilder = keyboardBuilder;
+		keyboardBuilder.setKeyArea(keyArea);
 	}
 
 	@Override
