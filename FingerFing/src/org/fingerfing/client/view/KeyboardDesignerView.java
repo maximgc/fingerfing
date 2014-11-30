@@ -2,6 +2,7 @@ package org.fingerfing.client.view;
 
 import org.fingerfing.client.domain.Finger;
 import org.fingerfing.client.domain.Key;
+import org.fingerfing.client.presenter.KeyboardDesignerPresenter;
 import org.fingerfing.client.view.event.KeyInputEvent;
 import org.fingerfing.client.view.event.KeyInputHandler;
 
@@ -51,6 +52,7 @@ public class KeyboardDesignerView extends Composite {
 
 	private Finger curFinger = Finger.LEFT_THUMB;
 	private KeyboardConstructor keyboardBuilder;
+	private KeyboardDesignerPresenter presenter;
 
 	@UiHandler("fingerList")
 	void onFingerListChange(ChangeEvent event) {
@@ -61,5 +63,14 @@ public class KeyboardDesignerView extends Composite {
 	@UiHandler("nextFinger")
 	void onNextFingerClick(ClickEvent event) {
 		fingerList.setSelectedIndex(fingerList.getSelectedIndex() + 1);
+	}
+
+	public void setPresenter(KeyboardDesignerPresenter presenter) {
+		this.presenter = presenter;
+	}
+	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor,
+			KeyboardLabelDescriptor keyboardGeneralLabelDescriptor,
+			KeyboardLabelDescriptor keyboardAlternativeLabelDescriptor) {
+		keyboard.setKeyboardDescriptor(keyboardDescriptor, keyboardGeneralLabelDescriptor, keyboardAlternativeLabelDescriptor);
 	}
 }

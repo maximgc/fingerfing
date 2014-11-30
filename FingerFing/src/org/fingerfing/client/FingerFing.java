@@ -1,6 +1,7 @@
 package org.fingerfing.client;
 
 import org.fingerfing.client.presenter.CourseDesignerPresenter;
+import org.fingerfing.client.presenter.KeyboardDesignerPresenter;
 import org.fingerfing.client.presenter.MainPresenter;
 import org.fingerfing.client.presenter.SettingsPresenter;
 import org.fingerfing.client.presenter.TrainPresenter;
@@ -34,6 +35,7 @@ public class FingerFing implements EntryPoint {
 		final MainPresenter mainPresenter = new MainPresenter(mv, eventBus);
 		final TrainPresenter trainPresenter = new TrainPresenter(mv.getTrainView(), eventBus);
 		final CourseDesignerPresenter courseDesignerPresenter = new CourseDesignerPresenter(mv.getCourseDesignerView(), eventBus);
+		final KeyboardDesignerPresenter keyboardDesignerPresenter = new KeyboardDesignerPresenter(mv.getKeyboardDesignerView(), eventBus);
 		
 		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, trainPresenter);
 		eventBus.addHandler(ExerciseDescriptorChangeEvent.TYPE, courseDesignerPresenter);
@@ -43,9 +45,11 @@ public class FingerFing implements EntryPoint {
 		eventBus.addHandler(ActionChangeEvent.TYPE, mainPresenter);
 		eventBus.addHandler(ActionChangeEvent.TYPE, trainPresenter);
 		eventBus.addHandler(ActionChangeEvent.TYPE, courseDesignerPresenter);
+		eventBus.addHandler(ActionChangeEvent.TYPE, keyboardDesignerPresenter);
 		eventBus.addHandler(ActionChangeEvent.TYPE, flowController);
 		
 		eventBus.addHandler(KeyboardDescriptorsChangeEvent.TYPE, trainPresenter);
+		eventBus.addHandler(KeyboardDescriptorsChangeEvent.TYPE, keyboardDesignerPresenter);
 
 		History.addValueChangeHandler(flowController);
 		History.fireCurrentHistoryState();
