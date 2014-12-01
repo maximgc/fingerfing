@@ -1,8 +1,10 @@
-package org.fingerfing.client.view;
+package org.fingerfing.client.view.widget;
 
 import java.util.Map;
 
 import org.fingerfing.client.domain.Key;
+import org.fingerfing.client.view.KeyboardDescriptor;
+import org.fingerfing.client.view.KeyboardLabelDescriptor;
 import org.fingerfing.client.view.event.KeyInputHandler;
 import org.fingerfing.client.view.event.NativeKeyInputHandler;
 

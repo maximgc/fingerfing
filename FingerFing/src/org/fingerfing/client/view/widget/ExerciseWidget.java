@@ -1,4 +1,4 @@
-package org.fingerfing.client.view;
+package org.fingerfing.client.view.widget;
 
 import java.util.List;
 

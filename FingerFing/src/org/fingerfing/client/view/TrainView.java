@@ -7,6 +7,9 @@ import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.view.event.HasNativeKeyInputHandler;
 import org.fingerfing.client.view.event.NativeKeyInputHandler;
+import org.fingerfing.client.view.widget.ExerciseWidget;
+import org.fingerfing.client.view.widget.KeyboardBuilderSimple;
+import org.fingerfing.client.view.widget.KeyboardWidget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

@@ -1,10 +1,12 @@
-package org.fingerfing.client.view;
+package org.fingerfing.client.view.widget;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.fingerfing.client.domain.Key;
+import org.fingerfing.client.view.KeyboardDescriptor;
+import org.fingerfing.client.view.KeyboardLabelDescriptor;
 import org.fingerfing.client.view.KeyboardDescriptor.KeyDescriptor;
 import org.fingerfing.client.view.KeyboardDescriptor.RowDescriptor;
 import org.fingerfing.client.view.event.KeyInputHandler;
@@ -12,7 +14,7 @@ import org.fingerfing.client.view.event.NativeKeyInputHandler;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
-class KeyboardBuilderSimple implements KeyboardBuilder {
+public class KeyboardBuilderSimple implements KeyboardBuilder {
 
 	private static final String KEY_WIDGET_STYLE = "keyWidget";
 
@@ -49,9 +51,6 @@ class KeyboardBuilderSimple implements KeyboardBuilder {
 		this.keyArea = keyArea;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.fingerfing.client.view.KeyboardBuilder#addKeyInputHandler(org.fingerfing.client.view.event.KeyInputHandler)
-	 */
 	@Override
 	public void addKeyInputHandler(KeyInputHandler handler) {
 		this.keyInputHandler = handler;
@@ -62,9 +61,6 @@ class KeyboardBuilderSimple implements KeyboardBuilder {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.fingerfing.client.view.KeyboardBuilder#addNativeKeyInputHandler(org.fingerfing.client.view.event.NativeKeyInputHandler)
-	 */
 	@Override
 	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
 		this.nativeKeyInputHandler = handler;
@@ -124,9 +120,6 @@ class KeyboardBuilderSimple implements KeyboardBuilder {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.fingerfing.client.view.KeyboardBuilder#setAlternativeLabelDescriptor(org.fingerfing.client.view.KeyboardLabelDescriptor)
-	 */
 	@Override
 	public void setAlternativeLabelDescriptor(
 			KeyboardLabelDescriptor labelDescriptor) {
@@ -135,9 +128,6 @@ class KeyboardBuilderSimple implements KeyboardBuilder {
 			buildLabelBlock(KeyWidget.LABEL_RIGHT_BOTTOM, generalLabelMap);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.fingerfing.client.view.KeyboardBuilder#setGeneralLabelDescriptor(org.fingerfing.client.view.KeyboardLabelDescriptor)
-	 */
 	@Override
 	public void setGeneralLabelDescriptor(
 			KeyboardLabelDescriptor labelDescriptor) {
@@ -146,9 +136,6 @@ class KeyboardBuilderSimple implements KeyboardBuilder {
 			buildLabelBlock(KeyWidget.LABEL_LEFT_TOP, generalLabelMap);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.fingerfing.client.view.KeyboardBuilder#setKeyboardDescriptor(org.fingerfing.client.view.KeyboardDescriptor)
-	 */
 	@Override
 	public Map<Key, KeyWidget> setKeyboardDescriptor(
 			KeyboardDescriptor keyboardDescriptor) {
@@ -157,9 +144,6 @@ class KeyboardBuilderSimple implements KeyboardBuilder {
 		return keyWidgetMap;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.fingerfing.client.view.KeyboardBuilder#setKeyboardDescriptor(org.fingerfing.client.view.KeyboardDescriptor, org.fingerfing.client.view.KeyboardLabelDescriptor, org.fingerfing.client.view.KeyboardLabelDescriptor)
-	 */
 	@Override
 	public Map<Key, KeyWidget> setKeyboardDescriptor(
 			KeyboardDescriptor keyboardDescriptor,

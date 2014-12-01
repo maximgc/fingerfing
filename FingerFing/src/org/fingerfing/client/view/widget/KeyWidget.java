@@ -1,4 +1,4 @@
-package org.fingerfing.client.view;
+package org.fingerfing.client.view.widget;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,7 +18,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 
-class KeyWidget extends Button implements HasNativeKeyInputHandler,
+public class KeyWidget extends Button implements HasNativeKeyInputHandler,
 		HasKeyInputHandler {
 
 	public static final int LABEL_RIGHT_BOTTOM = 3;
