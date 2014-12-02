@@ -5,16 +5,13 @@ import java.util.Map;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.view.KeyboardDescriptor;
 import org.fingerfing.client.view.KeyboardLabelDescriptor;
+import org.fingerfing.client.view.widget.event.HandlerManager;
 import org.fingerfing.client.view.widget.event.KeyInputHandler;
 import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 interface KeyboardBuilder {
-
-	public abstract void addKeyInputHandler(KeyInputHandler handler);
-
-	public abstract void addNativeKeyInputHandler(NativeKeyInputHandler handler);
 
 	public abstract void setAlternativeLabelDescriptor(
 			KeyboardLabelDescriptor labelDescriptor);
@@ -31,5 +28,11 @@ interface KeyboardBuilder {
 			KeyboardDescriptor keyboardDescriptor,
 			KeyboardLabelDescriptor keyboardGeneralLabelDescriptor,
 			KeyboardLabelDescriptor keyboardAlternativeLabelDescriptor);
+
+	public abstract void setKeyInputHandlers(
+			HandlerManager<KeyInputHandler> keyInputHandlers);
+
+	public abstract void setNativeKeyInputHandlers(
+			HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers);
 
 }

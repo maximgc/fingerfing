@@ -40,7 +40,7 @@ public class KeyboardDesignerView extends Composite {
 			@Override
 			public void onKeyInput(KeyInputEvent event) {
 				Key key = event.getKey();
-				keyboard.getKeyWidget(key).showFinger(curFinger);
+//				keyboard.getKeyWidget(key).showFinger(curFinger);
 			}
 		});
 	}

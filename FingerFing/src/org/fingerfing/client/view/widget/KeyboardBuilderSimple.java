@@ -5,16 +5,39 @@ import java.util.List;
 import java.util.Map;
 
 import org.fingerfing.client.domain.Key;
+import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.view.KeyboardDescriptor;
 import org.fingerfing.client.view.KeyboardLabelDescriptor;
 import org.fingerfing.client.view.KeyboardDescriptor.KeyDescriptor;
 import org.fingerfing.client.view.KeyboardDescriptor.RowDescriptor;
+import org.fingerfing.client.view.widget.event.HandlerManager;
+import org.fingerfing.client.view.widget.event.KeyInputEvent;
 import org.fingerfing.client.view.widget.event.KeyInputHandler;
+import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 public class KeyboardBuilderSimple implements KeyboardBuilder {
+
+	private class ClickHandlerImpl implements ClickHandler {
+		private final NativeKey nativeKey;
+		private final Key key;
+
+		private ClickHandlerImpl(NativeKey nativeKey, Key key) {
+			this.nativeKey = nativeKey;
+			this.key = key;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			keyInputHandlers.fireEvent(new KeyInputEvent(key));
+			nativeKeyInputHandlers
+					.fireEvent(new NativeKeyInputEvent(nativeKey));
+		}
+	}
 
 	private static final String KEY_WIDGET_STYLE = "keyWidget";
 
@@ -34,48 +57,42 @@ public class KeyboardBuilderSimple implements KeyboardBuilder {
 
 	private Map<Key, String> alternativeLabelMap;
 
-	private NativeKeyInputHandler nativeKeyInputHandler;
+	private HandlerManager<KeyInputHandler> keyInputHandlers = new HandlerManager<KeyInputHandler>();
 
-	private KeyInputHandler keyInputHandler;
+	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
+
+	public KeyboardBuilderSimple() {
+	}
 
 	public KeyboardBuilderSimple(AbsolutePanel keyPanel) {
 		assert (keyPanel != null) : "keyArea is null";
 		this.keyArea = keyPanel;
 	}
-
-	public KeyboardBuilderSimple() {
-	}
-
-	@Override
-	public void setKeyArea(AbsolutePanel keyArea) {
-		this.keyArea = keyArea;
-	}
-
-	@Override
-	public void addKeyInputHandler(KeyInputHandler handler) {
-		this.keyInputHandler = handler;
-		if (keyWidgetMap == null)
-			return;
-		for (KeyWidget kw : keyWidgetMap.values()) {
-			kw.addKeyInputHandler(handler);
-		}
-	}
-
-	@Override
-	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		this.nativeKeyInputHandler = handler;
-		if (keyWidgetMap == null)
-			return;
-		for (KeyWidget kw : keyWidgetMap.values()) {
-			kw.addNativeKeyInputHandler(handler);
-		}
-	}
-
+	
 	private void buildBlock(List<RowDescriptor> rows, int left, int top) {
 		for (KeyboardDescriptor.RowDescriptor kr : rows) {
 			buildRow(kr.getRow(), left, top, KEY_HEIGHT);
 			top += KEY_HEIGHT + KEY_SPACE_VERTICAL;
 		}
+	}
+
+	private void buildKey(final Key key, int left, int top, int width,
+			int height) {
+		KeyWidget keyWidget = new KeyWidget(left, top, width, height);
+		keyWidget.setStyleName(KEY_WIDGET_STYLE);
+		keyArea.add(keyWidget, left, top);
+		keyWidgetMap.put(key, keyWidget);
+
+		final NativeKey nativeKey = NativeKey.getByNativeCode(key
+				.getNativeCode());
+		keyWidget.addClickHandler(new ClickHandlerImpl(nativeKey, key));
+		
+		if (generalLabelMap != null)
+			buildLabelKey(KeyWidget.LABEL_LEFT_TOP, generalLabelMap.get(key),
+					keyWidget);
+		if (alternativeLabelMap != null)
+			buildLabelKey(KeyWidget.LABEL_RIGHT_BOTTOM,
+					alternativeLabelMap.get(key), keyWidget);
 	}
 
 	private void buildLabelBlock(int pos, Map<Key, String> labelMap) {
@@ -87,23 +104,6 @@ public class KeyboardBuilderSimple implements KeyboardBuilder {
 
 	private void buildLabelKey(int pos, String label, KeyWidget keyWidget) {
 		keyWidget.setLabel(pos, label);
-	}
-
-	private void buildKey(Key key, int left, int top, int width, int height) {
-		KeyWidget keyWidget = new KeyWidget(key, left, top, width, height);
-		keyWidget.setStyleName(KEY_WIDGET_STYLE);
-		keyArea.add(keyWidget, left, top);
-		keyWidgetMap.put(key, keyWidget);
-		if (keyInputHandler != null)
-			keyWidget.addKeyInputHandler(keyInputHandler);
-		if (nativeKeyInputHandler != null)
-			keyWidget.addNativeKeyInputHandler(nativeKeyInputHandler);
-		if (generalLabelMap != null)
-			buildLabelKey(KeyWidget.LABEL_LEFT_TOP, generalLabelMap.get(key),
-					keyWidget);
-		if (alternativeLabelMap != null)
-			buildLabelKey(KeyWidget.LABEL_RIGHT_BOTTOM,
-					alternativeLabelMap.get(key), keyWidget);
 	}
 
 	private void buildRow(List<KeyDescriptor> keys, int left, int top,
@@ -137,6 +137,11 @@ public class KeyboardBuilderSimple implements KeyboardBuilder {
 	}
 
 	@Override
+	public void setKeyArea(AbsolutePanel keyArea) {
+		this.keyArea = keyArea;
+	}
+
+	@Override
 	public Map<Key, KeyWidget> setKeyboardDescriptor(
 			KeyboardDescriptor keyboardDescriptor) {
 		keyArea.clear();
@@ -155,5 +160,18 @@ public class KeyboardBuilderSimple implements KeyboardBuilder {
 		keyArea.clear();
 		buildBlock(keyboardDescriptor.getBlock(), BLOCK_LEFT, BLOCK_TOP);
 		return keyWidgetMap;
+	}
+
+	@Override
+	public void setKeyInputHandlers(
+			HandlerManager<KeyInputHandler> keyInputHandlers) {
+		this.keyInputHandlers = keyInputHandlers;
+	}
+
+	@Override
+	public void setNativeKeyInputHandlers(
+			HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers) {
+		this.nativeKeyInputHandlers = nativeKeyInputHandlers;
+		
 	}
 }

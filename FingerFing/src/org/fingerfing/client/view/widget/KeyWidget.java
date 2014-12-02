@@ -4,22 +4,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.fingerfing.client.domain.Finger;
-import org.fingerfing.client.domain.Key;
-import org.fingerfing.client.domain.NativeKey;
-import org.fingerfing.client.view.widget.event.HasKeyInputHandler;
-import org.fingerfing.client.view.widget.event.HasNativeKeyInputHandler;
-import org.fingerfing.client.view.widget.event.KeyInputEvent;
-import org.fingerfing.client.view.widget.event.KeyInputHandler;
-import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
-import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
-
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 
-public class KeyWidget extends Button implements HasNativeKeyInputHandler,
-		HasKeyInputHandler {
+public class KeyWidget extends Button {
 
 	public static final int LABEL_RIGHT_BOTTOM = 3;
 	public static final int LABEL_LEFT_BOTTOM = 2;
@@ -65,48 +53,24 @@ public class KeyWidget extends Button implements HasNativeKeyInputHandler,
 	private static final String EXPECTED = "expected";
 	// private int left, top, width, height;
 
-	private Key key;
 
 	private Queue<KeyWidget.Effect> effectQueue = new LinkedList<KeyWidget.Effect>();
 
 	private DellayedEffect showdellayedEffects = new DellayedEffect();
 
-	public KeyWidget(Key key, int left, int top, int width, int height) {
-		this(key, left, top, width, height, null);
+	public KeyWidget(int left, int top, int width, int height) {
+		this(left, top, width, height, null);
 	}
 
-	public KeyWidget(Key key, int left, int top, int width, int height,
+	public KeyWidget(int left, int top, int width, int height,
 			String label) {
 		super(label);
 		// this.left = left;
 		// this.top = top;
 		// this.width = width;
 		// this.height = height;
-		this.key = key;
 		super.setWidth(width + "px");
 		super.setHeight(height + "px");
-	}
-
-	@Override
-	public void addKeyInputHandler(final KeyInputHandler handler) {
-		this.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				handler.onKeyInput(new KeyInputEvent(key));
-			}
-		});
-	}
-
-	@Override
-	public void addNativeKeyInputHandler(final NativeKeyInputHandler handler) {
-		final NativeKey nativeKey = NativeKey.getByNativeCode(key
-				.getNativeCode());
-		addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				handler.onNativeKeyInput(new NativeKeyInputEvent(nativeKey));
-			}
-		});
 	}
 
 	private String[] labels = new String[] { "", "", "", "" };

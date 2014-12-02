@@ -11,6 +11,7 @@ import org.fingerfing.client.view.KeyboardDescriptor;
 import org.fingerfing.client.view.KeyboardLabelDescriptor;
 import org.fingerfing.client.view.widget.event.HandlerManager;
 import org.fingerfing.client.view.widget.event.HasKeyInputHandler;
+import org.fingerfing.client.view.widget.event.HasNativeKeyInputHandler;
 import org.fingerfing.client.view.widget.event.KeyInputHandler;
 import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
@@ -26,7 +27,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 public class KeyboardWidget extends Composite implements ExerciseWidget,
-		HasKeyInputHandler {
+		HasKeyInputHandler, HasNativeKeyInputHandler {
 
 	interface KeyboardUiBinder extends UiBinder<Widget, KeyboardWidget> {
 	}
@@ -51,31 +52,28 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 
 	private Map<Key, KeyWidget> keyWidgetMap;
 
-	private Element curElement;
+	private KeyWidget curElementKey;
 
 	private KeyboardBuilder keyboardBuilder;
 
-	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers;
+	private HandlerManager<KeyInputHandler> keyInputHandlers = new HandlerManager<KeyInputHandler>();
+
+	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
+	
 
 	public KeyboardWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
 		focusPanel.addKeyDownHandler(new KeyDownHandlerImpl());
 	}
 
 	@Override
 	public void addKeyInputHandler(KeyInputHandler handler) {
-		keyboardBuilder.addKeyInputHandler(handler);
+		keyInputHandlers.addHandler(handler);
 	}
 
 	@Override
 	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
 		nativeKeyInputHandlers.addHandler(handler);
-		keyboardBuilder.addNativeKeyInputHandler(handler);
-	}
-
-	public KeyWidget getKeyWidget(Key key) {
-		return keyWidgetMap.get(key);
 	}
 
 	@Override
@@ -106,6 +104,8 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 	public void setKeyboardBuilder(KeyboardBuilder keyboardBuilder) {
 		this.keyboardBuilder = keyboardBuilder;
 		keyboardBuilder.setKeyArea(keyArea);
+		keyboardBuilder.setKeyInputHandlers(keyInputHandlers);
+		keyboardBuilder.setNativeKeyInputHandlers(nativeKeyInputHandlers);
 	}
 
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
@@ -144,13 +144,11 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 	public void showCurrentElement(Element element) {
 		if (keyWidgetMap == null)
 			return;
-		if (curElement != null) {
-			KeyWidget kw = keyWidgetMap.get(curElement.getKey());
-			kw.resetExpected();
+		if (curElementKey != null) {
+			curElementKey.resetExpected();
 		}
-		KeyWidget kw = keyWidgetMap.get(element.getKey());
-		kw.showExpected();
-		curElement = element;
+		curElementKey = keyWidgetMap.get(element.getKey());
+		curElementKey.showExpected();
 	}
 
 	@Override

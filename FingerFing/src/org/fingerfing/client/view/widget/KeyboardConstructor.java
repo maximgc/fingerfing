@@ -5,6 +5,7 @@ import java.util.Map;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.view.KeyboardDescriptor;
 import org.fingerfing.client.view.KeyboardLabelDescriptor;
+import org.fingerfing.client.view.widget.event.HandlerManager;
 import org.fingerfing.client.view.widget.event.KeyInputHandler;
 import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
@@ -21,17 +22,17 @@ public class KeyboardConstructor implements KeyboardBuilder{
 	public KeyboardConstructor() {
 	}
 
-	@Override
-	public void addKeyInputHandler(KeyInputHandler handler) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void addKeyInputHandler(KeyInputHandler handler) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public void setAlternativeLabelDescriptor(
@@ -66,5 +67,19 @@ public class KeyboardConstructor implements KeyboardBuilder{
 			KeyboardLabelDescriptor keyboardAlternativeLabelDescriptor) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setKeyInputHandlers(
+			HandlerManager<KeyInputHandler> keyInputHandlers) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setNativeKeyInputHandlers(
+			HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers) {
+		// TODO Auto-generated method stub
+		
 	}
 }

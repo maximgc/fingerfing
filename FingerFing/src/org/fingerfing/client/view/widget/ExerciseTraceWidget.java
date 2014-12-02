@@ -7,6 +7,7 @@ import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.view.widget.event.HandlerManager;
+import org.fingerfing.client.view.widget.event.HasNativeKeyInputHandler;
 import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
 import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
@@ -14,7 +15,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.TextArea;
 
-public class ExerciseTraceWidget extends TextArea implements ExerciseWidget {
+public class ExerciseTraceWidget extends TextArea implements ExerciseWidget, HasNativeKeyInputHandler {
 
 	private class KeyDownHandlerImpl implements KeyDownHandler {
 		@Override
@@ -30,28 +31,15 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget {
 	private Element curElement;
 	private Attempt[] attempts;
 
+	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
+
 	public ExerciseTraceWidget() {
 		this.addKeyDownHandler(new KeyDownHandlerImpl());
 	}
 
 	@Override
-	public void showCurrentElement(Element element) {
-		this.curElement = element;
-		refresh();
-	}
-
-	@Override
-	public void showAttempt(Attempt attempt) {
-		this.attempts[attempt.getPos()] = attempt;
-		refresh();
-	}
-
-	@Override
-	public void showSequence(List<Key> sequence) {
-		this.keySeq = sequence;
-		this.attempts = new Attempt[keySeq.size()];
-		this.curElement = null;
-		refresh();
+	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
+		nativeKeyInputHandlers.addHandler(handler);
 	}
 
 	private void refresh() {
@@ -69,11 +57,24 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget {
 		this.setText(sb.toString());
 	}
 
-	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
+	@Override
+	public void showAttempt(Attempt attempt) {
+		this.attempts[attempt.getPos()] = attempt;
+		refresh();
+	}
 
 	@Override
-	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		nativeKeyInputHandlers.addHandler(handler);
+	public void showCurrentElement(Element element) {
+		this.curElement = element;
+		refresh();
+	}
+
+	@Override
+	public void showSequence(List<Key> sequence) {
+		this.keySeq = sequence;
+		this.attempts = new Attempt[keySeq.size()];
+		this.curElement = null;
+		refresh();
 	}
 
 }

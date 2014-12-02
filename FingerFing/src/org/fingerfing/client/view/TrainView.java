@@ -6,6 +6,7 @@ import org.fingerfing.client.domain.Attempt;
 import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.presenter.TrainPresenter;
+import org.fingerfing.client.view.widget.ExerciseTraceWidget;
 import org.fingerfing.client.view.widget.ExerciseWidget;
 import org.fingerfing.client.view.widget.KeyboardBuilderSimple;
 import org.fingerfing.client.view.widget.KeyboardWidget;
@@ -39,7 +40,7 @@ public class TrainView extends Composite {
 			.create(TrainWidgetImplUiBinder.class);
 
 	@UiField
-	ExerciseWidget trace;
+	ExerciseTraceWidget trace;
 	@UiField
 	KeyboardWidget keyboard;
 
