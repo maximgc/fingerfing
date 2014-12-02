@@ -10,9 +10,6 @@ import org.fingerfing.client.presenter.event.ExerciseDescriptorChangeHandler;
 import org.fingerfing.client.presenter.event.KeyboardDescriptorsChangeEvent;
 import org.fingerfing.client.presenter.event.KeyboardDescriptorsChangeHandler;
 import org.fingerfing.client.view.TrainView;
-import org.fingerfing.client.view.event.NativeKeyInputEvent;
-import org.fingerfing.client.view.event.NativeKeyInputHandler;
-
 import com.google.gwt.event.shared.EventBus;
 
 public class TrainPresenter implements ExerciseDescriptorChangeHandler,
@@ -23,16 +20,10 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 
 	public TrainPresenter(TrainView trainView, EventBus eventBus) {
 		this.trainView = trainView;
-		//WARN не нравится что trainView.addNativeKeyInputHandler в констркторе
-		this.trainView.addNativeKeyInputHandler(new NativeKeyInputHandler() {
-			@Override
-			public void onNativeKeyInput(NativeKeyInputEvent event) {
-				onKeyInput(event.getNativeKey());
-			}
-		});
+		this.trainView.setPresenter(this);
 	}
 
-	private void onKeyInput(NativeKey nativeKey) {
+	public void onKeyInput(NativeKey nativeKey) {
 		if (!exercise.isComplete()) {
 			trainView.showAttempt(exercise.makeAttempt(nativeKey));
 			startElement();

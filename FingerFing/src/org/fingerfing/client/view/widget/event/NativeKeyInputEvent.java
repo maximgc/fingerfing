@@ -1,8 +1,8 @@
-package org.fingerfing.client.view.event;
+package org.fingerfing.client.view.widget.event;
 
 import org.fingerfing.client.domain.NativeKey;
 
-public class NativeKeyInputEvent {
+public class NativeKeyInputEvent extends Event<NativeKeyInputHandler> {
 	
 	private NativeKey nativeKey;
 
@@ -12,6 +12,11 @@ public class NativeKeyInputEvent {
 	
 	public NativeKey getNativeKey() {
 		return nativeKey;
+	}
+
+	@Override
+	public void dispatch(NativeKeyInputHandler handler) {
+		handler.onNativeKeyInput(this);
 	}
 	
 }

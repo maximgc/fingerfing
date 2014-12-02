@@ -9,8 +9,8 @@ import org.fingerfing.client.view.KeyboardDescriptor;
 import org.fingerfing.client.view.KeyboardLabelDescriptor;
 import org.fingerfing.client.view.KeyboardDescriptor.KeyDescriptor;
 import org.fingerfing.client.view.KeyboardDescriptor.RowDescriptor;
-import org.fingerfing.client.view.event.KeyInputHandler;
-import org.fingerfing.client.view.event.NativeKeyInputHandler;
+import org.fingerfing.client.view.widget.event.KeyInputHandler;
+import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 

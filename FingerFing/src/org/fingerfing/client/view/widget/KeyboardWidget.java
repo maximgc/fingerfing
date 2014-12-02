@@ -9,10 +9,11 @@ import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
 import org.fingerfing.client.view.KeyboardDescriptor;
 import org.fingerfing.client.view.KeyboardLabelDescriptor;
-import org.fingerfing.client.view.event.HasKeyInputHandler;
-import org.fingerfing.client.view.event.KeyInputHandler;
-import org.fingerfing.client.view.event.NativeKeyInputEvent;
-import org.fingerfing.client.view.event.NativeKeyInputHandler;
+import org.fingerfing.client.view.widget.event.HandlerManager;
+import org.fingerfing.client.view.widget.event.HasKeyInputHandler;
+import org.fingerfing.client.view.widget.event.KeyInputHandler;
+import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
+import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -30,6 +31,16 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 	interface KeyboardUiBinder extends UiBinder<Widget, KeyboardWidget> {
 	}
 
+	private class KeyDownHandlerImpl implements KeyDownHandler {
+		@Override
+		public void onKeyDown(KeyDownEvent event) {
+			NativeKey nativeKey = NativeKey.getByNativeCode(event
+					.getNativeKeyCode());
+			nativeKeyInputHandlers
+					.fireEvent(new NativeKeyInputEvent(nativeKey));
+		}
+	}
+
 	private static KeyboardUiBinder uiBinder = GWT
 			.create(KeyboardUiBinder.class);
 
@@ -44,26 +55,12 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 
 	private KeyboardBuilder keyboardBuilder;
 
-	private NativeKeyInputHandler nativeKeyInputHandler;
+	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers;
 
 	public KeyboardWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		focusPanel.addKeyDownHandler(new KeyDownHandler() {
-			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				NativeKey nativeKey = NativeKey.getByNativeCode(event
-						.getNativeKeyCode());
-				if (nativeKeyInputHandler != null) {
-					nativeKeyInputHandler
-							.onNativeKeyInput(new NativeKeyInputEvent(nativeKey));
-				}
-			}
-		});
-	}
-
-	public void setKeyboardBuilder(KeyboardBuilder keyboardBuilder) {
-		this.keyboardBuilder = keyboardBuilder;
-		keyboardBuilder.setKeyArea(keyArea);
+		nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
+		focusPanel.addKeyDownHandler(new KeyDownHandlerImpl());
 	}
 
 	@Override
@@ -73,7 +70,7 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 
 	@Override
 	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		this.nativeKeyInputHandler = handler;
+		nativeKeyInputHandlers.addHandler(handler);
 		keyboardBuilder.addNativeKeyInputHandler(handler);
 	}
 
@@ -81,9 +78,24 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 		return keyWidgetMap.get(key);
 	}
 
+	@Override
+	public int getTabIndex() {
+		return focusPanel.getTabIndex();
+	}
+
+	@Override
+	public void setAccessKey(char key) {
+		focusPanel.setAccessKey(key);
+	}
+
 	public void setAlternativeLabelDescriptor(
 			KeyboardLabelDescriptor labelDescriptor) {
 		keyboardBuilder.setAlternativeLabelDescriptor(labelDescriptor);
+	}
+
+	@Override
+	public void setFocus(boolean focused) {
+		focusPanel.setFocus(focused);
 	}
 
 	public void setGeneralLabelDescriptor(
@@ -91,16 +103,27 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 		keyboardBuilder.setGeneralLabelDescriptor(labelDescriptor);
 	}
 
+	public void setKeyboardBuilder(KeyboardBuilder keyboardBuilder) {
+		this.keyboardBuilder = keyboardBuilder;
+		keyboardBuilder.setKeyArea(keyArea);
+	}
+
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
-		keyWidgetMap = keyboardBuilder.setKeyboardDescriptor(keyboardDescriptor);
+		keyWidgetMap = keyboardBuilder
+				.setKeyboardDescriptor(keyboardDescriptor);
 	}
 
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor,
 			KeyboardLabelDescriptor keyboardGeneralLabelDescriptor,
 			KeyboardLabelDescriptor keyboardAlternativeLabelDescriptor) {
-		keyWidgetMap = keyboardBuilder.setKeyboardDescriptor(keyboardDescriptor,
-				keyboardGeneralLabelDescriptor,
+		keyWidgetMap = keyboardBuilder.setKeyboardDescriptor(
+				keyboardDescriptor, keyboardGeneralLabelDescriptor,
 				keyboardAlternativeLabelDescriptor);
+	}
+
+	@Override
+	public void setTabIndex(int index) {
+		focusPanel.setTabIndex(index);
 	}
 
 	@Override
@@ -132,26 +155,6 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 
 	@Override
 	public void showSequence(List<Key> sequence) {
-	}
-
-	@Override
-	public int getTabIndex() {
-		return focusPanel.getTabIndex();
-	}
-
-	@Override
-	public void setAccessKey(char key) {
-		focusPanel.setAccessKey(key);
-	}
-
-	@Override
-	public void setFocus(boolean focused) {
-		focusPanel.setFocus(focused);
-	}
-
-	@Override
-	public void setTabIndex(int index) {
-		focusPanel.setTabIndex(index);
 	}
 
 }

@@ -5,11 +5,12 @@ import java.util.List;
 import org.fingerfing.client.domain.Attempt;
 import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
-import org.fingerfing.client.view.event.HasNativeKeyInputHandler;
-import org.fingerfing.client.view.event.NativeKeyInputHandler;
+import org.fingerfing.client.presenter.TrainPresenter;
 import org.fingerfing.client.view.widget.ExerciseWidget;
 import org.fingerfing.client.view.widget.KeyboardBuilderSimple;
 import org.fingerfing.client.view.widget.KeyboardWidget;
+import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
+import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -22,7 +23,14 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Max
  */
-public class TrainView extends Composite implements HasNativeKeyInputHandler {
+public class TrainView extends Composite {
+
+	private class NativeKeyInputHandlerImpl implements NativeKeyInputHandler {
+		@Override
+		public void onNativeKeyInput(NativeKeyInputEvent event) {
+			presenter.onKeyInput(event.getNativeKey());
+		}
+	}
 
 	interface TrainWidgetImplUiBinder extends UiBinder<Widget, TrainView> {
 	}
@@ -35,9 +43,15 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 	@UiField
 	KeyboardWidget keyboard;
 
+	private TrainPresenter presenter;
+
 	public TrainView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		keyboard.setKeyboardBuilder(new KeyboardBuilderSimple());
+		
+		NativeKeyInputHandler handler = new NativeKeyInputHandlerImpl();
+		trace.addNativeKeyInputHandler(handler);
+		keyboard.addNativeKeyInputHandler(handler);
 	}
 
 	public void showCurrentElement(Element element) {
@@ -54,13 +68,6 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 		trace.showSequence(sequence);
 		keyboard.showSequence(sequence);
 		keyboard.setFocus(true);
-	}
-
-	//WARN не нравится что addNativeKeyInputHandler на весь view
-	@Override
-	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		trace.addNativeKeyInputHandler(handler);
-		keyboard.addNativeKeyInputHandler(handler);
 	}
 
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {
@@ -80,7 +87,13 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor,
 			KeyboardLabelDescriptor keyboardGeneralLabelDescriptor,
 			KeyboardLabelDescriptor keyboardAlternativeLabelDescriptor) {
-		keyboard.setKeyboardDescriptor(keyboardDescriptor, keyboardGeneralLabelDescriptor, keyboardAlternativeLabelDescriptor);		
+		keyboard.setKeyboardDescriptor(keyboardDescriptor,
+				keyboardGeneralLabelDescriptor,
+				keyboardAlternativeLabelDescriptor);
 	}
-	
+
+	public void setPresenter(TrainPresenter presenter) {
+		this.presenter = presenter;
+	}
+
 }

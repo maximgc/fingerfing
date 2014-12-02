@@ -6,12 +6,12 @@ import java.util.Queue;
 import org.fingerfing.client.domain.Finger;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
-import org.fingerfing.client.view.event.HasKeyInputHandler;
-import org.fingerfing.client.view.event.HasNativeKeyInputHandler;
-import org.fingerfing.client.view.event.KeyInputEvent;
-import org.fingerfing.client.view.event.KeyInputHandler;
-import org.fingerfing.client.view.event.NativeKeyInputEvent;
-import org.fingerfing.client.view.event.NativeKeyInputHandler;
+import org.fingerfing.client.view.widget.event.HasKeyInputHandler;
+import org.fingerfing.client.view.widget.event.HasNativeKeyInputHandler;
+import org.fingerfing.client.view.widget.event.KeyInputEvent;
+import org.fingerfing.client.view.widget.event.KeyInputHandler;
+import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
+import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

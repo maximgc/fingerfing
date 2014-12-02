@@ -6,29 +6,34 @@ import org.fingerfing.client.domain.Attempt;
 import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.domain.NativeKey;
-import org.fingerfing.client.view.event.NativeKeyInputEvent;
-import org.fingerfing.client.view.event.NativeKeyInputHandler;
+import org.fingerfing.client.view.widget.event.HandlerManager;
+import org.fingerfing.client.view.widget.event.NativeKeyInputEvent;
+import org.fingerfing.client.view.widget.event.NativeKeyInputHandler;
 
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.TextArea;
 
-public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
+public class ExerciseTraceWidget extends TextArea implements ExerciseWidget {
+
+	private class KeyDownHandlerImpl implements KeyDownHandler {
+		@Override
+		public void onKeyDown(KeyDownEvent event) {
+			NativeKey nativeKey = NativeKey.getByNativeCode(event
+					.getNativeKeyCode());
+			nativeKeyInputHandlers.fireEvent(new NativeKeyInputEvent(
+					nativeKey));
+		}
+	}
 
 	private List<Key> keySeq;
 	private Element curElement;
 	private Attempt[] attempts;
 
 	public ExerciseTraceWidget() {
-		this.addKeyDownHandler(new KeyDownHandler() {
-			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				NativeKey nativeKey = NativeKey.getByNativeCode(event.getNativeKeyCode());
-				fireElementInput(new NativeKeyInputEvent(nativeKey));
-			}
-		});
+		this.addKeyDownHandler(new KeyDownHandlerImpl());
 	}
-	
+
 	@Override
 	public void showCurrentElement(Element element) {
 		this.curElement = element;
@@ -64,15 +69,11 @@ public class ExerciseTraceWidget extends TextArea implements ExerciseWidget{
 		this.setText(sb.toString());
 	}
 
-	private NativeKeyInputHandler elementInputHandler;
+	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
 
-	private void fireElementInput(NativeKeyInputEvent event) {
-		elementInputHandler.onNativeKeyInput(event);
-	}
-	
 	@Override
 	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-		this.elementInputHandler = handler;
+		nativeKeyInputHandlers.addHandler(handler);
 	}
 
 }

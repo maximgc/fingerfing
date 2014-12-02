@@ -3,10 +3,10 @@ package org.fingerfing.client.view;
 import org.fingerfing.client.domain.Finger;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.presenter.KeyboardDesignerPresenter;
-import org.fingerfing.client.view.event.KeyInputEvent;
-import org.fingerfing.client.view.event.KeyInputHandler;
 import org.fingerfing.client.view.widget.KeyboardConstructor;
 import org.fingerfing.client.view.widget.KeyboardWidget;
+import org.fingerfing.client.view.widget.event.KeyInputEvent;
+import org.fingerfing.client.view.widget.event.KeyInputHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
