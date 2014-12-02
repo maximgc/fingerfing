@@ -7,7 +7,10 @@ import org.fingerfing.client.domain.Element;
 import org.fingerfing.client.domain.Key;
 import org.fingerfing.client.view.event.HasNativeKeyInputHandler;
 
-public interface ExerciseWidget extends HasNativeKeyInputHandler {
+import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.IsWidget;
+
+public interface ExerciseWidget extends IsWidget, Focusable, HasNativeKeyInputHandler {
 
 	public void showCurrentElement(Element element);
 

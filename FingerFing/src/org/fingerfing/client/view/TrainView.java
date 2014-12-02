@@ -53,8 +53,10 @@ public class TrainView extends Composite implements HasNativeKeyInputHandler {
 	public void showSequence(List<Key> sequence) {
 		trace.showSequence(sequence);
 		keyboard.showSequence(sequence);
+		keyboard.setFocus(true);
 	}
 
+	//WARN не нравится что addNativeKeyInputHandler на весь view
 	@Override
 	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
 		trace.addNativeKeyInputHandler(handler);

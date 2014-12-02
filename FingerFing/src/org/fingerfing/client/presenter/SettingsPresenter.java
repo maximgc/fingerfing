@@ -86,6 +86,7 @@ public class SettingsPresenter implements ExerciseDescriptorModifyHandler {
 		}
 	}
 
+	//WARN не нравится onExerciseDescriptorModify
 	@Override
 	public void onExerciseDescriptorModify(ExerciseDescriptorModifyEvent event) {
 		settingsView.resetExerciseDescriptorSelector();

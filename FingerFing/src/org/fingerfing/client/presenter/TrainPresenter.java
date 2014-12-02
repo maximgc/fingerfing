@@ -23,6 +23,7 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 
 	public TrainPresenter(TrainView trainView, EventBus eventBus) {
 		this.trainView = trainView;
+		//WARN не нравится что trainView.addNativeKeyInputHandler в констркторе
 		this.trainView.addNativeKeyInputHandler(new NativeKeyInputHandler() {
 			@Override
 			public void onNativeKeyInput(NativeKeyInputEvent event) {
@@ -31,7 +32,7 @@ public class TrainPresenter implements ExerciseDescriptorChangeHandler,
 		});
 	}
 
-	public void onKeyInput(NativeKey nativeKey) {
+	private void onKeyInput(NativeKey nativeKey) {
 		if (!exercise.isComplete()) {
 			trainView.showAttempt(exercise.makeAttempt(nativeKey));
 			startElement();

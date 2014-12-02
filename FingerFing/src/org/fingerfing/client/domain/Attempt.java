@@ -1,6 +1,5 @@
 package org.fingerfing.client.domain;
 
-//WARN наследование?
 public class Attempt extends Element {
 
 	private int eval;

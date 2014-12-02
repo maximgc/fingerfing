@@ -134,37 +134,27 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 	public void showSequence(List<Key> sequence) {
 	}
 
-}
+	@Override
+	public int getTabIndex() {
+		return focusPanel.getTabIndex();
+	}
 
-// WARN unused
-// Timer t;
-// @SuppressWarnings("unused")
-// private void showBlock(final List<Key> sequence, final int i) {
-// if (keyWidgetMap==null) return;
-// if (t != null)
-// t.cancel();
-// t = new Timer() {
-// int n = i;
-// KeyWidget kw;
-//
-// @Override
-// public void run() {
-// if (n < sequence.size()) {
-// if (kw != null)
-// kw.resetInSeq();
-// kw = keyWidgetMap.get(sequence.get(n));
-// kw.showInSeq();
-// n++;
-// } else if (n == sequence.size()) {
-// if (kw != null)
-// kw.resetInSeq();
-// // this.cancel();
-// n = i;
-// }
-// }
-// };
-// t.scheduleRepeating(200);
-// }
+	@Override
+	public void setAccessKey(char key) {
+		focusPanel.setAccessKey(key);
+	}
+
+	@Override
+	public void setFocus(boolean focused) {
+		focusPanel.setFocus(focused);
+	}
+
+	@Override
+	public void setTabIndex(int index) {
+		focusPanel.setTabIndex(index);
+	}
+
+}
 
 // кнопка:
 // видимость
