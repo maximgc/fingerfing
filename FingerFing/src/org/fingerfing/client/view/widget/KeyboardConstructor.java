@@ -22,18 +22,6 @@ public class KeyboardConstructor implements KeyboardBuilder{
 	public KeyboardConstructor() {
 	}
 
-//	@Override
-//	public void addKeyInputHandler(KeyInputHandler handler) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void addNativeKeyInputHandler(NativeKeyInputHandler handler) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
 	@Override
 	public void setAlternativeLabelDescriptor(
 			KeyboardLabelDescriptor labelDescriptor) {
@@ -70,15 +58,15 @@ public class KeyboardConstructor implements KeyboardBuilder{
 	}
 
 	@Override
-	public void setKeyInputHandlers(
-			HandlerManager<KeyInputHandler> keyInputHandlers) {
+	public void setKeyInputHandlerManager(
+			HandlerManager<KeyInputHandler> manager) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setNativeKeyInputHandlers(
-			HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers) {
+	public void setNativeKeyInputHandlerManager(
+			HandlerManager<NativeKeyInputHandler> manager) {
 		// TODO Auto-generated method stub
 		
 	}

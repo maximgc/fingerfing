@@ -33,8 +33,8 @@ public class KeyboardBuilderSimple implements KeyboardBuilder {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			keyInputHandlers.fireEvent(new KeyInputEvent(key));
-			nativeKeyInputHandlers
+			keyInputHandlerManager.fireEvent(new KeyInputEvent(key));
+			nativeKeyInputHandlerManager
 					.fireEvent(new NativeKeyInputEvent(nativeKey));
 		}
 	}
@@ -57,9 +57,9 @@ public class KeyboardBuilderSimple implements KeyboardBuilder {
 
 	private Map<Key, String> alternativeLabelMap;
 
-	private HandlerManager<KeyInputHandler> keyInputHandlers = new HandlerManager<KeyInputHandler>();
+	private HandlerManager<KeyInputHandler> keyInputHandlerManager = new HandlerManager<KeyInputHandler>();
 
-	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers = new HandlerManager<NativeKeyInputHandler>();
+	private HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlerManager = new HandlerManager<NativeKeyInputHandler>();
 
 	public KeyboardBuilderSimple() {
 	}
@@ -163,15 +163,15 @@ public class KeyboardBuilderSimple implements KeyboardBuilder {
 	}
 
 	@Override
-	public void setKeyInputHandlers(
-			HandlerManager<KeyInputHandler> keyInputHandlers) {
-		this.keyInputHandlers = keyInputHandlers;
+	public void setKeyInputHandlerManager(
+			HandlerManager<KeyInputHandler> manager) {
+		this.keyInputHandlerManager = manager;
 	}
 
 	@Override
-	public void setNativeKeyInputHandlers(
-			HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers) {
-		this.nativeKeyInputHandlers = nativeKeyInputHandlers;
+	public void setNativeKeyInputHandlerManager(
+			HandlerManager<NativeKeyInputHandler> manager) {
+		this.nativeKeyInputHandlerManager = manager;
 		
 	}
 }

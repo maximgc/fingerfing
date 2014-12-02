@@ -104,8 +104,8 @@ public class KeyboardWidget extends Composite implements ExerciseWidget,
 	public void setKeyboardBuilder(KeyboardBuilder keyboardBuilder) {
 		this.keyboardBuilder = keyboardBuilder;
 		keyboardBuilder.setKeyArea(keyArea);
-		keyboardBuilder.setKeyInputHandlers(keyInputHandlers);
-		keyboardBuilder.setNativeKeyInputHandlers(nativeKeyInputHandlers);
+		keyboardBuilder.setKeyInputHandlerManager(keyInputHandlers);
+		keyboardBuilder.setNativeKeyInputHandlerManager(nativeKeyInputHandlers);
 	}
 
 	public void setKeyboardDescriptor(KeyboardDescriptor keyboardDescriptor) {

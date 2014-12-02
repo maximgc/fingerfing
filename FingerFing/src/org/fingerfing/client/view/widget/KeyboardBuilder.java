@@ -29,10 +29,10 @@ interface KeyboardBuilder {
 			KeyboardLabelDescriptor keyboardGeneralLabelDescriptor,
 			KeyboardLabelDescriptor keyboardAlternativeLabelDescriptor);
 
-	public abstract void setKeyInputHandlers(
-			HandlerManager<KeyInputHandler> keyInputHandlers);
+	public abstract void setKeyInputHandlerManager(
+			HandlerManager<KeyInputHandler> manager);
 
-	public abstract void setNativeKeyInputHandlers(
-			HandlerManager<NativeKeyInputHandler> nativeKeyInputHandlers);
+	public abstract void setNativeKeyInputHandlerManager(
+			HandlerManager<NativeKeyInputHandler> manager);
 
 }
